@@ -1,0 +1,163 @@
+Only in ../plugins/fabrique_auto/promotions/: base
+Only in ../plugins/fabrique_auto/promotions/formulaires: editer_promotion.html
+Only in ../plugins/fabrique_auto/promotions/formulaires: editer_promotion.php
+Only in ../plugins/fabrique_auto/promotions/lang: promotion_fr.php
+diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_promotions.php ../plugins/fabrique_auto/.backup/promotions/paquet.xml ../plugins/fabrique_auto/promotions/paquet.xml
+12c12
+< 		Paquet genere le 2014-05-17 11:56:21
+---
+> 		Paquet genere le 2014-05-17 12:06:23
+41a42,43
+> 	<necessite nom="saisies"  compatibilite="[1.24.0;]" />
+> 	<necessite nom="verifier" compatibilite="[1.0.0;]" />
+44a47,50
+> 	<pipeline nom="declarer_tables_objets_sql" inclure="base/promotions.php" />
+> 	<pipeline nom="declarer_tables_interfaces" inclure="base/promotions.php" />
+> 	<pipeline nom="declarer_tables_auxiliaires" inclure="base/promotions.php" />
+> 	<pipeline nom="optimiser_base_disparus" inclure="promotions_pipelines.php" />
+45a52,53
+> 	<menu nom="promotions" titre="promotion:titre_promotions" parent="menu_edition" icone="images/promotion-16.png" action="promotions" />
+> 	<menu nom="promotion_creer" titre="promotion:icone_creer_promotion" parent="outils_rapides" icone="images/promotion-new-16.png" action="promotion_edit" parametres="new=oui" />
+Only in ../plugins/fabrique_auto/promotions/prive: objets
+Only in ../plugins/fabrique_auto/promotions/prive/squelettes/contenu: promotion.html
+Only in ../plugins/fabrique_auto/promotions/prive/squelettes/contenu: promotions.html
+Only in ../plugins/fabrique_auto/promotions/prive/themes/spip/images: promotion-12.png
+Only in ../plugins/fabrique_auto/promotions/prive/themes/spip/images: promotion-16.png
+Only in ../plugins/fabrique_auto/promotions/prive/themes/spip/images: promotion-24.png
+Only in ../plugins/fabrique_auto/promotions/prive/themes/spip/images: promotion-32.png
+Only in ../plugins/fabrique_auto/promotions/prive/themes/spip/images: promotion-new-16.png
+diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_promotions.php ../plugins/fabrique_auto/.backup/promotions/promotions_administrations.php ../plugins/fabrique_auto/promotions/promotions_administrations.php
+51a52,53
+> 	$maj['create'] = array(array('maj_tables', array('spip_promotions', 'spip_promotions_liens')));
+>
+74a77,83
+> 	sql_drop_table("spip_promotions");
+> 	sql_drop_table("spip_promotions_liens");
+>
+> 	# Nettoyer les versionnages et forums
+> 	sql_delete("spip_versions",              sql_in("objet", array('promotion')));
+> 	sql_delete("spip_versions_fragments",    sql_in("objet", array('promotion')));
+> 	sql_delete("spip_forum",                 sql_in("objet", array('promotion')));
+diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_promotions.php ../plugins/fabrique_auto/.backup/promotions/promotions_autorisations.php ../plugins/fabrique_auto/promotions/promotions_autorisations.php
+37a38,140
+> // -----------------
+> // Objet promotions
+>
+>
+> /**
+>  * Autorisation de voir un élément de menu (promotions)
+>  *
+>  * @param  string $faire Action demandée
+>  * @param  string $type  Type d'objet sur lequel appliquer l'action
+>  * @param  int    $id    Identifiant de l'objet
+>  * @param  array  $qui   Description de l'auteur demandant l'autorisation
+>  * @param  array  $opt   Options de cette autorisation
+>  * @return bool          true s'il a le droit, false sinon
+> **/
+> function autoriser_promotions_menu_dist($faire, $type, $id, $qui, $opt){
+> 	return true;
+> }
+>
+>
+> /**
+>  * Autorisation de voir le bouton d'accès rapide de création (promotion)
+>  *
+>  * @param  string $faire Action demandée
+>  * @param  string $type  Type d'objet sur lequel appliquer l'action
+>  * @param  int    $id    Identifiant de l'objet
+>  * @param  array  $qui   Description de l'auteur demandant l'autorisation
+>  * @param  array  $opt   Options de cette autorisation
+>  * @return bool          true s'il a le droit, false sinon
+> **/
+> function autoriser_promotioncreer_menu_dist($faire, $type, $id, $qui, $opt){
+> 	return autoriser('creer', 'promotion', '', $qui, $opt);
+> }
+>
+> /**
+>  * Autorisation de créer (promotion)
+>  *
+>  * @param  string $faire Action demandée
+>  * @param  string $type  Type d'objet sur lequel appliquer l'action
+>  * @param  int    $id    Identifiant de l'objet
+>  * @param  array  $qui   Description de l'auteur demandant l'autorisation
+>  * @param  array  $opt   Options de cette autorisation
+>  * @return bool          true s'il a le droit, false sinon
+> **/
+> function autoriser_promotion_creer_dist($faire, $type, $id, $qui, $opt) {
+> 	return in_array($qui['statut'], array('0minirezo', '1comite'));
+> }
+>
+> /**
+>  * Autorisation de voir (promotion)
+>  *
+>  * @param  string $faire Action demandée
+>  * @param  string $type  Type d'objet sur lequel appliquer l'action
+>  * @param  int    $id    Identifiant de l'objet
+>  * @param  array  $qui   Description de l'auteur demandant l'autorisation
+>  * @param  array  $opt   Options de cette autorisation
+>  * @return bool          true s'il a le droit, false sinon
+> **/
+> function autoriser_promotion_voir_dist($faire, $type, $id, $qui, $opt) {
+> 	return true;
+> }
+>
+> /**
+>  * Autorisation de modifier (promotion)
+>  *
+>  * @param  string $faire Action demandée
+>  * @param  string $type  Type d'objet sur lequel appliquer l'action
+>  * @param  int    $id    Identifiant de l'objet
+>  * @param  array  $qui   Description de l'auteur demandant l'autorisation
+>  * @param  array  $opt   Options de cette autorisation
+>  * @return bool          true s'il a le droit, false sinon
+> **/
+> function autoriser_promotion_modifier_dist($faire, $type, $id, $qui, $opt) {
+> 	return in_array($qui['statut'], array('0minirezo', '1comite'));
+> }
+>
+> /**
+>  * Autorisation de supprimer (promotion)
+>  *
+>  * @param  string $faire Action demandée
+>  * @param  string $type  Type d'objet sur lequel appliquer l'action
+>  * @param  int    $id    Identifiant de l'objet
+>  * @param  array  $qui   Description de l'auteur demandant l'autorisation
+>  * @param  array  $opt   Options de cette autorisation
+>  * @return bool          true s'il a le droit, false sinon
+> **/
+> function autoriser_promotion_supprimer_dist($faire, $type, $id, $qui, $opt) {
+> 	return $qui['statut'] == '0minirezo' AND !$qui['restreint'];
+> }
+>
+>
+> /**
+>  * Autorisation de lier/délier l'élément (promotions)
+>  *
+>  * @param  string $faire Action demandée
+>  * @param  string $type  Type d'objet sur lequel appliquer l'action
+>  * @param  int    $id    Identifiant de l'objet
+>  * @param  array  $qui   Description de l'auteur demandant l'autorisation
+>  * @param  array  $opt   Options de cette autorisation
+>  * @return bool          true s'il a le droit, false sinon
+> **/
+> function autoriser_associerpromotions_dist($faire, $type, $id, $qui, $opt) {
+> 	return $qui['statut'] == '0minirezo' AND !$qui['restreint'];
+> }
+diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_promotions.php ../plugins/fabrique_auto/.backup/promotions/promotions_pipelines.php ../plugins/fabrique_auto/promotions/promotions_pipelines.php
+23a24,37
+> /**
+>  * Optimiser la base de données en supprimant les liens orphelins
+>  * de l'objet vers quelqu'un et de quelqu'un vers l'objet.
+>  *
+>  * @pipeline optimiser_base_disparus
+>  * @param  array $flux Données du pipeline
+>  * @return array       Données du pipeline
+>  */
+> function promotions_optimiser_base_disparus($flux){
+> 	include_spip('action/editer_liens');
+> 	$flux['data'] += objet_optimiser_liens(array('promotion'=>'*'),'*');
+> 	return $flux;
+> }
+>
+Only in ../plugins/fabrique_auto/promotions/: saisies
+Only in ../plugins/fabrique_auto/promotions/: saisies-vues

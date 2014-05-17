@@ -1,0 +1,8 @@
+#FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
+<div class="nettoyeur"></div>
+
+<INCLURE{fond=prive/objets/liste/promotions, par=titre, env, ajax, sinon=<:promotion:info_aucun_promotion:>}>
+
+[(#AUTORISER{creer,promotion})
+	[(#URL_ECRIRE{promotion_edit,new=oui}|icone_verticale{<:promotion:icone_creer_promotion:>,promotion,new,right})]
+]

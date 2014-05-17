@@ -1,0 +1,20 @@
+<BOUCLE_test_multiple(CONDITION){si #ENV{multiple}|=={on}|oui}>
+	[(#SET{valeur,[(#ENV*{valeur}|is_array|?{[(#ENV*{valeur})],[(#ENV*{valeur}|explode{','})]})]})]
+	<B_promotions_selectionnes>
+	<ul>
+	<BOUCLE_promotions_selectionnes(PROMOTIONS){id_promotion IN #GET*{valeur}}
+		{par num titre, titre}{statut?}{tout}>
+		<li class="choix">#TITRE (#ID_PROMOTION)</li>
+	</BOUCLE_promotions_selectionnes>
+	</ul>
+	</B_promotions_selectionnes>
+   	[(#ENV*{sans_reponse}|propre)]
+	<//B_promotions_selectionnes>
+</BOUCLE_test_multiple>
+	<BOUCLE_promotion_selectionne(PROMOTIONS){id_promotion=#ENV{valeur}}
+		{par num titre, titre}{statut?}{tout}>
+	  	<p>#TITRE (#ID_PROMOTION)</p>
+	</BOUCLE_promotion_selectionne>
+   	[(#ENV*{sans_reponse}|propre)]
+	<//B_promotion_selectionne>
+<//B_test_multiple>

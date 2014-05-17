@@ -1,0 +1,33 @@
+<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_promotion,nouveau}'>
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+	[(#ENV{editable})
+	<form method='post' action='#ENV{action}'><div>
+		#ACTION_FORMULAIRE{#ENV{action}}
+		<input type='hidden' name='id_promotion' value='#ENV{id_promotion}' />
+		<ul>
+
+			[(#SAISIE{input, titre, obligatoire=oui,
+				label=<:promotion:label_titre:>})]
+
+			[(#SAISIE{textarea, descriptif,
+				label=<:promotion:label_descriptif:>,
+				li_class=haut, class=inserer_barre_edition, rows=4})]
+
+			[(#SAISIE{date, date_debut,
+				label=<:promotion:label_date_debut:>})]
+
+			[(#SAISIE{date, date_fin,
+				label=<:promotion:label_date_fin:>})]
+
+			[(#SAISIE{selection, type_promotion, obligatoire=oui,
+				label=<:promotion:label_type_promotion:>})]
+
+		</ul>
+		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+		<!--extra-->
+		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
+	</div></form>
+	]
+</div>

@@ -1,0 +1,54 @@
+<paquet
+	prefix="promotions"
+	categorie="communication"
+	version="1.0.1"
+	etat="dev"
+	compatibilite="[3.0.16;3.0.*]"
+	logo="prive/themes/spip/images/promotions-64.png"
+	documentation=""
+	schema="1.0.0" 
+>
+	<!--
+		Paquet genere le 2014-05-17 12:06:23
+		(Vous pouvez bien entendu supprimer ces commentaires) 
+	-->
+
+	<nom>Promotions</nom>
+
+	<!-- cette balise peut etre presente plusieurs fois s'il y a plusieurs auteurs --> 
+	<auteur lien='http://websimple.be'>Rainer</auteur>
+
+	<licence>GNU/GPL</licence>
+
+	<!--
+		Exemple de commandes
+		* dependances
+		<necessite nom="saisies" compatibilite="[1.21.0;]" />
+		<utilise nom="saisies" compatibilite="[1.21.0;]" />
+		<lib nom="simplehtmldom" lien="http://chemin_vers_archive.zip" />
+		* pipelines
+		<pipeline nom="autoriser" inclure="promotions_autorisations.php" />
+		<pipeline nom="insert_head" inclure="promotions_pipelines.php" />
+		* declarer un pipeline 
+		<pipeline nom="mon_pipeline" action="" />
+		* parents de menus de SPIP :
+				menu_accueil (A eviter), menu_edition, menu_publication,
+				menu_activite, menu_squelette, menu_administration, menu_configuration 
+		<menu nom="promotions" titre="promotions:promotions_titre" parent="menu_edition"  icone="images/promotions-16.png" />
+		* parents d'onglets... configuration, plugins, statistiques, ... 
+		<onglet nom="promotions" titre="promotions:promotions_titre" parent="configuration" icone="images/promotions-24.png" />
+	-->
+
+	<necessite nom="saisies"  compatibilite="[1.24.0;]" /> 
+	<necessite nom="verifier" compatibilite="[1.0.0;]" /> 
+
+	<pipeline nom="autoriser" inclure="promotions_autorisations.php" /> 
+
+	<pipeline nom="declarer_tables_objets_sql" inclure="base/promotions.php" /> 
+	<pipeline nom="declarer_tables_interfaces" inclure="base/promotions.php" /> 
+	<pipeline nom="declarer_tables_auxiliaires" inclure="base/promotions.php" /> 
+	<pipeline nom="optimiser_base_disparus" inclure="promotions_pipelines.php" /> 
+
+	<menu nom="promotions" titre="promotion:titre_promotions" parent="menu_edition" icone="images/promotion-16.png" action="promotions" /> 
+	<menu nom="promotion_creer" titre="promotion:icone_creer_promotion" parent="outils_rapides" icone="images/promotion-new-16.png" action="promotion_edit" parametres="new=oui" /> 
+</paquet>

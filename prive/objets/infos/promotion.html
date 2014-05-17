@@ -1,0 +1,28 @@
+<BOUCLE_promotion(PROMOTIONS){id_promotion=#ENV{id}}{statut?}>
+<div class='infos'>
+[(#SET{texte_objet,<:promotion:titre_promotion:>})]
+<div class='numero'><:titre_cadre_numero_objet{objet=#GET{texte_objet}}:><p>#ID_PROMOTION</p></div>
+
+[(#FORMULAIRE_INSTITUER_OBJET{promotions,#ID_PROMOTION})]
+
+[(#REM)
+
+	Bouton voir en ligne
+
+]
+<BOUCLE_publie(PROMOTIONS){id_promotion}>
+	[(#VAL{redirect}
+		|generer_url_action{type=promotions&id=#ID_PROMOTION}
+		|parametre_url{var_mode,calcul}
+		|icone_horizontale{<:icone_voir_en_ligne:>,racine})]
+</BOUCLE_publie>
+	[(#AUTORISER{previsualiser,promotions,#ID_PROMOTION,'',#ARRAY{statut,#STATUT}})
+		[(#VAL{redirect}
+			|generer_url_action{type=promotions&id=#ID_PROMOTION}
+			|parametre_url{var_mode,preview}
+			|icone_horizontale{<:previsualiser:>,preview})]
+	]
+<//B_publie>
+
+</div>
+</BOUCLE_promotion>
