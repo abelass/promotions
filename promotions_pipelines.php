@@ -35,4 +35,13 @@ function promotions_optimiser_base_disparus($flux){
 	return $flux;
 }
 
+//Intervenir sur les détails d'une réservation du plug reservation_evenement
+function promotions_reservation_evenement_donnees_details($flux){
+
+	 if ($details = charger_fonction('action', "promotions/reservation_multiple_simple", true)){
+           $flux = $details($flux);
+	 	}
+		 
+	return $flux;
+}
 ?>
