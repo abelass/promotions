@@ -60,7 +60,7 @@ function promotions_declarer_tables_objets_sql($tables) {
 		),
 		'titre' => "titre AS titre, '' AS lang",
 		'date' => "date",
-		'champs_editables'  => array('titre', 'descriptif', 'date_debut', 'date_fin', 'type_promotion'),
+		'champs_editables'  => array('titre', 'descriptif', 'date_debut', 'date_fin', 'type_promotion','objet','id_objet'),
 		'champs_versionnes' => array('titre', 'descriptif', 'date_debut', 'date_fin', 'type_promotion'),
 		'rechercher_champs' => array("titre" => 8, "descriptif" => 4),
 		'tables_jointures'  => array('spip_promotions_liens'),
@@ -105,6 +105,8 @@ function promotions_declarer_tables_auxiliaires($tables) {
 			"id_promotion"       => "bigint(21) DEFAULT '0' NOT NULL",
 			"id_objet"           => "bigint(21) DEFAULT '0' NOT NULL",
 			"objet"              => "VARCHAR(25) DEFAULT '' NOT NULL",
+			"prix_normal"		 => "bigint(21) DEFAULT '0' NOT NULL",
+			"prix_promotion"	 => "bigint(21) DEFAULT '0' NOT NULL",			
 			"vu"                 => "VARCHAR(6) DEFAULT 'non' NOT NULL"
 		),
 		'key' => array(
