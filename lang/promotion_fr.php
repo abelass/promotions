@@ -21,6 +21,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_date_debut' => 'Date début',
 	'label_date_fin' => 'Date fin',
 	'label_descriptif' => 'Descriptif',
+	'label_parametres_generales' => 'Paramètres générales',	
 	'label_titre' => 'Titre',
 	'label_type_promotion' => 'Type Promotion',
 

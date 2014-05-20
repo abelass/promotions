@@ -60,6 +60,58 @@ function formulaires_editer_promotion_identifier_dist($id_promotion='new', $reto
  */
 function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
 	$valeurs = formulaires_editer_objet_charger('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
+	
+	$valeurs['saisies']=$saisies = array(
+	array(
+		'saisie' => 'fieldset',
+		'options' => array(
+			'nom' => 'general',
+			'label' => _T('promotion:label_parametres_generales'),
+		),
+		'saisies' => array(
+			array(
+				'saisie' => 'input',
+				'options' => array(
+					'nom' => 'titre',
+					'label' => _T('promotion:label_titre'),
+					'obligatoire'=>'oui'
+				)
+			),
+			array(
+				'saisie' => 'textarea',
+				'options' => array(
+					'nom' => 'descriptif',
+					'label' => _T('promotion:label_descriptif'),
+					'li_class'=>'haut', 
+					'class'=>'inserer_barre_edition',
+				)
+			),
+			array(
+				'saisie' => 'date',
+				'options' => array(
+					'nom' => 'date_debut',
+					'label' => _T('promotion:label_date_debut')
+				)
+			),
+			array(
+				'saisie' => 'date',
+				'options' => array(
+					'nom' => 'date_fin',
+					'label' => _T('promotion:label_date_fin')
+				)
+			),
+			array(
+				'saisie' => 'selection',
+				'options' => array(
+					'nom' => 'type_promotion',
+					'label' => _T('promotion:label_type_promotion'),
+					'obligatoire'=>'oui',
+					'datas'=>$types_promotion
+				)
+			),								
+		)
+	),
+);
 	return $valeurs;
 }
 
