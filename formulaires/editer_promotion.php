@@ -60,8 +60,35 @@ function formulaires_editer_promotion_identifier_dist($id_promotion='new', $reto
  */
 function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
 	$valeurs = formulaires_editer_objet_charger('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
+
+	//Chercher les fichiers promotions
+ 	$promotions = find_all_in_path("promotions/", '^');
+ 
+	 $promotions_noms=array();
+	 $promotions_defs=array();
+	 if(is_array( $promotions)){
+	 	foreach($promotions AS $fichier=>$chemin){
+	 		list($nom,$extension)=explode('.',$fichier);
+			//Charger la définition des champs
+			 if ($defs = charger_fonction($nom, "promotions", true)){
+	           	if(_request('type_promotion')==$nom){
+	           		$promotions_defs = array(array(
+	           			'saisie' => 'fieldset',			
+						'options' => array(
+							'nom' => 'specifique',
+							'label' => _T('promotion:label_parametres_specifiques')
+						),
+						'saisies' => $defs($valeurs)));
+						
+						//Lister les promotions dipsonible
+						$promotions_noms[$nom] =$nom;				
+				}
+		 	}		 
+	 	}
+	 }	
+
 	
-	$valeurs['saisies']=$saisies = array(
+$valeurs['saisies']=array(
 	array(
 		'saisie' => 'fieldset',
 		'options' => array(
@@ -106,12 +133,15 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 					'nom' => 'type_promotion',
 					'label' => _T('promotion:label_type_promotion'),
 					'obligatoire'=>'oui',
-					'datas'=>$types_promotion
+					'datas'=>$promotions_noms
 				)
 			),								
 		)
 	),
 );
+
+$valeurs['saisies']=array_merge($valeurs['saisies'],$promotions_defs);
+
 	return $valeurs;
 }
 
