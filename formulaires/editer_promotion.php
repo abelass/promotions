@@ -34,11 +34,11 @@ function definition_saisies(){
 							'nom' => 'specifique',
 							'label' => _T('promotion:label_parametres_specifiques')
 						),
-						'saisies' => $defs($valeurs)));
+						'saisies' => $defs($valeurs,'saisies')));
 									
 				}
 				//Lister les promotions dipsonible
-				$promotions_noms[$nom] =$nom;	
+				$promotions_noms[$nom] =$defs($valeurs,'nom');	
 		 	}		 
 	 	}
 	 }	
@@ -233,7 +233,9 @@ function formulaires_editer_promotion_verifier_dist($id_promotion='new', $retour
  */
 function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
 	
-	$saisies=definition_saisies();
+	$type_promotion=_request('type_promotion');
+	
+	$promotion = charger_fonction($type_promotion, "promotions", true);
 	
 	
 	return formulaires_editer_objet_traiter('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
