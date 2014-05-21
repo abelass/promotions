@@ -245,6 +245,8 @@ function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour=
 	
 	$promotion = charger_fonction($type_promotion, "promotions", true);
 	
+	$valeurs_promotion=$promotion('','saisies');
+	
 	
 	return formulaires_editer_objet_traiter('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
 }

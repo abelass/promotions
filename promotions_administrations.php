@@ -50,6 +50,7 @@ function promotions_upgrade($nom_meta_base_version, $version_cible) {
 	# ...
 
 	$maj['create'] = array(array('maj_tables', array('spip_promotions', 'spip_promotions_liens')));
+	$maj['1.1.0'] = array(array('maj_tables', array('spip_promotions')));	
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);

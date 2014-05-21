@@ -50,6 +50,7 @@ function promotions_declarer_tables_objets_sql($tables) {
 			"date_debut"         => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 			"date_fin"           => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 			"type_promotion"     => "varchar(55) NOT NULL DEFAULT ''",
+			"valeurs_promotion"  => "text NOT NULL DEFAULT ''",			
 			"date"               => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'", 
 			"statut"             => "varchar(20)  DEFAULT '0' NOT NULL", 
 			"maj"                => "TIMESTAMP"
@@ -60,7 +61,7 @@ function promotions_declarer_tables_objets_sql($tables) {
 		),
 		'titre' => "titre AS titre, '' AS lang",
 		'date' => "date",
-		'champs_editables'  => array('titre', 'descriptif', 'date_debut', 'date_fin', 'type_promotion','objet','id_objet'),
+		'champs_editables'  => array('titre', 'descriptif', 'date_debut', 'date_fin', 'type_promotion','objet','id_objet','valeurs_promotion'),
 		'champs_versionnes' => array('titre', 'descriptif', 'date_debut', 'date_fin', 'type_promotion'),
 		'rechercher_champs' => array("titre" => 8, "descriptif" => 4),
 		'tables_jointures'  => array('spip_promotions_liens'),
