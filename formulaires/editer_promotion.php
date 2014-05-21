@@ -14,6 +14,93 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 include_spip('inc/actions');
 include_spip('inc/editer');
 
+// Définition des champs
+function definition_saisies(){
+	
+	//Chercher les fichiers promotions
+ 	$promotions = find_all_in_path("promotions/", '^');
+ 
+	 $promotions_noms=array();
+	 $promotions_defs=array();
+	 if(is_array( $promotions)){
+	 	foreach($promotions AS $fichier=>$chemin){
+	 		list($nom,$extension)=explode('.',$fichier);
+			//Charger la définition des champs
+			 if ($defs = charger_fonction($nom, "promotions", true)){
+	           	if(_request('type_promotion')==$nom){
+	           		$promotions_defs = array(array(
+	           			'saisie' => 'fieldset',			
+						'options' => array(
+							'nom' => 'specifique',
+							'label' => _T('promotion:label_parametres_specifiques')
+						),
+						'saisies' => $defs($valeurs)));
+									
+				}
+				//Lister les promotions dipsonible
+				$promotions_noms[$nom] =$nom;	
+		 	}		 
+	 	}
+	 }	
+	
+	$saisies=array(
+	array(
+		'saisie' => 'fieldset',
+		'options' => array(
+			'nom' => 'general',
+			'label' => _T('promotion:label_parametres_generales'),
+		),
+		'saisies' => array(
+			array(
+				'saisie' => 'input',
+				'options' => array(
+					'nom' => 'titre',
+					'label' => _T('promotion:label_titre'),
+					'obligatoire'=>'oui'
+				)
+			),
+			array(
+				'saisie' => 'textarea',
+				'options' => array(
+					'nom' => 'descriptif',
+					'label' => _T('promotion:label_descriptif'),
+					'li_class'=>'haut', 
+					'class'=>'inserer_barre_edition',
+				)
+			),
+			array(
+				'saisie' => 'date',
+				'options' => array(
+					'nom' => 'date_debut',
+					'label' => _T('promotion:label_date_debut')
+				)
+			),
+			array(
+				'saisie' => 'date',
+				'options' => array(
+					'nom' => 'date_fin',
+					'label' => _T('promotion:label_date_fin')
+				)
+			),
+			array(
+				'saisie' => 'selection',
+				'options' => array(
+					'nom' => 'type_promotion',
+					'label' => _T('promotion:label_type_promotion'),
+					'obligatoire'=>'oui',
+					'datas'=>$promotions_noms
+					)
+				),								
+			)
+		),
+	);
+
+	$saisies=array_merge($saisies,$promotions_defs);
+	
+	
+	return $saisies;
+}
+
 /**
  * Identifier le formulaire en faisant abstraction des paramètres qui ne représentent pas l'objet edité
  *
@@ -61,86 +148,9 @@ function formulaires_editer_promotion_identifier_dist($id_promotion='new', $reto
 function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
 	$valeurs = formulaires_editer_objet_charger('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
 
-	//Chercher les fichiers promotions
- 	$promotions = find_all_in_path("promotions/", '^');
- 
-	 $promotions_noms=array();
-	 $promotions_defs=array();
-	 if(is_array( $promotions)){
-	 	foreach($promotions AS $fichier=>$chemin){
-	 		list($nom,$extension)=explode('.',$fichier);
-			//Charger la définition des champs
-			 if ($defs = charger_fonction($nom, "promotions", true)){
-	           	if(_request('type_promotion')==$nom){
-	           		$promotions_defs = array(array(
-	           			'saisie' => 'fieldset',			
-						'options' => array(
-							'nom' => 'specifique',
-							'label' => _T('promotion:label_parametres_specifiques')
-						),
-						'saisies' => $defs($valeurs)));
-						
-						//Lister les promotions dipsonible
-						$promotions_noms[$nom] =$nom;				
-				}
-		 	}		 
-	 	}
-	 }	
 
-	
-$valeurs['saisies']=array(
-	array(
-		'saisie' => 'fieldset',
-		'options' => array(
-			'nom' => 'general',
-			'label' => _T('promotion:label_parametres_generales'),
-		),
-		'saisies' => array(
-			array(
-				'saisie' => 'input',
-				'options' => array(
-					'nom' => 'titre',
-					'label' => _T('promotion:label_titre'),
-					'obligatoire'=>'oui'
-				)
-			),
-			array(
-				'saisie' => 'textarea',
-				'options' => array(
-					'nom' => 'descriptif',
-					'label' => _T('promotion:label_descriptif'),
-					'li_class'=>'haut', 
-					'class'=>'inserer_barre_edition',
-				)
-			),
-			array(
-				'saisie' => 'date',
-				'options' => array(
-					'nom' => 'date_debut',
-					'label' => _T('promotion:label_date_debut')
-				)
-			),
-			array(
-				'saisie' => 'date',
-				'options' => array(
-					'nom' => 'date_fin',
-					'label' => _T('promotion:label_date_fin')
-				)
-			),
-			array(
-				'saisie' => 'selection',
-				'options' => array(
-					'nom' => 'type_promotion',
-					'label' => _T('promotion:label_type_promotion'),
-					'obligatoire'=>'oui',
-					'datas'=>$promotions_noms
-				)
-			),								
-		)
-	),
-);
+	$valeurs['saisies']=definition_saisies();
 
-$valeurs['saisies']=array_merge($valeurs['saisies'],$promotions_defs);
 
 	return $valeurs;
 }
@@ -168,8 +178,13 @@ $valeurs['saisies']=array_merge($valeurs['saisies'],$promotions_defs);
  *     Tableau des erreurs
  */
 function formulaires_editer_promotion_verifier_dist($id_promotion='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+	
+	include_spip('inc/saisies');
+	
+	$saisies=definition_saisies();
 
-	$erreurs = formulaires_editer_objet_verifier('promotion',$id_promotion, array('titre', 'type_promotion'));
+	$erreurs = saisies_verifier($saisies);
+	
 	$verifier = charger_fonction('verifier', 'inc');
 
 	foreach (array('date_debut', 'date_fin') AS $champ)
@@ -212,6 +227,10 @@ function formulaires_editer_promotion_verifier_dist($id_promotion='new', $retour
  *     Retours des traitements
  */
 function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+	
+	$saisies=definition_saisies();
+	
+	
 	return formulaires_editer_objet_traiter('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
 }
 

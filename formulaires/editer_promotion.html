@@ -6,9 +6,9 @@
 	<form method='post' action='#ENV{action}'><div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 		<input type='hidden' name='id_promotion' value='#ENV{id_promotion}' />
-		
+		<ul>
 		#GENERER_SAISIES{#ENV{saisies}}
-		
+		</ul>
 		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
 		<!--extra-->
 		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
