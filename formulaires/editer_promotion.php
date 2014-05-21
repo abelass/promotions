@@ -152,6 +152,14 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 
 
 	$valeurs['saisies']=definition_saisies();
+	
+	//initialiser les donnees spécifiques de la promotion
+	if(isset($valeurs['saisies'][1]['saisies'])){
+		foreach($valeurs['saisies'][1]['saisies'] AS $saisie){
+			$valeurs[$saisie['options']['nom']]='';
+		}
+	}
+	
 
 
 	return $valeurs;
