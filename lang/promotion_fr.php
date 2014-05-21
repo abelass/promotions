@@ -8,6 +8,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
 	'ajouter_lien_promotion' => 'Ajouter cette promotion',
+	
+	//
+	'erreur_datefin'=>'La date fin doit être supérieure à la date début',
 
 	// I
 	'icone_creer_promotion' => 'Créer une promotion',

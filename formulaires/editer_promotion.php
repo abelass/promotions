@@ -72,6 +72,7 @@ function definition_saisies(){
 				'saisie' => 'date',
 				'options' => array(
 					'nom' => 'date_debut',
+					'horaire'=>'oui',					
 					'label' => _T('promotion:label_date_debut')
 				)
 			),
@@ -79,6 +80,7 @@ function definition_saisies(){
 				'saisie' => 'date',
 				'options' => array(
 					'nom' => 'date_fin',
+					'horaire'=>'oui',
 					'label' => _T('promotion:label_date_fin')
 				)
 			),
@@ -200,6 +202,9 @@ function formulaires_editer_promotion_verifier_dist($id_promotion='new', $retour
 			set_request($champ, null);
 		}
 	}
+	
+	if(_request('date_debut') AND _request('date_fin') AND _request('date_debut')>=_request('date_fin'))$erreurs['date_fin']=_T('promotion:erreur_datefin');
+	
 	return $erreurs;
 
 }
