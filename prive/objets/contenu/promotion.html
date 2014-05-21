@@ -25,4 +25,13 @@
 	<span dir='#LANG_DIR' class='#EDIT{type_promotion} type_promotion'>(#TYPE_PROMOTION)</span>
 </div>]
 
+
+<BOUCLE_valeurs_promotion(DATA){source tableau, #VALEURS_PROMOTION|unserialize}>
+<div class="champ contenu_#CLE ">
+	<label>#CLE : </label>
+	<span dir='#LANG_DIR' class='#CLE'> #VALEUR</span>
+</div>
+</BOUCLE_valeurs_promotion>
+
+
 </BOUCLE_promotion>

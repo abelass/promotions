@@ -15,7 +15,7 @@ include_spip('inc/actions');
 include_spip('inc/editer');
 
 // Définition des champs
-function definition_saisies(){
+function definition_saisies($type_promotion){
 	
 	//Chercher les fichiers promotions
  	$promotions = find_all_in_path("promotions/", '^');
@@ -27,7 +27,7 @@ function definition_saisies(){
 	 		list($nom,$extension)=explode('.',$fichier);
 			//Charger la définition des champs
 			 if ($defs = charger_fonction($nom, "promotions", true)){
-	           	if(_request('type_promotion')==$nom){
+	           	if($type_promotion==$nom){
 	           		$promotions_defs = array(array(
 	           			'saisie' => 'fieldset',			
 						'options' => array(
@@ -150,18 +150,17 @@ function formulaires_editer_promotion_identifier_dist($id_promotion='new', $reto
 function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
 	$valeurs = formulaires_editer_objet_charger('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
 
-
-	$valeurs['saisies']=definition_saisies();
+	$type_promotion=_request('type_promotion')?_request('type_promotion'):(isset($valeurs['type_promotion'])?$valeurs['type_promotion']:'');
+	
+	$valeurs['saisies']=definition_saisies($valeurs['type_promotion']);
+	$valeurs_promotion=unserialize($valeurs['valeurs_promotion']);
 	
 	//initialiser les donnees spécifiques de la promotion
 	if(isset($valeurs['saisies'][1]['saisies'])){
-		foreach($valeurs['saisies'][1]['saisies'] AS $saisie){
-			$valeurs[$saisie['options']['nom']]='';
+		foreach($valeurs['saisies'][1]['saisies'] AS $saisie){;
+			$valeurs[$saisie['options']['nom']]=$valeurs_promotion[$saisie['options']['nom']];
 		}
 	}
-	
-
-
 	return $valeurs;
 }
 
@@ -191,7 +190,7 @@ function formulaires_editer_promotion_verifier_dist($id_promotion='new', $retour
 	
 	include_spip('inc/saisies');
 	
-	$saisies=definition_saisies();
+	$saisies=definition_saisies(_request('type_promotion'));
 
 	$erreurs = saisies_verifier($saisies);
 	
@@ -247,6 +246,13 @@ function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour=
 	
 	$valeurs_promotion=$promotion('','saisies');
 	
+	$promotion=array();
+	
+	foreach($valeurs_promotion AS $champ){
+		$promotion[$champ['options']['nom']]=_request($champ['options']['nom']);
+	}
+	
+	set_request('valeurs_promotion',serialize($promotion));
 	
 	return formulaires_editer_objet_traiter('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
 }
