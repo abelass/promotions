@@ -37,11 +37,24 @@ function promotions_optimiser_base_disparus($flux){
 
 //Intervenir sur les détails d'une réservation du plug reservation_evenement
 function promotions_reservation_evenement_donnees_details($flux){
+	
+	$date=date('Y-m-d H:i:s');
+	$sql=sql_select('*','spip_promotions','statut='.sql_quote('publie'));
+	
+		while ($data=sql_fetch($sql)){
+			if(
+				$details = charger_fonction('action', 'promotions/'.$data['type_promotion'], true) 
+				AND
+		 		($data['date_debut']=='0000-00-00 00:00:00' OR ($data['date_debut']!='0000-00-00 00:00:00' AND $data['date_debut']<=$date))
+				AND
+				($data['date_fin']=='0000-00-00 00:00:00' OR ($data['date_fin']!='0000-00-00 00:00:00' AND $data['date_fin']>=$date))
+					){
+						$data['valeurs_promotion']=unserialize($data['valeurs_promotion']);
+						$flux = $details($flux,$data);
+					}	
+					
+			}
 
-	 if ($details = charger_fonction('action', "promotions/reservation_multiple_simple", true)){
-           $flux = $details($flux);
-	 	}
-		 
 	return $flux;
 }
 ?>

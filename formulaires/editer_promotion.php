@@ -252,6 +252,7 @@ function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour=
 		$promotion[$champ['options']['nom']]=_request($champ['options']['nom']);
 	}
 	
+	
 	set_request('valeurs_promotion',serialize($promotion));
 	
 	return formulaires_editer_objet_traiter('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
