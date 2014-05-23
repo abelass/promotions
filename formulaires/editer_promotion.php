@@ -152,7 +152,7 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 
 	$type_promotion=_request('type_promotion')?_request('type_promotion'):(isset($valeurs['type_promotion'])?$valeurs['type_promotion']:'');
 	
-	$valeurs['saisies']=definition_saisies($valeurs['type_promotion']);
+	$valeurs['saisies']=definition_saisies($type_promotion);
 	$valeurs_promotion=unserialize($valeurs['valeurs_promotion']);
 	
 	//initialiser les donnees spécifiques de la promotion
@@ -257,6 +257,5 @@ function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour=
 	
 	return formulaires_editer_objet_traiter('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
 }
-
 
 ?>

@@ -51,8 +51,7 @@ function promotions_reservation_evenement_donnees_details($flux){
 					){
 						$data['valeurs_promotion']=unserialize($data['valeurs_promotion']);
 						$flux = $details($flux,$data);
-					}	
-					
+					}						
 			}
 
 	return $flux;
