@@ -195,22 +195,29 @@ function formulaires_editer_promotion_verifier_dist($id_promotion='new', $retour
 	$erreurs = saisies_verifier($saisies);
 	
 	$verifier = charger_fonction('verifier', 'inc');
-
-	foreach (array('date_debut', 'date_fin') AS $champ)
-	{
-		$normaliser = null;
-		if ($erreur = $verifier(_request($champ), 'date', array('normaliser'=>'datetime'), $normaliser)) {
-			$erreurs[$champ] = $erreur;
-		// si une valeur de normalisation a ete transmis, la prendre.
-		} elseif (!is_null($normaliser)) {
-			set_request($champ, $normaliser);
-		// si pas de normalisation ET pas de date soumise, il ne faut pas tenter d'enregistrer ''
-		} else {
-			set_request($champ, null);
-		}
-	}
 	
-	if(_request('date_debut') AND _request('date_fin') AND _request('date_debut')>=_request('date_fin'))$erreurs['date_fin']=_T('promotion:erreur_datefin');
+
+		foreach (array('date_debut', 'date_fin') AS $champ)
+		{
+			if(_request($champ)){
+			$normaliser = null;
+			if ($erreur = $verifier(_request($champ), 'date', array('normaliser'=>'datetime'), $normaliser)) {
+				$erreurs[$champ] = $erreur;
+			// si une valeur de normalisation a ete transmis, la prendre.
+			} elseif (!is_null($normaliser)) {
+				set_request($champ, $normaliser);
+			// si pas de normalisation ET pas de date soumise, il ne faut pas tenter d'enregistrer ''
+			} else {
+				set_request($champ, '0000-00-00 00:00:00');
+			}
+		}		
+	}
+
+		
+
+
+	
+	if(_request('date_debut')>'0000-00-00 00:00:00' AND _request('date_fin')>'0000-00-00 00:00:00' AND _request('date_debut')>=_request('date_fin'))$erreurs['date_fin']=_T('promotion:erreur_datefin');
 	
 	return $erreurs;
 
