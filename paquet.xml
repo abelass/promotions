@@ -6,7 +6,7 @@
 	compatibilite="[3.0.16;3.0.*]"
 	logo="prive/themes/spip/images/promotions-64.png"
 	documentation=""
-	schema="1.1.0" 
+	schema="1.2.0" 
 >
 
 	<nom>Promotions</nom>
@@ -29,7 +29,7 @@
 	<pipeline nom="optimiser_base_disparus" inclure="promotions_pipelines.php" />
 	
 	<pipeline nom="reservation_evenement_donnees_details" inclure="promotions_pipelines.php" />
-	<pipeline nom="formulaire_traiter" inclure="promotions_pipelines.php" />		 
+	<pipeline nom="post_insertion" inclure="promotions_pipelines.php" />		 
 
 	<menu nom="promotions" titre="promotion:titre_promotions" parent="menu_edition" icone="images/promotion-16.png" action="promotions" /> 
 	<menu nom="promotion_creer" titre="promotion:icone_creer_promotion" parent="outils_rapides" icone="images/promotion-new-16.png" action="promotion_edit" parametres="new=oui" /> 

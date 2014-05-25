@@ -106,7 +106,7 @@ function promotions_declarer_tables_auxiliaires($tables) {
 			"id_promotion"       => "bigint(21) DEFAULT '0' NOT NULL",
 			"id_objet"           => "bigint(21) DEFAULT '0' NOT NULL",
 			"objet"              => "VARCHAR(25) DEFAULT '' NOT NULL",
-			"prix_normal"		 => "bigint(21) DEFAULT '0' NOT NULL",
+			"prix_original"		 => "bigint(21) DEFAULT '0' NOT NULL",
 			"prix_promotion"	 => "bigint(21) DEFAULT '0' NOT NULL",			
 			"vu"                 => "VARCHAR(6) DEFAULT 'non' NOT NULL"
 		),
