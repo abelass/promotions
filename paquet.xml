@@ -29,7 +29,8 @@
 	<pipeline nom="optimiser_base_disparus" inclure="promotions_pipelines.php" />
 	
 	<pipeline nom="reservation_evenement_donnees_details" inclure="promotions_pipelines.php" />
-	<pipeline nom="post_insertion" inclure="promotions_pipelines.php" />		 
+	<pipeline nom="post_insertion" inclure="promotions_pipelines.php" />
+		 
 
 	<menu nom="promotions" titre="promotion:titre_promotions" parent="menu_edition" icone="images/promotion-16.png" action="promotions" /> 
 	<menu nom="promotion_creer" titre="promotion:icone_creer_promotion" parent="outils_rapides" icone="images/promotion-new-16.png" action="promotion_edit" parametres="new=oui" /> 
