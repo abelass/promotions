@@ -74,50 +74,19 @@ function promotions_reservation_evenement_donnees_details($flux){
 	return $flux;
 }
 
-//Enregistrement des détails de la promotion accordée
-
 function promotions_post_insertion($flux){
 	$table=$flux['args']['table'];
 	
 	if($donnees_promotion=_request('donnees_promotion') AND $table==_request('table')){
-		$promotions=_request('promotions')?_request('promotions'):array();
+
 		$donnees_promotion['id_objet']=$flux['args']['id_objet'];
 		
-		//On liste toutes
-		set_request('promotions',array_merge($promotions,array($donnees_promotion)));	
-
-		sql_insertq('spip_promotions_liens',$donnees_promotion);		
+		sql_insertq('spip_promotions_liens',$donnees_promotion);	
+		
+		spip_log('post_insertion','teste');
 	};
 
 return $flux;	
 }
 
-/*function promotions_formulaire_traiter($flux){
-	$form = $flux['args']['form'];
-	if ($form=='reservation' AND $promotions=_request('promotions')){
-		
-		$promotion=$promotions[0];
-		
-		$sql=sql_select(
-			'prix_original,titre',
-			'spip_promotions_liens,spip_promotions',
-			'id_objet='.$promotion['id_objet'].' AND objet='.sql_quote($promotion['objet']));
-		$i=0;
-		$titre=array();
-		while($data=sql_fetch($sql)){
-			$i++;			
-			if($i==1)$prix_original=$data['prix_original'];
-			$titre[]=extraire_multi($data['titre']);
-		};
-
-		
-		//Afficher la promotion
-		$replace=recuperer_fond('inclure/promotion_reservation',array('prix_original'=>$prix_original,'titre'=>implode(', ',$titre)));
-					echo $replace;
-		
-		$message_ok=str_replace('<tr class="total_ttc">', $replace.'<tr class="total_ttc">', $flux['data']['message_ok']);
-		$flux['data']['message_ok']=$message_ok;
-	}
-	return $flux;
-}*/
 ?>
