@@ -7,6 +7,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
+	'absolu' => 'Absolu',	
 	'ajouter_lien_promotion' => 'Ajouter cette promotion',
 	
 	//
@@ -26,8 +27,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_descriptif' => 'Descriptif',
 	'label_parametres_generales' => 'Paramètres générales',	
 	'label_parametres_specifiques' => 'Paramètres spécifiques',	
+	'label_reduction'	=>'Réduction :',
 	'label_titre' => 'Titre',
 	'label_type_promotion' => 'Type Promotion',
+	'label_type_reduction'	=>'Type de réduction :',	
+
+	//
+	'pourcentage' => 'Pourcentage',	
 
 	// R
 	'retirer_lien_promotion' => 'Retirer cette promotion',

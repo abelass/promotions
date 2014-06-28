@@ -22,20 +22,20 @@ function definition_saisies($type_promotion){
  
 	 $promotions_noms=array();
 	 $promotions_defs=array();
-	 if(is_array( $promotions)){
+	 if(is_array($promotions)){
 	 	foreach($promotions AS $fichier=>$chemin){
 	 		list($nom,$extension)=explode('.',$fichier);
 			//Charger la définition des champs
 			 if ($defs = charger_fonction($nom, "promotions", true)){
-	           	if($type_promotion==$nom){
+			 	$saisies=$defs($valeurs,'saisies');
+	           	if($type_promotion==$nom AND $saisies){
 	           		$promotions_defs = array(array(
 	           			'saisie' => 'fieldset',			
 						'options' => array(
 							'nom' => 'specifique',
 							'label' => _T('promotion:label_parametres_specifiques')
 						),
-						'saisies' => $defs($valeurs,'saisies')));
-									
+						'saisies' => $saisies));									
 				}
 				//Lister les promotions dipsonible
 				$promotions_noms[$nom] =$defs($valeurs,'nom');	
@@ -84,6 +84,39 @@ function definition_saisies($type_promotion){
 					'label' => _T('promotion:label_date_fin')
 				)
 			),
+			array(
+				'saisie' => 'input',
+				'options' => array(
+					'nom' => 'reduction',
+					'label' => _T('promotion:label_reduction'),
+					'obligatoire'=>'oui'
+				)
+			),
+			array(
+				'saisie' => 'selection',
+				'options' => array(
+					'nom' => 'type_reduction',
+					'label' => _T('promotion:label_type_reduction'),
+					'datas'=>array(
+						'pourcentage'=>_T('promotion:pourcentage'),
+						'absolu'=>_T('promotion:absolu')							
+						), 
+				'obligatoire'=>'oui'							
+				)
+			),
+			array(
+				'saisie' => 'radio',
+				'options' => array(
+					'nom' => 'prix_base',
+					'label' => _T('promotion:label_prix_base'),
+					'explication' => _T('promotion:explication_prix_base'),					
+					'datas'=>array(
+						'prix_original'=>_T('promotion:prix_base'),
+						'prix_reduit'=>_T('promotion:prix_reduit')							
+						), 
+				'obligatoire'=>'oui'							
+				)
+			),			
 			array(
 				'saisie' => 'selection',
 				'options' => array(
@@ -158,7 +191,7 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 	//initialiser les donnees spécifiques de la promotion
 	if(isset($valeurs['saisies'][1]['saisies'])){
 		foreach($valeurs['saisies'][1]['saisies'] AS $saisie){;
-			$valeurs[$saisie['options']['nom']]=$valeurs_promotion[$saisie['options']['nom']];
+			if(isset($saisie['options']['nom']))$valeurs[$saisie['options']['nom']]=$valeurs_promotion[$saisie['options']['nom']];
 		}
 	}
 	return $valeurs;
