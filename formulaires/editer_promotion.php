@@ -111,7 +111,7 @@ function definition_saisies($type_promotion,$valeurs=array()){
 					'label' => _T('promotion:label_prix_base'),
 					'explication' => _T('promotion:explication_prix_base'),					
 					'datas'=>array(
-						'prix_original'=>_T('promotion:prix_base'),
+						'prix_original'=>_T('promotion:prix_original'),
 						'prix_reduit'=>_T('promotion:prix_reduit')							
 						), 
 				'obligatoire'=>'oui'							
