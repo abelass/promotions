@@ -15,7 +15,7 @@ include_spip('inc/actions');
 include_spip('inc/editer');
 
 // Définition des champs
-function definition_saisies($type_promotion){
+function definition_saisies($type_promotion,$valeurs=array()){
 	
 	//Chercher les fichiers promotions
  	$promotions = find_all_in_path("promotions/", '^');
@@ -27,18 +27,18 @@ function definition_saisies($type_promotion){
 	 		list($nom,$extension)=explode('.',$fichier);
 			//Charger la définition des champs
 			 if ($defs = charger_fonction($nom, "promotions", true)){
-			 	$saisies=$defs($valeurs,'saisies');
-	           	if($type_promotion==$nom AND $saisies){
+			 	$promotion=$defs($valeurs);
+	           	if($type_promotion==$nom AND isset($promotion['saisies'])){
 	           		$promotions_defs = array(array(
 	           			'saisie' => 'fieldset',			
 						'options' => array(
 							'nom' => 'specifique',
 							'label' => _T('promotion:label_parametres_specifiques')
 						),
-						'saisies' => $saisies));									
+						'saisies' => $promotion['saisies']));									
 				}
 				//Lister les promotions dipsonible
-				$promotions_noms[$nom] =$defs($valeurs,'nom');	
+				if(isset($promotion['nom']))$promotions_noms[$nom] =$promotion['nom'];	
 		 	}		 
 	 	}
 	 }	
@@ -185,7 +185,7 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 
 	$type_promotion=_request('type_promotion')?_request('type_promotion'):(isset($valeurs['type_promotion'])?$valeurs['type_promotion']:'');
 	
-	$valeurs['saisies']=definition_saisies($type_promotion);
+	$valeurs['saisies']=definition_saisies($type_promotion,$valeurs);
 	$valeurs_promotion=unserialize($valeurs['valeurs_promotion']);
 	
 	//initialiser les donnees spécifiques de la promotion
@@ -284,14 +284,15 @@ function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour=
 	
 	$promotion = charger_fonction($type_promotion, "promotions", true);
 	
-	$valeurs_promotion=$promotion('','saisies');
+	$valeurs_promotion=$promotion();
 	
-	$promotion=array();
-	
-	foreach($valeurs_promotion AS $champ){
-		$promotion[$champ['options']['nom']]=_request($champ['options']['nom']);
+	if(isset($valeurs_promotion['saisies'])){
+		$promotion=array();
+		
+		foreach($valeurs_promotion AS $champ){
+			$promotion[$champ['options']['nom']]=_request($champ['options']['nom']);
+		}			
 	}
-	
 	
 	set_request('valeurs_promotion',serialize($promotion));
 	
