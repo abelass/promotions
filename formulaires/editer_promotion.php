@@ -114,7 +114,8 @@ function definition_saisies($type_promotion,$valeurs=array()){
 						'prix_original'=>_T('promotion:prix_original'),
 						'prix_reduit'=>_T('promotion:prix_reduit')							
 						), 
-				'obligatoire'=>'oui'							
+					'obligatoire'=>'oui',
+					 'afficher_si'=> '@type_reduction@ == "pourcentage"' 							
 				)
 			),			
 			array(
@@ -186,7 +187,7 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 
 	$type_promotion=_request('type_promotion')?_request('type_promotion'):(isset($valeurs['type_promotion'])?$valeurs['type_promotion']:'');
 	
-	$valeurs['saisies']=definition_saisies($type_promotion,$valeurs);
+	$valeurs['_saisies']=definition_saisies($type_promotion,$valeurs);
 	$valeurs_promotion=unserialize($valeurs['valeurs_promotion']);
 	
 	//initialiser les donnees spécifiques de la promotion
