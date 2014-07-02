@@ -83,7 +83,6 @@ function promotions_post_insertion($flux){
 		
 		sql_insertq('spip_promotions_liens',$donnees_promotion);	
 		
-		spip_log('post_insertion','teste');
 	};
 
 return $flux;	
