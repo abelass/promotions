@@ -101,7 +101,7 @@ function definition_saisies($type_promotion,$valeurs=array()){
 						'pourcentage'=>_T('promotion:pourcentage'),
 						'absolu'=>_T('promotion:absolu')							
 						), 
-				'obligatoire'=>'oui'							
+					'obligatoire'=>'oui'							
 				)
 			),
 			array(
@@ -123,7 +123,8 @@ function definition_saisies($type_promotion,$valeurs=array()){
 					'nom' => 'type_promotion',
 					'label' => _T('promotion:label_type_promotion'),
 					'obligatoire'=>'oui',
-					'datas'=>$promotions_noms
+					'datas'=>$promotions_noms,
+					'class'=>'auto_submit'
 					)
 				),								
 			)

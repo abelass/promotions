@@ -42,5 +42,5 @@
 	<script type="text/javascript">/*<!\\[CDATA\\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin,#extra');/*\\]\\]>*/</script>
 ]
 </BOUCLE_promotion>
-[(#ENV**{exec}|=={promotion_edit}|?{#INCLURE{fond=prive/squelettes/contenu/promotion_edit,redirect='',env,retourajax=oui},#REM|sinon_interdire_acces})]
+[(#ENV**{exec}|=={promotion_edit}|?{<div class="ajax">#INCLURE{fond=prive/squelettes/contenu/promotion_edit,redirect='',env,retourajax=oui}</div>,#REM|sinon_interdire_acces})]
 <//B_promotion>
