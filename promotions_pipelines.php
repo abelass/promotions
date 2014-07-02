@@ -49,10 +49,11 @@ function promotions_reservation_evenement_donnees_details($flux){
 				AND
 				($data['date_fin']=='0000-00-00 00:00:00' OR ($data['date_fin']!='0000-00-00 00:00:00' AND $data['date_fin']>=$date))
 					){
-						$flux['data']['prix_original']=$flux['data']['prix_ht'];
+						//Essaie de trouver le prix original
+						$flux['data']['prix_original']=isset($flux['data']['prix_original'])?$flux['data']['prix_original']:$flux['data']['prix_ht'];
 						$data['valeurs_promotion']=unserialize($data['valeurs_promotion']);
 						
-						//On passe à la fonction de lam promotion
+						//On passe à la fonction de la promotion
 						$flux = $details($flux,$data);
 						
 						//On prépare l'enregistrement de la promotion
