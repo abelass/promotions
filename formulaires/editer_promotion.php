@@ -19,6 +19,7 @@ function definition_saisies($type_promotion,$valeurs=array()){
 	
 	//Chercher les fichiers promotions
  	$promotions = find_all_in_path("promotions/", '^');
+
  
 	 $promotions_noms=array();
 	 $promotions_defs=array();
@@ -191,9 +192,9 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 	$valeurs_promotion=unserialize($valeurs['valeurs_promotion']);
 	
 	//initialiser les donnees spécifiques de la promotion
-	if(isset($valeurs['saisies'][1]['saisies'])){
-		foreach($valeurs['saisies'][1]['saisies'] AS $saisie){;
-			if(isset($saisie['options']['nom']))$valeurs[$saisie['options']['nom']]=$valeurs_promotion[$saisie['options']['nom']];
+	if(isset($valeurs['_saisies'][1]['saisies'])){
+		foreach($valeurs['_saisies'][1]['saisies'] AS $saisie){
+			if(isset($saisie['options']['nom']))$valeurs[$saisie['options']['nom']]=_request($saisie['options']['nom'])?_request($saisie['options']['nom']):$valeurs_promotion[$saisie['options']['nom']];
 		}
 	}
 	return $valeurs;
