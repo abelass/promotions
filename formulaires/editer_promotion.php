@@ -188,8 +188,9 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 
 	$type_promotion=_request('type_promotion')?_request('type_promotion'):(isset($valeurs['type_promotion'])?$valeurs['type_promotion']:'');
 	
+	$valeurs_promotion=$valeurs['valeurs_promotion']=unserialize($valeurs['valeurs_promotion']);
 	$valeurs['_saisies']=definition_saisies($type_promotion,$valeurs);
-	$valeurs_promotion=unserialize($valeurs['valeurs_promotion']);
+	
 	
 	//initialiser les donnees spécifiques de la promotion
 	if(isset($valeurs['_saisies'][1]['saisies'])){
@@ -200,6 +201,7 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 			}
 		}
 	}
+
 	return $valeurs;
 }
 
@@ -295,7 +297,8 @@ function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour=
 	if(isset($valeurs_promotion['saisies'])){
 		$promotion=array();
 		
-		foreach($valeurs_promotion AS $champ){
+		foreach($valeurs_promotion['saisies'] AS $champ){
+			spip_log(_request($champ['options']['nom']),'teste');
 			$promotion[$champ['options']['nom']]=_request($champ['options']['nom']);
 		}			
 	}
