@@ -194,7 +194,10 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 	//initialiser les donnees spécifiques de la promotion
 	if(isset($valeurs['_saisies'][1]['saisies'])){
 		foreach($valeurs['_saisies'][1]['saisies'] AS $saisie){
-			if(isset($saisie['options']['nom']))$valeurs[$saisie['options']['nom']]=_request($saisie['options']['nom'])?_request($saisie['options']['nom']):$valeurs_promotion[$saisie['options']['nom']];
+			if(isset($saisie['options']['nom'])){
+				$valeurs[$saisie['options']['nom']]=_request($saisie['options']['nom'])?_request($saisie['options']['nom']):
+				(isset($valeurs_promotion[$saisie['options']['nom']])?$valeurs_promotion[$saisie['options']['nom']]:'');
+			}
 		}
 	}
 	return $valeurs;
