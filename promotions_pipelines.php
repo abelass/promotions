@@ -53,6 +53,14 @@ function promotions_reservation_evenement_donnees_details($flux){
 						$flux['data']['prix_original']=isset($flux['data']['prix_original'])?$flux['data']['prix_original']:$flux['data']['prix_ht'];
 						$data['valeurs_promotion']=unserialize($data['valeurs_promotion']);
 						
+						//Prix de base pour le calcul en pourcentage
+						if(isset($flux['data']['prix_base'])){
+							if($flux['data']['prix_base']=='prix_reduit')$flux['data']['prix_base']=$flux['data']['prix_ht'];
+							elseif($flux['data']['prix_base']=='prix_original')$flux['data']['prix_base']=$flux['data']['prix_original'];
+						}
+						
+						elseif(isset())
+						
 						//On passe à la fonction de la promotion
 						$flux = $details($flux,$data);
 						
