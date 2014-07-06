@@ -55,19 +55,19 @@ function promotions_reservation_evenement_donnees_details($flux){
 						
 						//Pour l'enregistrement de la promotion
 						$flux['data']['objet']='reservations_detail';
-						$flux['data']['table']='spip_reservations_details'
+						$flux['data']['table']='spip_reservations_details';
 						
 						$reduction=$promotion['valeurs_promotion']['reduction'];
 						$type_reduction=$promotion['valeurs_promotion']['type_reduction'];
 						
 						
-						$flux['applicable']='non';
+						$flux['data']['applicable']='non';
 						
 						//On passe à la fonction de la promotion pour établir si la promotion s'applique
 						$flux = $details($flux,$data);
 						
 						//Si oui on modifie le prix
-						if($flux['applicable']='oui'){							
+						if($flux['data']['applicable']=='oui'){							
 							//On applique les réductions prévues
 							
 							//Si en pourcentage
