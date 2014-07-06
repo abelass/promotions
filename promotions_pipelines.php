@@ -57,8 +57,8 @@ function promotions_reservation_evenement_donnees_details($flux){
 						$flux['data']['objet']='reservations_detail';
 						$flux['data']['table']='spip_reservations_details';
 						
-						$reduction=$promotion['valeurs_promotion']['reduction'];
-						$type_reduction=$promotion['valeurs_promotion']['type_reduction'];
+						$reduction=$data['reduction'];
+						$type_reduction=$data['type_reduction'];
 						
 						
 						$flux['data']['applicable']='non';
@@ -67,20 +67,21 @@ function promotions_reservation_evenement_donnees_details($flux){
 						$flux = $details($flux,$data);
 						
 						//Si oui on modifie le prix
-						if($flux['data']['applicable']=='oui'){							
+						if($flux['data']['applicable']=='oui'){
+							
 							//On applique les réductions prévues
 							
-							//Si en pourcentage
+							//En pourcentage
 							if($type_reduction=='pourcentage'){
 								//Prix de base 
-								if(isset($flux['data']['prix_base'])){
-									if($flux['data']['prix_base']=='prix_reduit')$prix_base=$flux['data']['prix_ht'];
-									elseif($flux['data']['prix_base']=='prix_original')$prix_base=$flux['data']['prix_original'];
+								if(isset($data['prix_base'])){
+									if($data['prix_base']=='prix_reduit')$prix_base=$flux['data']['prix_ht'];
+									elseif($data['prix_base']=='prix_original')$prix_base=$flux['data']['prix_original'];
 								}								
 								
-								$flux['data']['prix_ht']=$flux['data']['prix_ht']-($prix_bas/100*$reduction);
+								$flux['data']['prix_ht']=$flux['data']['prix_ht']-($prix_base/100*$reduction);
 							}
-							//Si en absolu
+							//En absolu
 							elseif($type_reduction=='absolu')$flux['data']['prix_ht']=$flux['data']['prix_ht']-$reduction;
 						}
 
