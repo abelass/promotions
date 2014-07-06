@@ -53,15 +53,37 @@ function promotions_reservation_evenement_donnees_details($flux){
 						$flux['data']['prix_original']=isset($flux['data']['prix_original'])?$flux['data']['prix_original']:$flux['data']['prix_ht'];
 						$data['valeurs_promotion']=unserialize($data['valeurs_promotion']);
 						
-						//Prix de base pour le calcul en pourcentage
-						if(isset($flux['data']['prix_base'])){
-							if($flux['data']['prix_base']=='prix_reduit')$flux['data']['prix_base']=$flux['data']['prix_ht'];
-							elseif($flux['data']['prix_base']=='prix_original')$flux['data']['prix_base']=$flux['data']['prix_original'];
+						//Pour l'enregistrement de la promotion
+						$flux['data']['objet']='reservations_detail';
+						$flux['data']['table']='spip_reservations_details'
+						
+						$reduction=$promotion['valeurs_promotion']['reduction'];
+						$type_reduction=$promotion['valeurs_promotion']['type_reduction'];
+						
+						
+						$flux['applicable']='non';
+						
+						//On passe à la fonction de la promotion pour établir si la promotion s'applique
+						$flux = $details($flux,$data);
+						
+						//Si oui on modifie le prix
+						if($flux['applicable']='oui'){							
+							//On applique les réductions prévues
+							
+							//Si en pourcentage
+							if($type_reduction=='pourcentage'){
+								//Prix de base 
+								if(isset($flux['data']['prix_base'])){
+									if($flux['data']['prix_base']=='prix_reduit')$prix_base=$flux['data']['prix_ht'];
+									elseif($flux['data']['prix_base']=='prix_original')$prix_base=$flux['data']['prix_original'];
+								}								
+								
+								$flux['data']['prix_ht']=$flux['data']['prix_ht']-($prix_bas/100*$reduction);
+							}
+							//Si en absolu
+							elseif($type_reduction=='absolu')$flux['data']['prix_ht']=$flux['data']['prix_ht']-$reduction;
 						}
 
-						
-						//On passe à la fonction de la promotion
-						$flux = $details($flux,$data);
 						
 						//On prépare l'enregistrement de la promotion
 						set_request('donnees_promotion',array(
