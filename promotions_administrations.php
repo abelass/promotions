@@ -36,6 +36,7 @@ function promotions_upgrade($nom_meta_base_version, $version_cible) {
 	$maj['1.1.0'] = array(array('maj_tables', array('spip_promotions')));
 	$maj['1.2.0'] = array(array('sql_alter','TABLE spip_promotions_liens CHANGE prix_normal prix_original bigint(21) DEFAULT \'0\' NOT NULL'),);		
 	$maj['1.3.0'] = array(array('maj_tables', array('spip_promotions')));
+	$maj['1.4.0'] = array(array('maj_tables', array('spip_promotions')));	
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 }

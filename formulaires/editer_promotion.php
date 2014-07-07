@@ -23,6 +23,11 @@ function definition_saisies($type_promotion,$valeurs=array()){
  
 	 $promotions_noms=array();
 	 $promotions_defs=array();
+	 
+	 $promotions_dispos=isset($valeurs['promotions'])?$valeurs['promotions']:'';
+	 $rangs=isset($valeurs['rangs'])?$valeurs['rangs']:'';	 
+	 $nombre_promotions=isset($valeurs['nombre_promotions'])?$valeurs['nombre_promotions']:0;	 
+	 	 
 	 if(is_array($promotions)){
 	 	foreach($promotions AS $fichier=>$chemin){
 	 		list($nom,$extension)=explode('.',$fichier);
@@ -118,7 +123,25 @@ function definition_saisies($type_promotion,$valeurs=array()){
 					'obligatoire'=>'oui',
 					 'afficher_si'=> '@type_reduction@ == "pourcentage"' 							
 				)
-			),			
+			),
+			array(
+				'saisie' => 'selection_multiple',
+				'options' => array(
+					'nom' => 'non_cumulable',
+					'label' => _T('promotion:label_non_cumulable'),
+					'datas'=>$promotions_dispos, 
+					'class'	=>'chosen'						
+				)
+			),	
+			array(
+				'saisie' => 'selection',
+				'options' => array(
+					'nom' => 'rang',
+					'label' => _T('promotion:label_rang'),
+					'datas'=>$rangs,
+					'obligatoire'=>'oui'							
+				)
+			),									
 			array(
 				'saisie' => 'selection',
 				'options' => array(
@@ -188,9 +211,28 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 
 	$type_promotion=_request('type_promotion')?_request('type_promotion'):(isset($valeurs['type_promotion'])?$valeurs['type_promotion']:'');
 	
+	$sql=sql_select('id_promotion,rang,titre','spip_promotions','statut !="poubelle"','','rang');
+	
+	$valeurs['promotions']=array();
+	$valeurs['rangs']=array();
+	
+	$i=0;
+	while($data=sql_fetch($sql)){
+		$i++;
+		$valeurs['promotions'][$data['id_promotion']]=$data['titre'];
+		$valeurs['rangs'][$i]=$i.' ('.$data['titre'].')';		
+	}
+	
+	$valeurs['nombre_promotions']=sql_count($sql);
+	
+	$valeurs['promotions']['toutes']=_T('promotion:toutes');	
+	//$valeurs['rangs'][$valeurs['nombre_promotions']+1]=_T('promotion:fin');	
+	
 	$valeurs_promotion=$valeurs['valeurs_promotion']=unserialize($valeurs['valeurs_promotion']);
 	$valeurs['_saisies']=definition_saisies($type_promotion,$valeurs);
 	
+	$valeurs['rang_ancien']=$valeurs['rang'];
+	$valeurs['_hidden'].='<input type="hidden" name="rang_ancien" value="'.$valeurs['rang_ancien'].'"/>';	
 	
 	//initialiser les donnees spécifiques de la promotion
 	if(isset($valeurs['_saisies'][1]['saisies'])){
@@ -201,6 +243,7 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 			}
 		}
 	}
+
 
 	return $valeurs;
 }
@@ -305,6 +348,29 @@ function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour=
 	
 	set_request('valeurs_promotion',serialize($promotion));
 	
+	//établir le rang
+	$rang_ancien=_request('rang_ancien');
+	$rang=_request('rang');	
+	
+	if($rang_ancien>$rang){
+			$sql=sql_select('id_promotion','spip_promotions','statut!="poubelle" AND rang>='._request('rang'),'','rang');
+			while($data=sql_fetch($sql)){
+				$rang++;
+				sql_updateq('spip_promotions',array('rang'=>$rang),'id_promotion='.$data['id_promotion']);	
+			}
+		}
+	else{
+		$sql=sql_select('id_promotion','spip_promotions','statut!="poubelle" AND rang>'._request('rang_ancien').' AND rang <='._request('rang'),'','rang DESC');
+			$rang=_request('rang');
+			while($data=sql_fetch($sql)){
+				$rang=$rang-1;
+				sql_updateq('spip_promotions',array('rang'=>$rang),'id_promotion='.$data['id_promotion']);	
+			}
+		
+	}
+
+
+			
 	return formulaires_editer_objet_traiter('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
 }
 
