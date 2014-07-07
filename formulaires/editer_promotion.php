@@ -211,7 +211,9 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 
 	$type_promotion=_request('type_promotion')?_request('type_promotion'):(isset($valeurs['type_promotion'])?$valeurs['type_promotion']:'');
 	
-	$sql=sql_select('id_promotion,rang,titre','spip_promotions','statut !="poubelle"','','rang');
+	$sql=sql_select('id_promotion,rang,titre','spip_promotions','id_promotion!='._request('id_promotion').' AND statut !="poubelle"','','rang');
+	
+	$valeurs['non_cumulable']=_request('non_cumulable')?_request('non_cumulable'):isset($valeurs['non_cumulable'])?unserialize($valeurs['non_cumulable']):'';
 	
 	$valeurs['promotions']=array();
 	$valeurs['rangs']=array();
@@ -347,6 +349,7 @@ function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour=
 	}
 	
 	set_request('valeurs_promotion',serialize($promotion));
+	set_request('non_cumulable',serialize(_request('non_cumulable')));
 	
 	//établir le rang
 	/*$rang_ancien=_request('rang_ancien');
