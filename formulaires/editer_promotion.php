@@ -215,7 +215,7 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 	
 	$valeurs['non_cumulable']=_request('non_cumulable')?_request('non_cumulable'):isset($valeurs['non_cumulable'])?unserialize($valeurs['non_cumulable']):'';
 	
-	$valeurs['promotions']=array();
+	$valeurs['promotions']=array('toutes'=>_T('promotion:toutes_promotions'));
 	$valeurs['rangs']=array();
 	
 	$i=0;
@@ -224,18 +224,11 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 		$valeurs['promotions'][$data['id_promotion']]=$data['titre'];
 		//$valeurs['rangs'][$i]=$i.' ('.$data['titre'].')';		
 	}
-	
-	//$valeurs['nombre_promotions']=sql_count($sql);
-	
-	$valeurs['promotions']['toutes']=_T('promotion:toutes');	
-	//$valeurs['rangs'][$valeurs['nombre_promotions']+1]=_T('promotion:fin');	
+
 	
 	$valeurs_promotion=$valeurs['valeurs_promotion']=unserialize($valeurs['valeurs_promotion']);
 	$valeurs['_saisies']=definition_saisies($type_promotion,$valeurs);
-	
-	$valeurs['rang_ancien']=$valeurs['rang'];
-	$valeurs['_hidden'].='<input type="hidden" name="rang_ancien" value="'.$valeurs['rang_ancien'].'"/>';	
-	
+		
 	//initialiser les donnees spécifiques de la promotion
 	if(isset($valeurs['_saisies'][1]['saisies'])){
 		foreach($valeurs['_saisies'][1]['saisies'] AS $saisie){
@@ -343,7 +336,6 @@ function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour=
 		$promotion=array();
 		
 		foreach($valeurs_promotion['saisies'] AS $champ){
-			spip_log(_request($champ['options']['nom']),'teste');
 			$promotion[$champ['options']['nom']]=_request($champ['options']['nom']);
 		}			
 	}

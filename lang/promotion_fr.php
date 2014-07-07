@@ -25,13 +25,14 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// L
 	'label_date_debut' => 'Date début',
 	'label_date_fin' => 'Date fin',
-	'label_descriptif' => 'Descriptif',
+	'label_descriptif' => 'Descriptif :',
+	'label_non_cumulable' => 'Promotion non cumulable avec :',	
 	'label_parametres_generales' => 'Paramètres générales',	
 	'label_parametres_specifiques' => 'Paramètres spécifiques',	
 	'label_prix_base' => 'Prix de base :',		
 	'label_reduction'	=>'Réduction :',
-	'label_titre' => 'Titre',
-	'label_type_promotion' => 'Type Promotion',
+	'label_titre' => 'Titre :',
+	'label_type_promotion' => 'Type Promotion :_',
 	'label_type_reduction'	=>'Type de réduction :',	
 
 	//
@@ -52,6 +53,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_promotion' => 'Promotion',
 	'titre_promotions' => 'Promotions',
 	'titre_promotions_rubrique' => 'Promotions de la rubrique',
+	'toutes_promotions' => 'Toutes les promotions',	
 );
 
 ?>

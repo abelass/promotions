@@ -41,9 +41,11 @@ function promotions_reservation_evenement_donnees_details($flux){
 	$date=date('Y-m-d H:i:s');
 	$sql=sql_select('*','spip_promotions','statut='.sql_quote('publie'),'','rang');
 	$non_cumulable_all=array();
-		while ($data=sql_fetch($sql)){
-			$non_cumulable=is_array($data['non_cumulable'])?unserialize($data['non_cumulable']):array();
+	while ($data=sql_fetch($sql)){
+			
+			$non_cumulable=isset($data['non_cumulable'])?unserialize($data['non_cumulable']):array();
 			$id_promotion=$data['id_promotion'];
+			spip_log($non_cumulable_all,'teste');			
 			if(
 				$details = charger_fonction('action', 'promotions/'.$data['type_promotion'], true) 
 				AND
@@ -51,7 +53,7 @@ function promotions_reservation_evenement_donnees_details($flux){
 				AND
 				($data['date_fin']=='0000-00-00 00:00:00' OR ($data['date_fin']!='0000-00-00 00:00:00' AND $data['date_fin']>=$date))
 				AND !in_array($id_promotion,$non_cumulable_all)
-					){
+				){
 						//Essaie de trouver le prix original
 						$flux['data']['prix_original']=isset($flux['data']['prix_original'])?$flux['data']['prix_original']:$flux['data']['prix_ht'];
 						$data['valeurs_promotion']=unserialize($data['valeurs_promotion']);
@@ -71,7 +73,9 @@ function promotions_reservation_evenement_donnees_details($flux){
 						
 						//Si oui on modifie le prix
 						if($flux['data']['applicable']=='oui'){
+							
 							$non_cumulable_all=array_merge($non_cumulable,$non_cumulable_all);
+						
 							//On applique les réductions prévues
 							
 							//En pourcentage
