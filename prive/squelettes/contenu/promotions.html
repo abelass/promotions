@@ -6,3 +6,14 @@
 [(#AUTORISER{creer,promotion})
 	[(#URL_ECRIRE{promotion_edit,new=oui}|icone_verticale{<:promotion:icone_creer_promotion:>,promotion,new,right})]
 ]
+
+<script type="text/javascript">
+    $(function() {
+        [(#REM)drag and drop]     
+        $( ".promotions").sortable({items:"tr.tr_liste"});
+        $( ".promotions").bind("sortupdate", function(event, ui) {
+            var ordre = $(this).sortable('toArray').toString();
+            $('.promotions').load('[(#URL_ACTION_AUTEUR{ranger,nouvel,#SELF}|replace{&amp;,&})]&ordre='+ordre);
+        });
+    });
+</script>

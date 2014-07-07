@@ -27,6 +27,7 @@
 	<pipeline nom="declarer_tables_interfaces" inclure="base/promotions.php" /> 
 	<pipeline nom="declarer_tables_auxiliaires" inclure="base/promotions.php" /> 
 	<pipeline nom="optimiser_base_disparus" inclure="promotions_pipelines.php" />
+	<pipeline nom="jqueryui_plugins" inclure="spromotions_pipelines.php" /> 	
 	
 	<pipeline nom="reservation_evenement_donnees_details" inclure="promotions_pipelines.php" />
 	<pipeline nom="post_insertion" inclure="promotions_pipelines.php" />

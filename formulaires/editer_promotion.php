@@ -133,7 +133,7 @@ function definition_saisies($type_promotion,$valeurs=array()){
 					'class'	=>'chosen'						
 				)
 			),	
-			array(
+			/*array(
 				'saisie' => 'selection',
 				'options' => array(
 					'nom' => 'rang',
@@ -141,7 +141,7 @@ function definition_saisies($type_promotion,$valeurs=array()){
 					'datas'=>$rangs,
 					'obligatoire'=>'oui'							
 				)
-			),									
+			),	*/								
 			array(
 				'saisie' => 'selection',
 				'options' => array(
@@ -220,10 +220,10 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
 	while($data=sql_fetch($sql)){
 		$i++;
 		$valeurs['promotions'][$data['id_promotion']]=$data['titre'];
-		$valeurs['rangs'][$i]=$i.' ('.$data['titre'].')';		
+		//$valeurs['rangs'][$i]=$i.' ('.$data['titre'].')';		
 	}
 	
-	$valeurs['nombre_promotions']=sql_count($sql);
+	//$valeurs['nombre_promotions']=sql_count($sql);
 	
 	$valeurs['promotions']['toutes']=_T('promotion:toutes');	
 	//$valeurs['rangs'][$valeurs['nombre_promotions']+1]=_T('promotion:fin');	
@@ -349,7 +349,7 @@ function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour=
 	set_request('valeurs_promotion',serialize($promotion));
 	
 	//établir le rang
-	$rang_ancien=_request('rang_ancien');
+	/*$rang_ancien=_request('rang_ancien');
 	$rang=_request('rang');	
 	
 	if($rang_ancien>$rang){
@@ -367,7 +367,7 @@ function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour=
 				sql_updateq('spip_promotions',array('rang'=>$rang),'id_promotion='.$data['id_promotion']);	
 			}
 		
-	}
+	}*/
 
 
 			

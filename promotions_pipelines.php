@@ -119,4 +119,9 @@ function promotions_post_insertion($flux){
 return $flux;	
 }
 
+function selection_objet_jqueryui_plugins($scripts){
+   $scripts[] = "jquery.ui.sortable";
+   return $scripts;
+}
+
 ?>
