@@ -341,8 +341,12 @@ function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour=
 	}
 	
 	set_request('valeurs_promotion',serialize($promotion));
-	set_request('non_cumulable',serialize(_request('non_cumulable')));
 	
+	$non_cumulable=is_array(_request('non_cumulable'))?serialize(_request('non_cumulable')):serialize(array());
+	
+	set_request('non_cumulable',$non_cumulable);
+
+	 
 	//établir le rang
 	/*$rang_ancien=_request('rang_ancien');
 	$rang=_request('rang');	

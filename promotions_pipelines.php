@@ -70,11 +70,14 @@ function promotions_reservation_evenement_donnees_details($flux){
 						
 						//On passe à la fonction de la promotion pour établir si la promotion s'applique
 						$flux = $details($flux,$data);
-						
+
 						//Si oui on modifie le prix
 						if($flux['data']['applicable']=='oui'){
-							
-							$non_cumulable_all=array_merge($non_cumulable,$non_cumulable_all);
+								if(is_array($non_cumulable))array_push($non_cumulable_all,$non_cumulable);
+										
+									
+
+							echo serialize($non_cumulable_all);
 						
 							//On applique les réductions prévues
 							
