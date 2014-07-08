@@ -42,8 +42,7 @@ function promotions_reservation_evenement_donnees_details($flux){
 	$sql=sql_select('*','spip_promotions','statut='.sql_quote('publie'),'','rang');
 	$evenements_exclus=_request('evenements_exclus')?_request('evenements_exclus'):array();
 	$id_evenement=$flux['data']['id_evenement'];
-	
-	
+		
 	while ($data=sql_fetch($sql)){
 			
 			$non_cumulable=isset($data['non_cumulable'])?unserialize($data['non_cumulable']):array();
