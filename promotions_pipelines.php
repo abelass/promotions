@@ -40,27 +40,24 @@ function promotions_reservation_evenement_donnees_details($flux){
 	
 	$date=date('Y-m-d H:i:s');
 	$sql=sql_select('*','spip_promotions','statut='.sql_quote('publie'),'','rang');
-	$non_cumulable_all=array();
 	$evenements_exclus=_request('evenements_exclus')?_request('evenements_exclus'):array();
 	$id_evenement=$flux['data']['id_evenement'];
 	
 	
 	while ($data=sql_fetch($sql)){
 			
-			
 			$non_cumulable=isset($data['non_cumulable'])?unserialize($data['non_cumulable']):array();
 			$id_promotion=$data['id_promotion'];
 			$evenements_exclus_promotion=isset($evenements_exclus[$id_promotion])?$evenements_exclus[$id_promotion]:array();
-			spip_log($non_cumulable_all,'teste');			
+			$exclure_toutes=(isset($evenements_exclus['toutes']))?$evenements_exclus['toutes']:'';
 			if(
 				$details = charger_fonction('action', 'promotions/'.$data['type_promotion'], true) 
 				AND
 		 		($data['date_debut']=='0000-00-00 00:00:00' OR ($data['date_debut']!='0000-00-00 00:00:00' AND $data['date_debut']<=$date))
 				AND
 				($data['date_fin']=='0000-00-00 00:00:00' OR ($data['date_fin']!='0000-00-00 00:00:00' AND $data['date_fin']>=$date))
-				AND !in_array($id_evenement,$evenements_exclus_promotion) 
-				
-				AND !in_array('toutes',$non_cumulable_all)
+				AND !in_array($id_evenement,$evenements_exclus_promotion) 				
+				AND (!$exclure_toutes OR ($exclure_toutes AND $exclure_toutes[0]==$id_promotion))
 				){
 						//Essaie de trouver le prix original
 						$flux['data']['prix_original']=isset($flux['data']['prix_original'])?$flux['data']['prix_original']:$flux['data']['prix_ht'];
@@ -82,11 +79,9 @@ function promotions_reservation_evenement_donnees_details($flux){
 						//Si oui on modifie le prix
 						if($flux['data']['applicable']=='oui'){
 								if(is_array($non_cumulable)){
-									
-									$non_cumulable_all=array_merge($non_cumulable_all,$non_cumulable);
-									
 									foreach($non_cumulable AS $nc){
 										$evenements_exclus[$nc][]=$id_evenement;
+										if($nc=='toutes')$evenements_exclus[$nc][0]=$id_promotion;
 									}
 								}
 						set_request('evenements_exclus',$evenements_exclus);
