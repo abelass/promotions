@@ -40,7 +40,7 @@ function promotions_reservation_evenement_donnees_details($flux){
 	
 	$date=date('Y-m-d H:i:s');
 	$sql=sql_select('*','spip_promotions','statut='.sql_quote('publie'),'','rang');
-	$non_cumulable_all=array();
+	$non_cumulable_all=_request('non_cumulable_all')?_request('non_cumulable_all'):array();
 	while ($data=sql_fetch($sql)){
 			
 			$non_cumulable=isset($data['non_cumulable'])?unserialize($data['non_cumulable']):array();
@@ -74,11 +74,12 @@ function promotions_reservation_evenement_donnees_details($flux){
 						//Si oui on modifie le prix
 						if($flux['data']['applicable']=='oui'){
 								if(is_array($non_cumulable)){
-
 									$non_cumulable_all=array_merge($non_cumulable_all,$non_cumulable);
 								}
 
+						set_request('non_cumulable_all',$non_cumulable_all);
 						
+						echo serialize($non_cumulable_all);
 							//On applique les réductions prévues
 							
 							//En pourcentage
