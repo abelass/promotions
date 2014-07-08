@@ -73,11 +73,11 @@ function promotions_reservation_evenement_donnees_details($flux){
 
 						//Si oui on modifie le prix
 						if($flux['data']['applicable']=='oui'){
-								if(is_array($non_cumulable))array_merge_keys($non_cumulable_all,$non_cumulable);
-										
-									
+								if(is_array($non_cumulable)){
 
-							echo serialize($non_cumulable_all);
+									$non_cumulable_all=array_merge($non_cumulable_all,$non_cumulable);
+								}
+
 						
 							//On applique les réductions prévues
 							
@@ -134,14 +134,5 @@ function promotions_jqueryui_plugins($scripts){
    return $scripts;
 }
 
-function array_merge_keys($a,$b){
-    $args = func_get_args();
-    $result = array();
-    foreach($args as &$array){
-        foreach($array as $key=>&$value){
-            $result[$key] = $value;
-        }
-    }
-    return $result;
-}
+
 ?>
