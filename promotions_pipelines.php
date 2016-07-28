@@ -22,7 +22,7 @@ if (! defined('_ECRIRE_INC_VERSION'))
  * de l'objet vers quelqu'un et de quelqu'un vers l'objet.
  *
  * @pipeline optimiser_base_disparus
- * 
+ *
  * @param array $flux
  *        	Données du pipeline
  * @return array Données du pipeline
@@ -43,7 +43,7 @@ function promotions_reservation_evenement_donnees_details($flux) {
 		$evenements_exclus = _request('evenements_exclus') ? _request('evenements_exclus') : array ();
 		$id_evenement = $flux['data']['id_evenement'];
 		
-		while ( $data = sql_fetch($sql) ) {
+		while ($data = sql_fetch($sql)) {
 			
 			$non_cumulable = isset($data['non_cumulable']) ? unserialize($data['non_cumulable']) : array ();
 			$id_promotion = $data['id_promotion'];
@@ -52,17 +52,13 @@ function promotions_reservation_evenement_donnees_details($flux) {
 			if ($details = charger_fonction('action', 'promotions/' . $data['type_promotion'], true) 
 					and ($data['date_debut'] == '0000-00-00 00:00:00' or (
 									/*$data['date_debut']!='0000-00-00 00:00:00' AND */
-									$data['date_debut'] <= $date)
-							) 
+									$data['date_debut'] <= $date)) 
 					and ($data['date_fin'] == '0000-00-00 00:00:00' or (
 									/*$data['date_fin']!='0000-00-00 00:00:00' AND*/
-									$data['date_fin'] >= $date)
-							) 
+									$data['date_fin'] >= $date)) 
 					and ! in_array($id_evenement, $evenements_exclus_promotion) 
-					and (!$exclure_toutes or (
-							$exclure_toutes and $exclure_toutes[0] == $id_promotion)
-							)
-					) {
+					and (! $exclure_toutes or ($exclure_toutes and $exclure_toutes[0] == $id_promotion))) {
+
 				// Essaie de trouver le prix original
 				$flux['data']['prix_original'] = isset($flux['data']['prix_original']) ? $flux['data']['prix_original'] : $flux['data']['prix_ht'];
 				$data['valeurs_promotion'] = unserialize($data['valeurs_promotion']);
@@ -78,11 +74,11 @@ function promotions_reservation_evenement_donnees_details($flux) {
 				
 				// On passe à la fonction de la promotion pour établir si la promotion s'applique
 				$flux = $details($flux, $data);
-				
+
 				// Si oui on modifie le prix
 				if ($flux['data']['applicable'] == 'oui') {
 					if (is_array($non_cumulable)) {
-						foreach ( $non_cumulable as $nc ) {
+						foreach ($non_cumulable as $nc) {
 							$evenements_exclus[$nc][] = $id_evenement;
 							if ($nc == 'toutes')
 								$evenements_exclus[$nc][0] = $id_promotion;
@@ -103,7 +99,7 @@ function promotions_reservation_evenement_donnees_details($flux) {
 						}
 						
 						$flux['data']['prix_ht'] = $flux['data']['prix_ht'] - ($prix_base / 100 * $reduction);
-					}					// En absolu
+					} // En absolu
 					elseif ($type_reduction == 'absolu')
 						$flux['data']['prix_ht'] = $flux['data']['prix_ht'] - $reduction;
 				}
@@ -117,7 +113,8 @@ function promotions_reservation_evenement_donnees_details($flux) {
 				));
 				// On passe le nom de la table pour la pipeline post_insertion
 				set_request('table', $flux['data']['table']);
-			} else
+			}
+			else
 				set_request('donnees_promotion', '');
 		}
 	}
