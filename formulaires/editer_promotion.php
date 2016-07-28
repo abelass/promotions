@@ -45,7 +45,7 @@ function definition_saisies($type_promotion, $valeurs = array()) {
 						) 
 					);
 				}
-				// Lister les promotions dipsonible
+				// Lister les promotions dipsonibles
 				if (isset($promotion['nom']))
 					$promotions_noms[$nom] = $promotion['nom'];
 			}
@@ -213,7 +213,12 @@ function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retou
 	
 	$type_promotion = _request('type_promotion') ? _request('type_promotion') : (isset($valeurs['type_promotion']) ? $valeurs['type_promotion'] : '');
 	
-	$sql = sql_select('id_promotion,rang,titre', 'spip_promotions', 'id_promotion!=' . _request('id_promotion') . ' AND statut !="poubelle"', '', 'rang');
+	if ($id_promotion =_request('id_promotion')) {
+			$sql = sql_select('id_promotion,rang,titre', 
+					'spip_promotions', 'id_promotion!=' . _request('id_promotion') . ' AND statut !="poubelle"'
+					, ''
+					, 'rang');
+	}
 	
 	$valeurs['non_cumulable'] = _request('non_cumulable') ? _request('non_cumulable') : isset($valeurs['non_cumulable']) ? unserialize($valeurs['non_cumulable']) : '';
 	
