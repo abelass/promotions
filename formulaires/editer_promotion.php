@@ -28,13 +28,13 @@ function definition_saisies($type_promotion, $valeurs = array()) {
 	$nombre_promotions = isset($valeurs['nombre_promotions']) ? $valeurs['nombre_promotions'] : 0;
 	
 	if (is_array($promotions)) {
-		foreach ( $promotions as $fichier => $chemin ) {
+		foreach ($promotions as $fichier => $chemin) {
 			list ($nom, $extension) = explode('.', $fichier);
 			// Charger la définition des champs
 			if ($defs = charger_fonction($nom, "promotions", true)) {
 				$promotion = $defs($valeurs);
 				if ($type_promotion == $nom and isset($promotion['saisies'])) {
-					$promotions_defs = array(
+					$promotions_defs = array (
 						array (
 							'saisie' => 'fieldset',
 							'options' => array (
@@ -213,11 +213,8 @@ function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retou
 	
 	$type_promotion = _request('type_promotion') ? _request('type_promotion') : (isset($valeurs['type_promotion']) ? $valeurs['type_promotion'] : '');
 	
-	if ($id_promotion =_request('id_promotion')) {
-			$sql = sql_select('id_promotion,rang,titre', 
-					'spip_promotions', 'id_promotion!=' . _request('id_promotion') . ' AND statut !="poubelle"'
-					, ''
-					, 'rang');
+	if ($id_promotion = _request('id_promotion')) {
+		$sql = sql_select('id_promotion,rang,titre', 'spip_promotions', 'id_promotion!=' . _request('id_promotion') . ' AND statut !="poubelle"', '', 'rang');
 	}
 	
 	$valeurs['non_cumulable'] = _request('non_cumulable') ? _request('non_cumulable') : isset($valeurs['non_cumulable']) ? unserialize($valeurs['non_cumulable']) : '';
@@ -239,7 +236,7 @@ function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retou
 	
 	// initialiser les donnees spécifiques de la promotion
 	if (isset($valeurs['_saisies'][1]['saisies'])) {
-		foreach ( $valeurs['_saisies'][1]['saisies'] as $saisie ) {
+		foreach ($valeurs['_saisies'][1]['saisies'] as $saisie) {
 			if (isset($saisie['options']['nom'])) {
 				$valeurs[$saisie['options']['nom']] = _request($saisie['options']['nom']) ? _request($saisie['options']['nom']) : (isset($valeurs_promotion[$saisie['options']['nom']]) ? $valeurs_promotion[$saisie['options']['nom']] : '');
 			}
@@ -279,10 +276,10 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
 	
 	$verifier = charger_fonction('verifier', 'inc');
 	
-	foreach ( array (
+	foreach (array (
 		'date_debut',
 		'date_fin' 
-	) as $champ ) {
+	) as $champ) {
 		if (_request($champ)) {
 			$normaliser = null;
 			if ($erreur = $verifier(_request($champ), 'date', array (
@@ -290,10 +287,12 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
 			), $normaliser)) {
 				$erreurs[$champ] = $erreur;
 				// si une valeur de normalisation a ete transmis, la prendre.
-			} elseif (! is_null($normaliser)) {
+			}
+			elseif (! is_null($normaliser)) {
 				set_request($champ, $normaliser);
 				// si pas de normalisation ET pas de date soumise, il ne faut pas tenter d'enregistrer ''
-			} else {
+			}
+			else {
 				set_request($champ, '0000-00-00 00:00:00');
 			}
 		}
@@ -336,7 +335,7 @@ function formulaires_editer_promotion_traiter_dist($id_promotion = 'new', $retou
 	if (isset($valeurs_promotion['saisies'])) {
 		$promotion = array ();
 		
-		foreach ( $valeurs_promotion['saisies'] as $champ ) {
+		foreach ($valeurs_promotion['saisies'] as $champ) {
 			$promotion[$champ['options']['nom']] = _request($champ['options']['nom']);
 		}
 	}
