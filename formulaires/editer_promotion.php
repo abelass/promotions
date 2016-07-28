@@ -8,131 +8,134 @@
  * @licence    GNU/GPL
  * @package    SPIP\Promotions\Formulaires
  */
-
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (! defined('_ECRIRE_INC_VERSION'))
+	return;
 
 include_spip('inc/actions');
 include_spip('inc/editer');
 
 // Définition des champs
-function definition_saisies($type_promotion,$valeurs=array()){
+function definition_saisies($type_promotion, $valeurs = array()) {
 	
-	//Chercher les fichiers promotions
- 	$promotions = find_all_in_path("promotions/", '^');
-
- 
-	 $promotions_noms=array();
-	 $promotions_defs=array();
-	 
-	 $promotions_dispos=isset($valeurs['promotions'])?$valeurs['promotions']:'';
-	 $rangs=isset($valeurs['rangs'])?$valeurs['rangs']:'';	 
-	 $nombre_promotions=isset($valeurs['nombre_promotions'])?$valeurs['nombre_promotions']:0;	 
-	 	 
-	 if(is_array($promotions)){
-	 	foreach($promotions AS $fichier=>$chemin){
-	 		list($nom,$extension)=explode('.',$fichier);
-			//Charger la définition des champs
-			 if ($defs = charger_fonction($nom, "promotions", true)){
-			 	$promotion=$defs($valeurs);
-	           	if($type_promotion==$nom AND isset($promotion['saisies'])){
-	           		$promotions_defs = array(array(
-	           			'saisie' => 'fieldset',			
-						'options' => array(
-							'nom' => 'specifique',
-							'label' => _T('promotion:label_parametres_specifiques')
-						),
-						'saisies' => $promotion['saisies']));									
+	// Chercher les fichiers promotions
+	$promotions = find_all_in_path("promotions/", '^');
+	
+	$promotions_noms = array ();
+	$promotions_defs = array ();
+	
+	$promotions_dispos = isset($valeurs['promotions']) ? $valeurs['promotions'] : '';
+	$rangs = isset($valeurs['rangs']) ? $valeurs['rangs'] : '';
+	$nombre_promotions = isset($valeurs['nombre_promotions']) ? $valeurs['nombre_promotions'] : 0;
+	
+	if (is_array($promotions)) {
+		foreach ( $promotions as $fichier => $chemin ) {
+			list ($nom, $extension) = explode('.', $fichier);
+			// Charger la définition des champs
+			if ($defs = charger_fonction($nom, "promotions", true)) {
+				$promotion = $defs($valeurs);
+				if ($type_promotion == $nom and isset($promotion['saisies'])) {
+					$promotions_defs = array(
+						array (
+							'saisie' => 'fieldset',
+							'options' => array (
+								'nom' => 'specifique',
+								'label' => _T('promotion:label_parametres_specifiques') 
+							),
+							'saisies' => $promotion['saisies'] 
+						) 
+					);
 				}
-				//Lister les promotions dipsonible
-				if(isset($promotion['nom']))$promotions_noms[$nom] =$promotion['nom'];	
-		 	}		 
-	 	}
-	 }	
+				// Lister les promotions dipsonible
+				if (isset($promotion['nom']))
+					$promotions_noms[$nom] = $promotion['nom'];
+			}
+		}
+	}
 	
-	$saisies=array(
-	array(
-		'saisie' => 'fieldset',
-		'options' => array(
-			'nom' => 'general',
-			'label' => _T('promotion:label_parametres_generales'),
-		),
-		'saisies' => array(
-			array(
-				'saisie' => 'input',
-				'options' => array(
-					'nom' => 'titre',
-					'label' => _T('promotion:label_titre'),
-					'obligatoire'=>'oui'
-				)
+	$saisies = array (
+		array (
+			'saisie' => 'fieldset',
+			'options' => array (
+				'nom' => 'general',
+				'label' => _T('promotion:label_parametres_generales') 
 			),
-			array(
-				'saisie' => 'textarea',
-				'options' => array(
-					'nom' => 'descriptif',
-					'label' => _T('promotion:label_descriptif'),
-					'li_class'=>'haut', 
-					'class'=>'inserer_barre_edition',
-				)
-			),
-			array(
-				'saisie' => 'date',
-				'options' => array(
-					'nom' => 'date_debut',
-					'horaire'=>'oui',					
-					'label' => _T('promotion:label_date_debut')
-				)
-			),
-			array(
-				'saisie' => 'date',
-				'options' => array(
-					'nom' => 'date_fin',
-					'horaire'=>'oui',
-					'label' => _T('promotion:label_date_fin')
-				)
-			),
-			array(
-				'saisie' => 'input',
-				'options' => array(
-					'nom' => 'reduction',
-					'label' => _T('promotion:label_reduction'),
-					'obligatoire'=>'oui'
-				)
-			),
-			array(
-				'saisie' => 'selection',
-				'options' => array(
-					'nom' => 'type_reduction',
-					'label' => _T('promotion:label_type_reduction'),
-					'datas'=>array(
-						'pourcentage'=>_T('promotion:pourcentage'),
-						'absolu'=>_T('promotion:absolu')							
-						), 
-					'obligatoire'=>'oui'							
-				)
-			),
-			array(
-				'saisie' => 'radio',
-				'options' => array(
-					'nom' => 'prix_base',
-					'label' => _T('promotion:label_prix_base'),
-					'explication' => _T('promotion:explication_prix_base'),					
-					'datas'=>array(
-						'prix_original'=>_T('promotion:prix_original'),
-						'prix_reduit'=>_T('promotion:prix_reduit')							
-						), 
-					'obligatoire'=>'oui',
-					 'afficher_si'=> '@type_reduction@ == "pourcentage"' 							
-				)
-			),
-			array(
-				'saisie' => 'selection_multiple',
-				'options' => array(
-					'nom' => 'non_cumulable',
-					'label' => _T('promotion:label_non_cumulable'),
-					'datas'=>$promotions_dispos, 
-					'class'	=>'chosen'						
-				)
-			),	
+			'saisies' => array (
+				array (
+					'saisie' => 'input',
+					'options' => array (
+						'nom' => 'titre',
+						'label' => _T('promotion:label_titre'),
+						'obligatoire' => 'oui' 
+					) 
+				),
+				array (
+					'saisie' => 'textarea',
+					'options' => array (
+						'nom' => 'descriptif',
+						'label' => _T('promotion:label_descriptif'),
+						'li_class' => 'haut',
+						'class' => 'inserer_barre_edition' 
+					) 
+				),
+				array (
+					'saisie' => 'date',
+					'options' => array (
+						'nom' => 'date_debut',
+						'horaire' => 'oui',
+						'label' => _T('promotion:label_date_debut') 
+					) 
+				),
+				array (
+					'saisie' => 'date',
+					'options' => array (
+						'nom' => 'date_fin',
+						'horaire' => 'oui',
+						'label' => _T('promotion:label_date_fin') 
+					) 
+				),
+				array (
+					'saisie' => 'input',
+					'options' => array (
+						'nom' => 'reduction',
+						'label' => _T('promotion:label_reduction'),
+						'obligatoire' => 'oui' 
+					) 
+				),
+				array (
+					'saisie' => 'selection',
+					'options' => array (
+						'nom' => 'type_reduction',
+						'label' => _T('promotion:label_type_reduction'),
+						'datas' => array (
+							'pourcentage' => _T('promotion:pourcentage'),
+							'absolu' => _T('promotion:absolu') 
+						),
+						'obligatoire' => 'oui' 
+					) 
+				),
+				array (
+					'saisie' => 'radio',
+					'options' => array (
+						'nom' => 'prix_base',
+						'label' => _T('promotion:label_prix_base'),
+						'explication' => _T('promotion:explication_prix_base'),
+						'datas' => array (
+							'prix_original' => _T('promotion:prix_original'),
+							'prix_reduit' => _T('promotion:prix_reduit') 
+						),
+						'obligatoire' => 'oui',
+						'afficher_si' => '@type_reduction@ == "pourcentage"' 
+					) 
+				),
+				array (
+					'saisie' => 'selection_multiple',
+					'options' => array (
+						'nom' => 'non_cumulable',
+						'label' => _T('promotion:label_non_cumulable'),
+						'datas' => $promotions_dispos,
+						'class' => 'chosen' 
+					) 
+				),	
 			/*array(
 				'saisie' => 'selection',
 				'options' => array(
@@ -142,22 +145,21 @@ function definition_saisies($type_promotion,$valeurs=array()){
 					'obligatoire'=>'oui'							
 				)
 			),	*/								
-			array(
-				'saisie' => 'selection',
-				'options' => array(
-					'nom' => 'type_promotion',
-					'label' => _T('promotion:label_type_promotion'),
-					'obligatoire'=>'oui',
-					'datas'=>$promotions_noms,
-					'class'=>'auto_submit'
-					)
-				),								
-			)
-		),
+			array (
+					'saisie' => 'selection',
+					'options' => array (
+						'nom' => 'type_promotion',
+						'label' => _T('promotion:label_type_promotion'),
+						'obligatoire' => 'oui',
+						'datas' => $promotions_noms,
+						'class' => 'auto_submit' 
+					) 
+				) 
+			) 
+		) 
 	);
-
-	$saisies=array_merge($saisies,$promotions_defs);
 	
+	$saisies = array_merge($saisies, $promotions_defs);
 	
 	return $saisies;
 }
@@ -166,22 +168,23 @@ function definition_saisies($type_promotion,$valeurs=array()){
  * Identifier le formulaire en faisant abstraction des paramètres qui ne représentent pas l'objet edité
  *
  * @param int|string $id_promotion
- *     Identifiant du promotion. 'new' pour un nouveau promotion.
+ *        	Identifiant du promotion. 'new' pour un nouveau promotion.
  * @param string $retour
- *     URL de redirection après le traitement
+ *        	URL de redirection après le traitement
  * @param int $lier_trad
- *     Identifiant éventuel d'un promotion source d'une traduction
+ *        	Identifiant éventuel d'un promotion source d'une traduction
  * @param string $config_fonc
- *     Nom de la fonction ajoutant des configurations particulières au formulaire
+ *        	Nom de la fonction ajoutant des configurations particulières au formulaire
  * @param array $row
- *     Valeurs de la ligne SQL du promotion, si connu
+ *        	Valeurs de la ligne SQL du promotion, si connu
  * @param string $hidden
- *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
- * @return string
- *     Hash du formulaire
+ *        	Contenu HTML ajouté en même temps que les champs cachés du formulaire.
+ * @return string Hash du formulaire
  */
-function formulaires_editer_promotion_identifier_dist($id_promotion='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-	return serialize(array(intval($id_promotion)));
+function formulaires_editer_promotion_identifier_dist($id_promotion = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
+	return serialize(array (
+		intval($id_promotion) 
+	));
 }
 
 /**
@@ -190,56 +193,54 @@ function formulaires_editer_promotion_identifier_dist($id_promotion='new', $reto
  * Déclarer les champs postés et y intégrer les valeurs par défaut
  *
  * @uses formulaires_editer_objet_charger()
- *
+ *      
  * @param int|string $id_promotion
- *     Identifiant du promotion. 'new' pour un nouveau promotion.
+ *        	Identifiant du promotion. 'new' pour un nouveau promotion.
  * @param string $retour
- *     URL de redirection après le traitement
+ *        	URL de redirection après le traitement
  * @param int $lier_trad
- *     Identifiant éventuel d'un promotion source d'une traduction
+ *        	Identifiant éventuel d'un promotion source d'une traduction
  * @param string $config_fonc
- *     Nom de la fonction ajoutant des configurations particulières au formulaire
+ *        	Nom de la fonction ajoutant des configurations particulières au formulaire
  * @param array $row
- *     Valeurs de la ligne SQL du promotion, si connu
+ *        	Valeurs de la ligne SQL du promotion, si connu
  * @param string $hidden
- *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
- * @return array
- *     Environnement du formulaire
+ *        	Contenu HTML ajouté en même temps que les champs cachés du formulaire.
+ * @return array Environnement du formulaire
  */
-function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-	$valeurs = formulaires_editer_objet_charger('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
-
-	$type_promotion=_request('type_promotion')?_request('type_promotion'):(isset($valeurs['type_promotion'])?$valeurs['type_promotion']:'');
+function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
+	$valeurs = formulaires_editer_objet_charger('promotion', $id_promotion, '', $lier_trad, $retour, $config_fonc, $row, $hidden);
 	
-	$sql=sql_select('id_promotion,rang,titre','spip_promotions','id_promotion!='._request('id_promotion').' AND statut !="poubelle"','','rang');
+	$type_promotion = _request('type_promotion') ? _request('type_promotion') : (isset($valeurs['type_promotion']) ? $valeurs['type_promotion'] : '');
 	
-	$valeurs['non_cumulable']=_request('non_cumulable')?_request('non_cumulable'):isset($valeurs['non_cumulable'])?unserialize($valeurs['non_cumulable']):'';
+	$sql = sql_select('id_promotion,rang,titre', 'spip_promotions', 'id_promotion!=' . _request('id_promotion') . ' AND statut !="poubelle"', '', 'rang');
 	
-	$valeurs['promotions']=array('toutes'=>_T('promotion:toutes_promotions'));
-	$valeurs['rangs']=array();
+	$valeurs['non_cumulable'] = _request('non_cumulable') ? _request('non_cumulable') : isset($valeurs['non_cumulable']) ? unserialize($valeurs['non_cumulable']) : '';
 	
-	$i=0;
-	while($data=sql_fetch($sql)){
-		$i++;
-		$valeurs['promotions'][$data['id_promotion']]=$data['titre'];
-		//$valeurs['rangs'][$i]=$i.' ('.$data['titre'].')';		
+	$valeurs['promotions'] = array (
+		'toutes' => _T('promotion:toutes_promotions') 
+	);
+	$valeurs['rangs'] = array ();
+	
+	$i = 0;
+	while ( $data = sql_fetch($sql) ) {
+		$i ++;
+		$valeurs['promotions'][$data['id_promotion']] = $data['titre'];
+		// $valeurs['rangs'][$i]=$i.' ('.$data['titre'].')';
 	}
-
 	
-	$valeurs_promotion=$valeurs['valeurs_promotion']=unserialize($valeurs['valeurs_promotion']);
-	$valeurs['_saisies']=definition_saisies($type_promotion,$valeurs);
-		
-	//initialiser les donnees spécifiques de la promotion
-	if(isset($valeurs['_saisies'][1]['saisies'])){
-		foreach($valeurs['_saisies'][1]['saisies'] AS $saisie){
-			if(isset($saisie['options']['nom'])){
-				$valeurs[$saisie['options']['nom']]=_request($saisie['options']['nom'])?_request($saisie['options']['nom']):
-				(isset($valeurs_promotion[$saisie['options']['nom']])?$valeurs_promotion[$saisie['options']['nom']]:'');
+	$valeurs_promotion = $valeurs['valeurs_promotion'] = unserialize($valeurs['valeurs_promotion']);
+	$valeurs['_saisies'] = definition_saisies($type_promotion, $valeurs);
+	
+	// initialiser les donnees spécifiques de la promotion
+	if (isset($valeurs['_saisies'][1]['saisies'])) {
+		foreach ( $valeurs['_saisies'][1]['saisies'] as $saisie ) {
+			if (isset($saisie['options']['nom'])) {
+				$valeurs[$saisie['options']['nom']] = _request($saisie['options']['nom']) ? _request($saisie['options']['nom']) : (isset($valeurs_promotion[$saisie['options']['nom']]) ? $valeurs_promotion[$saisie['options']['nom']] : '');
 			}
 		}
 	}
-
-
+	
 	return $valeurs;
 }
 
@@ -249,57 +250,54 @@ function formulaires_editer_promotion_charger_dist($id_promotion='new', $retour=
  * Vérifier les champs postés et signaler d'éventuelles erreurs
  *
  * @uses formulaires_editer_objet_verifier()
- *
+ *      
  * @param int|string $id_promotion
- *     Identifiant du promotion. 'new' pour un nouveau promotion.
+ *        	Identifiant du promotion. 'new' pour un nouveau promotion.
  * @param string $retour
- *     URL de redirection après le traitement
+ *        	URL de redirection après le traitement
  * @param int $lier_trad
- *     Identifiant éventuel d'un promotion source d'une traduction
+ *        	Identifiant éventuel d'un promotion source d'une traduction
  * @param string $config_fonc
- *     Nom de la fonction ajoutant des configurations particulières au formulaire
+ *        	Nom de la fonction ajoutant des configurations particulières au formulaire
  * @param array $row
- *     Valeurs de la ligne SQL du promotion, si connu
+ *        	Valeurs de la ligne SQL du promotion, si connu
  * @param string $hidden
- *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
- * @return array
- *     Tableau des erreurs
+ *        	Contenu HTML ajouté en même temps que les champs cachés du formulaire.
+ * @return array Tableau des erreurs
  */
-function formulaires_editer_promotion_verifier_dist($id_promotion='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-	
+function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
 	include_spip('inc/saisies');
 	
-	$saisies=definition_saisies(_request('type_promotion'));
-
+	$saisies = definition_saisies(_request('type_promotion'));
+	
 	$erreurs = saisies_verifier($saisies);
 	
 	$verifier = charger_fonction('verifier', 'inc');
 	
-
-		foreach (array('date_debut', 'date_fin') AS $champ)
-		{
-			if(_request($champ)){
+	foreach ( array (
+		'date_debut',
+		'date_fin' 
+	) as $champ ) {
+		if (_request($champ)) {
 			$normaliser = null;
-			if ($erreur = $verifier(_request($champ), 'date', array('normaliser'=>'datetime'), $normaliser)) {
+			if ($erreur = $verifier(_request($champ), 'date', array (
+				'normaliser' => 'datetime' 
+			), $normaliser)) {
 				$erreurs[$champ] = $erreur;
-			// si une valeur de normalisation a ete transmis, la prendre.
-			} elseif (!is_null($normaliser)) {
+				// si une valeur de normalisation a ete transmis, la prendre.
+			} elseif (! is_null($normaliser)) {
 				set_request($champ, $normaliser);
-			// si pas de normalisation ET pas de date soumise, il ne faut pas tenter d'enregistrer ''
+				// si pas de normalisation ET pas de date soumise, il ne faut pas tenter d'enregistrer ''
 			} else {
 				set_request($champ, '0000-00-00 00:00:00');
 			}
-		}		
+		}
 	}
-
-		
-
-
 	
-	if(_request('date_debut')>'0000-00-00 00:00:00' AND _request('date_fin')>'0000-00-00 00:00:00' AND _request('date_debut')>=_request('date_fin'))$erreurs['date_fin']=_T('promotion:erreur_datefin');
+	if (_request('date_debut') > '0000-00-00 00:00:00' and _request('date_fin') > '0000-00-00 00:00:00' and _request('date_debut') >= _request('date_fin'))
+		$erreurs['date_fin'] = _T('promotion:erreur_datefin');
 	
 	return $erreurs;
-
 }
 
 /**
@@ -308,69 +306,66 @@ function formulaires_editer_promotion_verifier_dist($id_promotion='new', $retour
  * Traiter les champs postés
  *
  * @uses formulaires_editer_objet_traiter()
- *
+ *      
  * @param int|string $id_promotion
- *     Identifiant du promotion. 'new' pour un nouveau promotion.
+ *        	Identifiant du promotion. 'new' pour un nouveau promotion.
  * @param string $retour
- *     URL de redirection après le traitement
+ *        	URL de redirection après le traitement
  * @param int $lier_trad
- *     Identifiant éventuel d'un promotion source d'une traduction
+ *        	Identifiant éventuel d'un promotion source d'une traduction
  * @param string $config_fonc
- *     Nom de la fonction ajoutant des configurations particulières au formulaire
+ *        	Nom de la fonction ajoutant des configurations particulières au formulaire
  * @param array $row
- *     Valeurs de la ligne SQL du promotion, si connu
+ *        	Valeurs de la ligne SQL du promotion, si connu
  * @param string $hidden
- *     Contenu HTML ajouté en même temps que les champs cachés du formulaire.
- * @return array
- *     Retours des traitements
+ *        	Contenu HTML ajouté en même temps que les champs cachés du formulaire.
+ * @return array Retours des traitements
  */
-function formulaires_editer_promotion_traiter_dist($id_promotion='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-	
-	$type_promotion=_request('type_promotion');
+function formulaires_editer_promotion_traiter_dist($id_promotion = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
+	$type_promotion = _request('type_promotion');
 	
 	$promotion = charger_fonction($type_promotion, "promotions", true);
 	
-	$valeurs_promotion=$promotion();
+	$valeurs_promotion = $promotion();
 	
-	if(isset($valeurs_promotion['saisies'])){
-		$promotion=array();
+	if (isset($valeurs_promotion['saisies'])) {
+		$promotion = array ();
 		
-		foreach($valeurs_promotion['saisies'] AS $champ){
-			$promotion[$champ['options']['nom']]=_request($champ['options']['nom']);
-		}			
+		foreach ( $valeurs_promotion['saisies'] as $champ ) {
+			$promotion[$champ['options']['nom']] = _request($champ['options']['nom']);
+		}
 	}
 	
-	set_request('valeurs_promotion',serialize($promotion));
+	set_request('valeurs_promotion', serialize($promotion));
 	
-	$non_cumulable=is_array(_request('non_cumulable'))?serialize(_request('non_cumulable')):serialize(array());
+	$non_cumulable = is_array(_request('non_cumulable')) ? serialize(_request('non_cumulable')) : serialize(array ());
 	
-	set_request('non_cumulable',$non_cumulable);
-
-	 
-	//établir le rang
-	/*$rang_ancien=_request('rang_ancien');
-	$rang=_request('rang');	
+	set_request('non_cumulable', $non_cumulable);
 	
-	if($rang_ancien>$rang){
-			$sql=sql_select('id_promotion','spip_promotions','statut!="poubelle" AND rang>='._request('rang'),'','rang');
-			while($data=sql_fetch($sql)){
-				$rang++;
-				sql_updateq('spip_promotions',array('rang'=>$rang),'id_promotion='.$data['id_promotion']);	
-			}
-		}
-	else{
-		$sql=sql_select('id_promotion','spip_promotions','statut!="poubelle" AND rang>'._request('rang_ancien').' AND rang <='._request('rang'),'','rang DESC');
-			$rang=_request('rang');
-			while($data=sql_fetch($sql)){
-				$rang=$rang-1;
-				sql_updateq('spip_promotions',array('rang'=>$rang),'id_promotion='.$data['id_promotion']);	
-			}
-		
-	}*/
-
-
-			
-	return formulaires_editer_objet_traiter('promotion',$id_promotion,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
+	// établir le rang
+	/*
+	 * $rang_ancien=_request('rang_ancien');
+	 * $rang=_request('rang');
+	 *
+	 * if($rang_ancien>$rang){
+	 * $sql=sql_select('id_promotion','spip_promotions','statut!="poubelle" AND rang>='._request('rang'),'','rang');
+	 * while($data=sql_fetch($sql)){
+	 * $rang++;
+	 * sql_updateq('spip_promotions',array('rang'=>$rang),'id_promotion='.$data['id_promotion']);
+	 * }
+	 * }
+	 * else{
+	 * $sql=sql_select('id_promotion','spip_promotions','statut!="poubelle" AND rang>'._request('rang_ancien').' AND rang <='._request('rang'),'','rang DESC');
+	 * $rang=_request('rang');
+	 * while($data=sql_fetch($sql)){
+	 * $rang=$rang-1;
+	 * sql_updateq('spip_promotions',array('rang'=>$rang),'id_promotion='.$data['id_promotion']);
+	 * }
+	 *
+	 * }
+	 */
+	
+	return formulaires_editer_objet_traiter('promotion', $id_promotion, '', $lier_trad, $retour, $config_fonc, $row, $hidden);
 }
 
 ?>

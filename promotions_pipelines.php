@@ -49,11 +49,20 @@ function promotions_reservation_evenement_donnees_details($flux) {
 			$id_promotion = $data['id_promotion'];
 			$evenements_exclus_promotion = isset($evenements_exclus[$id_promotion]) ? $evenements_exclus[$id_promotion] : array ();
 			$exclure_toutes = (isset($evenements_exclus['toutes'])) ? $evenements_exclus['toutes'] : '';
-			if ($details = charger_fonction('action', 'promotions/' . $data['type_promotion'], true) and ($data['date_debut'] == '0000-00-00 00:00:00' or (
+			if ($details = charger_fonction('action', 'promotions/' . $data['type_promotion'], true) 
+					and ($data['date_debut'] == '0000-00-00 00:00:00' or (
 									/*$data['date_debut']!='0000-00-00 00:00:00' AND */
-									$data['date_debut'] <= $date)) and ($data['date_fin'] == '0000-00-00 00:00:00' or (
+									$data['date_debut'] <= $date)
+							) 
+					and ($data['date_fin'] == '0000-00-00 00:00:00' or (
 									/*$data['date_fin']!='0000-00-00 00:00:00' AND*/
-									 $data['date_fin'] >= $date)) and ! in_array($id_evenement, $evenements_exclus_promotion) and (! $exclure_toutes or ($exclure_toutes and $exclure_toutes[0] == $id_promotion))) {
+									$data['date_fin'] >= $date)
+							) 
+					and ! in_array($id_evenement, $evenements_exclus_promotion) 
+					and (!$exclure_toutes or (
+							$exclure_toutes and $exclure_toutes[0] == $id_promotion)
+							)
+					) {
 				// Essaie de trouver le prix original
 				$flux['data']['prix_original'] = isset($flux['data']['prix_original']) ? $flux['data']['prix_original'] : $flux['data']['prix_ht'];
 				$data['valeurs_promotion'] = unserialize($data['valeurs_promotion']);
