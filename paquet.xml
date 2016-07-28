@@ -2,7 +2,7 @@
 	prefix="promotions"
 	categorie="communication"
 	version="1.4.3"
-	etat="dev"
+	etat="test"
 	compatibilite="[3.0.17;3.1.*]"
 	logo="prive/themes/spip/images/promotions-64.png"
 	documentation=""
