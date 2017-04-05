@@ -85,7 +85,7 @@ function promotions_reservation_evenement_donnees_details($flux) {
 						// Prix de base
 						if (isset($data['prix_base'])) {
 							if ($data['prix_base'] == 'prix_reduit')
-								$prix_base = $flux['data']['prix_ht'];
+								$prix_base = $flux['data']['prix'];
 							elseif ($data['prix_base'] == 'prix_original')
 								$prix_base = $flux['data']['prix_original'];
 						}
