@@ -8,10 +8,10 @@
  * @licence    GNU/GPL
  * @package    SPIP\Promotions\Pipelines
  */
-if (! defined('_ECRIRE_INC_VERSION'))
+if (!defined('_ECRIRE_INC_VERSION'))
 	return;
 
-	/*
+/*
  * Un fichier de pipelines permet de regrouper
  * les fonctions de branchement de votre plugin
  * sur des pipelines existants.
@@ -29,7 +29,7 @@ if (! defined('_ECRIRE_INC_VERSION'))
  */
 function promotions_optimiser_base_disparus($flux) {
 	include_spip('action/editer_liens');
-	$flux['data'] += objet_optimiser_liens(array (
+	$flux['data'] += objet_optimiser_liens(array(
 		'promotion' => '*'
 	), '*');
 	return $flux;
@@ -37,23 +37,19 @@ function promotions_optimiser_base_disparus($flux) {
 
 // Intervenir sur les détails d'une réservation du plug reservation_evenement
 function promotions_reservation_evenement_donnees_details($flux) {
-	if (! _request('exec')) {
+	if (!_request('exec')) {
 		$date = date('Y-m-d H:i:s');
 		$sql = sql_select('*', 'spip_promotions', 'statut=' . sql_quote('publie'), '', 'rang');
-		$evenements_exclus = _request('evenements_exclus') ? _request('evenements_exclus') : array ();
+		$evenements_exclus = _request('evenements_exclus') ? _request('evenements_exclus') : array();
 		$id_evenement = $flux['data']['id_evenement'];
 
 		while ($data = sql_fetch($sql)) {
 
-			$non_cumulable = isset($data['non_cumulable']) ? unserialize($data['non_cumulable']) : array ();
+			$non_cumulable = isset($data['non_cumulable']) ? unserialize($data['non_cumulable']) : array();
 			$id_promotion = $data['id_promotion'];
-			$evenements_exclus_promotion = isset($evenements_exclus[$id_promotion]) ? $evenements_exclus[$id_promotion] : array ();
+			$evenements_exclus_promotion = isset($evenements_exclus[$id_promotion]) ? $evenements_exclus[$id_promotion] : array();
 			$exclure_toutes = (isset($evenements_exclus['toutes'])) ? $evenements_exclus['toutes'] : '';
-			if ($details = charger_fonction('action', 'promotions/' . $data['type_promotion'], true)
-					and ($data['date_debut'] == '0000-00-00 00:00:00' or $data['date_debut'] <= $date)
-					and ($data['date_fin'] == '0000-00-00 00:00:00' or $data['date_fin'] >= $date)
-					and ! in_array($id_evenement, $evenements_exclus_promotion)
-					and (! $exclure_toutes or ($exclure_toutes and $exclure_toutes[0] == $id_promotion))) {
+			if ($details = charger_fonction('action', 'promotions/' . $data['type_promotion'], true) and ($data['date_debut'] == '0000-00-00 00:00:00' or $data['date_debut'] <= $date) and ($data['date_fin'] == '0000-00-00 00:00:00' or $data['date_fin'] >= $date) and !in_array($id_evenement, $evenements_exclus_promotion) and (!$exclure_toutes or ($exclure_toutes and $exclure_toutes[0] == $id_promotion))) {
 
 				// Essaie de trouver le prix original
 				$flux['data']['prix_original'] = isset($flux['data']['prix_original']) ? $flux['data']['prix_original'] : $flux['data']['prix_ht'];
@@ -99,11 +95,11 @@ function promotions_reservation_evenement_donnees_details($flux) {
 					} // En absolu
 					elseif ($type_reduction == 'absolu')
 						$flux['data']['prix'] = $flux['data']['prix'] - $reduction;
-						$flux['data']['prix_ht'] = 0;
+					$flux['data']['prix_ht'] = 0;
 				}
 
 				// On prépare l'enregistrement de la promotion
-				set_request('donnees_promotion', array (
+				set_request('donnees_promotion', array(
 					'id_promotion' => $data['id_promotion'],
 					'objet' => $flux['data']['objet'],
 					'prix_original' => $flux['data']['prix_original'],
