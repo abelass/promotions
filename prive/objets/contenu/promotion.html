@@ -26,13 +26,23 @@
 	<span dir='#LANG_DIR' class='#EDIT{type_promotion} type_promotion'>(#TYPE_PROMOTION)</span>
 </div>]
 
-[(#REM) Les valeurs spécifique de la promotion]
-#SET{valeurs_promotions, #VALEURS_PROMOTION|unserialize}
-<BOUCLE_valeurs_promotion(DATA){source tableau, #TYPE_PROMOTION|promotions_definition_saisies{'', #ARRAY{donnees_champs,oui}}}>
-	[(#GET{valeurs_promotions}|table_valeur{#VALEUR{options/nom}}|oui)
-<div class="champ contenu_[(#VALEUR{options/nom})]">
-	[<label>(#VALEUR{options/label}) </label>]
-	[<span dir='#LANG_DIR' class='#CLE'> (#GET{valeurs_promotions}|table_valeur{#VALEUR{options/nom}}|implode{','})</span>]
+[<div class="champ contenu_reduction[ (#REDUCTION*|strlen|?{'',vide})]">
+	<label><:promotion:label_reduction:></label>
+	<span dir='#LANG_DIR' class='#EDIT{reduction} reduction'>(#REDUCTION)</span>
 </div>]
-</BOUCLE_valeurs_promotion>
+
+[<div class="champ contenu_type_reduction[ (#TYPE_REDUCTION*|strlen|?{'',vide})]">
+	<label><:promotion:label_type_reduction:></label>
+	<span dir='#LANG_DIR' class='#EDIT{type_reduction} type_reduction'>(#TYPE_REDUCTION)</span>
+</div>]
+
+	[(#REM) Les valeurs spécifique de la promotion]
+	#SET{valeurs_promotions, #VALEURS_PROMOTION|unserialize}
+	<BOUCLE_valeurs_promotion(DATA){source tableau, #TYPE_PROMOTION|promotions_definition_saisies{'', #ARRAY{donnees_champs,oui}}}>
+		[(#GET{valeurs_promotions}|table_valeur{#VALEUR{options/nom}}|oui)
+	<div class="champ contenu_[(#VALEUR{options/nom})]">
+		[<label>(#VALEUR{options/label}) </label>]
+		[<span dir='#LANG_DIR' class='#CLE'> (#GET{valeurs_promotions}|table_valeur{#VALEUR{options/nom}}|implode{','})</span>]
+	</div>]
+	</BOUCLE_valeurs_promotion>
 </BOUCLE_promotion>

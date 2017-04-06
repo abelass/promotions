@@ -28,10 +28,10 @@ if (! defined('_ECRIRE_INC_VERSION'))
 		// Chercher les fichiers promotions
 		$promotions = find_all_in_path("promotions/", '^');
 
-		$promotions_noms = array ();
+		$type_promotions_noms= array ();
 		$promotions_defs = array ();
 
-		$promotions_dispos = isset($valeurs['promotions']) ? $valeurs['promotions'] : '';
+		$promotions_actives= isset($valeurs['promotions']) ? $valeurs['promotions'] : '';
 		$rangs = isset($valeurs['rangs']) ? $valeurs['rangs'] : '';
 		$nombre_promotions = isset($valeurs['nombre_promotions']) ? $valeurs['nombre_promotions'] : 0;
 
@@ -55,7 +55,7 @@ if (! defined('_ECRIRE_INC_VERSION'))
 					}
 					// Lister les promotions dipsonibles
 					if (isset($promotion['nom']))
-						$promotions_noms[$nom] = $promotion['nom'];
+						$type_promotions_noms[$nom] = $promotion['nom'];
 				}
 			}
 		}
@@ -65,7 +65,7 @@ if (! defined('_ECRIRE_INC_VERSION'))
 		}
 		else {
 			include_spip('inc/promotion');
-			$saisies = promotions_champ_generaux($promotions_dispos, $promotions_noms);
+			$saisies = promotions_champ_generaux($promotions_actives, $type_promotions_noms);
 			$saisies = array_merge($saisies, $promotions_defs);
 		}
 

@@ -20,9 +20,9 @@ if (! defined('_ECRIRE_INC_VERSION'))
  * @return array Les champs de la promotion.
  */
 	// Définition des champs
-	function promotions_champ_generaux($promotions_dispos, $promotions_noms) {
+	function promotions_champ_generaux($promotions_actives, $type_promotions) {
 
-		$saisies = array (
+		return array (
 			array (
 				'saisie' => 'fieldset',
 				'options' => array (
@@ -102,7 +102,7 @@ if (! defined('_ECRIRE_INC_VERSION'))
 						'options' => array (
 							'nom' => 'non_cumulable',
 							'label' => _T('promotion:label_non_cumulable'),
-							'datas' => $promotions_dispos,
+							'datas' => $promotions_actives,
 							'class' => 'chosen'
 						)
 					),
@@ -121,12 +121,11 @@ if (! defined('_ECRIRE_INC_VERSION'))
 							'nom' => 'type_promotion',
 							'label' => _T('promotion:label_type_promotion'),
 							'obligatoire' => 'oui',
-							'datas' => $promotions_noms,
+							'datas' => $type_promotions,
 							'class' => 'auto_submit'
 						)
 					)
 				)
 			)
 		);
-		return $saisies;
 	}

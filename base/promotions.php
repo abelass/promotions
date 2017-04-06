@@ -49,20 +49,21 @@ function promotions_declarer_tables_objets_sql($tables) {
 			"descriptif"         => "text NOT NULL DEFAULT ''",
 			"date_debut"         => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 			"date_fin"           => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
-			"reduction"       	 => "bigint(21) NOT NULL",
+			"reduction"          => "bigint(21) NOT NULL",
 			"type_reduction"     => "varchar(20) NOT NULL DEFAULT ''",
-			"prix_base"     	 => "varchar(20) NOT NULL DEFAULT ''",						
+			"prix_base"          => "varchar(20) NOT NULL DEFAULT ''",
 			"type_promotion"     => "varchar(55) NOT NULL DEFAULT ''",
-			"valeurs_promotion"  => "text NOT NULL DEFAULT ''",	
-			"non_cumulable"		 => "text NOT NULL DEFAULT ''",
-			"rang"			 	 => "bigint(21) NOT NULL",								
-			"date"               => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'", 
-			"statut"             => "varchar(20)  DEFAULT '0' NOT NULL", 
+			"nombre_applicable"  => "int(11) NOT NULL",
+			"valeurs_promotion"  => "text NOT NULL DEFAULT ''",
+			"non_cumulable"      => "text NOT NULL DEFAULT ''",
+			"rang"               => "bigint(21) NOT NULL",
+			"date"               => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
+			"statut"             => "varchar(20)  DEFAULT '0' NOT NULL",
 			"maj"                => "TIMESTAMP"
 		),
 		'key' => array(
 			"PRIMARY KEY"        => "id_promotion",
-			"KEY statut"         => "statut", 
+			"KEY statut"         => "statut",
 		),
 		'titre' => "titre AS titre, '' AS lang",
 		'date' => "date",
@@ -82,12 +83,12 @@ function promotions_declarer_tables_objets_sql($tables) {
 				'champ'     => 'statut',
 				'publie'    => 'publie',
 				'previsu'   => 'publie,prop,prepa',
-				'post_date' => 'date', 
+				'post_date' => 'date',
 				'exception' => array('statut','tout')
 			)
 		),
-		'texte_changer_statut' => 'promotion:texte_changer_statut_promotion', 
-		
+		'texte_changer_statut' => 'promotion:texte_changer_statut_promotion',
+
 
 	);
 
@@ -112,7 +113,7 @@ function promotions_declarer_tables_auxiliaires($tables) {
 			"id_objet"           => "bigint(21) DEFAULT '0' NOT NULL",
 			"objet"              => "VARCHAR(25) DEFAULT '' NOT NULL",
 			"prix_original"		 => "bigint(21) DEFAULT '0' NOT NULL",
-			"prix_promotion"	 => "bigint(21) DEFAULT '0' NOT NULL",			
+			"prix_promotion"	 => "bigint(21) DEFAULT '0' NOT NULL",
 			"vu"                 => "VARCHAR(6) DEFAULT 'non' NOT NULL"
 		),
 		'key' => array(
