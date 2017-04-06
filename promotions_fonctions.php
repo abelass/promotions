@@ -59,120 +59,16 @@ if (! defined('_ECRIRE_INC_VERSION'))
 				}
 			}
 		}
-
-		$saisies = array (
-			array (
-				'saisie' => 'fieldset',
-				'options' => array (
-					'nom' => 'general',
-					'label' => _T('promotion:label_parametres_generales')
-				),
-				'saisies' => array (
-					array (
-						'saisie' => 'input',
-						'options' => array (
-							'nom' => 'titre',
-							'label' => _T('promotion:label_titre'),
-							'obligatoire' => 'oui'
-						)
-					),
-					array (
-						'saisie' => 'textarea',
-						'options' => array (
-							'nom' => 'descriptif',
-							'label' => _T('promotion:label_descriptif'),
-							'li_class' => 'haut',
-							'class' => 'inserer_barre_edition'
-						)
-					),
-					array (
-						'saisie' => 'date',
-						'options' => array (
-							'nom' => 'date_debut',
-							'horaire' => 'oui',
-							'label' => _T('promotion:label_date_debut')
-						)
-					),
-					array (
-						'saisie' => 'date',
-						'options' => array (
-							'nom' => 'date_fin',
-							'horaire' => 'oui',
-							'label' => _T('promotion:label_date_fin')
-						)
-					),
-					array (
-						'saisie' => 'input',
-						'options' => array (
-							'nom' => 'reduction',
-							'label' => _T('promotion:label_reduction'),
-							'obligatoire' => 'oui'
-						)
-					),
-					array (
-						'saisie' => 'selection',
-						'options' => array (
-							'nom' => 'type_reduction',
-							'label' => _T('promotion:label_type_reduction'),
-							'datas' => array (
-								'pourcentage' => _T('promotion:pourcentage'),
-								'absolu' => _T('promotion:absolu')
-							),
-							'obligatoire' => 'oui'
-						)
-					),
-					array (
-						'saisie' => 'radio',
-						'options' => array (
-							'nom' => 'prix_base',
-							'label' => _T('promotion:label_prix_base'),
-							'explication' => _T('promotion:explication_prix_base'),
-							'datas' => array (
-								'prix_original' => _T('promotion:prix_original'),
-								'prix_reduit' => _T('promotion:prix_reduit')
-							),
-							'obligatoire' => 'oui',
-							'afficher_si' => '@type_reduction@ == "pourcentage"'
-						)
-					),
-					array (
-						'saisie' => 'selection_multiple',
-						'options' => array (
-							'nom' => 'non_cumulable',
-							'label' => _T('promotion:label_non_cumulable'),
-							'datas' => $promotions_dispos,
-							'class' => 'chosen'
-						)
-					),
-					/*array(
-					 'saisie' => 'selection',
-					 'options' => array(
-					 'nom' => 'rang',
-					 'label' => _T('promotion:label_rang'),
-					 'datas'=>$rangs,
-					 'obligatoire'=>'oui'
-					 )
-					 ),	*/
-					array (
-						'saisie' => 'selection',
-						'options' => array (
-							'nom' => 'type_promotion',
-							'label' => _T('promotion:label_type_promotion'),
-							'obligatoire' => 'oui',
-							'datas' => $promotions_noms,
-							'class' => 'auto_submit'
-						)
-					)
-				)
-			)
-		);
-
-		$saisies = array_merge($saisies, $promotions_defs);
-
 		if (isset($options['donnees_champs']) and $options['donnees_champs'] == 'oui') {
-			$saisies = array_column($saisies, 'saisies');
-			$saisies = $saisies[1];
+			$champs_specifiques = array_column($promotions_defs, 'saisies');
+			$saisies = $champs_specifiques[0];
 		}
+		else {
+			include_spip('inc/promotion');
+			$saisies = promotions_champ_generaux($promotions_dispos, $promotions_noms);
+			$saisies = array_merge($saisies, $promotions_defs);
+		}
+
 
 		return $saisies;
 	}
