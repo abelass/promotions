@@ -25,11 +25,13 @@
 	<span dir='#LANG_DIR' class='#EDIT{type_promotion} type_promotion'>(#TYPE_PROMOTION)</span>
 </div>]
 
-
-<BOUCLE_valeurs_promotion(DATA){source tableau, #VALEURS_PROMOTION|unserialize}>
-<div class="champ contenu_#CLE ">
-	<label>#CLE : </label>
-	<span dir='#LANG_DIR' class='#CLE'> #VALEUR</span>
-</div>
+[(#REM) Les valeurs spécifique de la promotion]
+#SET{valeurs_promotions, #VALEURS_PROMOTION|unserialize}
+<BOUCLE_valeurs_promotion(DATA){source tableau, #TYPE_PROMOTION|promotions_definition_saisies{'', #ARRAY{donnees_champs,oui}}}>
+	[(#GET{valeurs_promotions}|table_valeur{#VALEUR{options/nom}}|oui)
+<div class="champ contenu_[(#VALEUR{options/nom})]">
+	[<label>(#VALEUR{options/label}) </label>]
+	[<span dir='#LANG_DIR' class='#CLE'> (#GET{valeurs_promotions}|table_valeur{#VALEUR{options/nom}}|implode{','})</span>]
+</div>]
 </BOUCLE_valeurs_promotion>
 </BOUCLE_promotion>

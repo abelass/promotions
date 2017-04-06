@@ -11,12 +11,6 @@
 if (! defined('_ECRIRE_INC_VERSION'))
 	return;
 
-	/*
- * Un fichier de pipelines permet de regrouper
- * les fonctions de branchement de votre plugin
- * sur des pipelines existants.
- */
-
 /**
  * Optimiser la base de données en supprimant les liens orphelins
  * de l'objet vers quelqu'un et de quelqu'un vers l'objet.
