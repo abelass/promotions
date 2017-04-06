@@ -31,7 +31,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array (
 	'label_prix_base' => 'Prix de base :',
 	'label_reduction' => 'Réduction :',
 	'label_titre' => 'Titre :',
-	'label_type_promotion' => 'Type Promotion : ',
+	'label_type_promotion' => 'Type promotion : ',
+	'label_type_reduction' => 'Type de ruction : ',
 
 	// N
 	'nom_promotion_simple' => 'Promotion simple',
