@@ -16,8 +16,11 @@ if (! defined('_ECRIRE_INC_VERSION'))
  *
  * @param string $type_promotion Le type de promotion.
  * @param array $valeurs Des valeurs par défaut.
+ * @options array options:
+ *                - donnees_champs: si oui filtre le tableau pour obtenir uniquement les champs
+ *                  spécifiques.
 
- * @return array Les champs de la promotion
+ * @return array Les champs de la promotion.
  */
 	// Définition des champs
 	function promotions_definition_saisies($type_promotion, $valeurs = array(), $options = array()) {
