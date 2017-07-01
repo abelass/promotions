@@ -20,7 +20,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * - créer la structure SQL,
  * - insérer du pre-contenu,
  * - installer des valeurs de configuration,
- * - mettre à jour la structure SQL 
+ * - mettre à jour la structure SQL
  *
  * @param string $nom_meta_base_version
  *     Nom de la meta informant de la version du schéma de données du plugin installé dans SPIP
@@ -34,9 +34,9 @@ function promotions_upgrade($nom_meta_base_version, $version_cible) {
 
 	$maj['create'] = array(array('maj_tables', array('spip_promotions', 'spip_promotions_liens')));
 	$maj['1.1.0'] = array(array('maj_tables', array('spip_promotions')));
-	$maj['1.2.0'] = array(array('sql_alter','TABLE spip_promotions_liens CHANGE prix_normal prix_original bigint(21) DEFAULT \'0\' NOT NULL'),);		
+	$maj['1.2.0'] = array(array('sql_alter','TABLE spip_promotions_liens CHANGE prix_normal prix_original bigint(21) DEFAULT \'0\' NOT NULL'),);
 	$maj['1.3.0'] = array(array('maj_tables', array('spip_promotions')));
-	$maj['1.4.0'] = array(array('maj_tables', array('spip_promotions')));	
+	$maj['1.4.0'] = array(array('maj_tables', array('spip_promotions')));
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 }
@@ -44,11 +44,11 @@ function promotions_upgrade($nom_meta_base_version, $version_cible) {
 
 /**
  * Fonction de désinstallation du plugin Promotions.
- * 
+ *
  * Vous devez :
  *
  * - nettoyer toutes les données ajoutées par le plugin et son utilisation
- * - supprimer les tables et les champs créés par le plugin. 
+ * - supprimer les tables et les champs créés par le plugin.
  *
  * @param string $nom_meta_base_version
  *     Nom de la meta informant de la version du schéma de données du plugin installé dans SPIP

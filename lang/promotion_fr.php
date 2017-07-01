@@ -4,15 +4,15 @@ if (! defined('_ECRIRE_INC_VERSION'))
 	return;
 
 $GLOBALS[$GLOBALS['idx_lang']] = array (
-	
+
 	// A
 	'absolu' => 'Absolu',
 	'ajouter_lien_promotion' => 'Ajouter cette promotion',
-	
+
 	// E
 	'erreur_datefin' => 'La date fin doit être supérieure à la date début',
 	'explication_prix_base' => 'Est-ce que la promotion se base sur le prix d\'origine ou dans un cas de cumul de promotion, sur un prix déjà réduit par une autre promotion',
-	
+
 	// I
 	'icone_creer_promotion' => 'Créer une promotion',
 	'icone_modifier_promotion' => 'Modifier cette promotion',
@@ -20,7 +20,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array (
 	'info_aucun_promotion' => 'Aucune promotion',
 	'info_nb_promotions' => '@nb@ promotions',
 	'info_promotions_auteur' => 'Les promotions de cet auteur',
-	
+
 	// L
 	'label_date_debut' => 'Date début',
 	'label_date_fin' => 'Date fin',
@@ -31,21 +31,21 @@ $GLOBALS[$GLOBALS['idx_lang']] = array (
 	'label_prix_base' => 'Prix de base :',
 	'label_reduction' => 'Réduction :',
 	'label_titre' => 'Titre :',
-	'label_type_promotion' => 'Type Promotion :_',
-	'label_type_reduction' => 'Type de réduction :',
-	
+	'label_type_promotion' => 'Type promotion : ',
+	'label_type_reduction' => 'Type de réduction : ',
+
 	// N
 	'nom_promotion_simple' => 'Promotion simple',
-	
+
 	// P
 	'pourcentage' => 'Pourcentage',
 	'prix_original' => 'Prix d\'origine',
 	'prix_reduit' => 'Prix réduit',
-	
+
 	// R
 	'retirer_lien_promotion' => 'Retirer cette promotion',
 	'retirer_tous_liens_promotions' => 'Retirer toutes les promotions',
-	
+
 	// T
 	'texte_ajouter_promotion' => 'Ajouter une promotion',
 	'texte_changer_statut_promotion' => 'Cette promotion est :',
@@ -55,7 +55,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array (
 	'titre_promotion' => 'Promotion',
 	'titre_promotions' => 'Promotions',
 	'titre_promotions_rubrique' => 'Promotions de la rubrique',
-	'toutes_promotions' => 'Toutes les promotions' 
+	'toutes_promotions' => 'Toutes les promotions'
 );
 
 ?>
