@@ -88,12 +88,18 @@ function promotions_reservation_evenement_donnees_details($flux) {
 								$prix_base = $flux['data']['prix_original'];
 						}
 
-						$flux['data']['prix_ht'] = $flux['data']['prix_ht'] - ($prix_base / 100 * $reduction);
+						if($flux['data']['prix_ht'] > 0) {
+							$flux['data']['prix_ht'] = $flux['data']['prix_ht'] - ($prix_base / 100 * $reduction);
+						}
+						else {
+							$flux['data']['prix_ht'] = 0;
+						}
 						$flux['data']['prix'] = 0;
 					} // En absolu
 					elseif ($type_reduction == 'absolu')
+					if ($flux['data']['prix_ht'] > 0) {
 						$flux['data']['prix_ht'] = $flux['data']['prix_ht'] - $reduction;
-						$flux['data']['prix_ht'] = $flux['data']['prix_ht'] - $reduction;
+					}
 				}
 
 				// On prépare l'enregistrement de la promotion
