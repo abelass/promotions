@@ -3,7 +3,7 @@
  * Déclarations relatives à la base de données
  *
  * @plugin     Promotions
- * @copyright  2014
+ * @copyright  2014 - 2018
  * @author     Rainer
  * @licence    GNU/GPL
  * @package    SPIP\Promotions\Pipelines
