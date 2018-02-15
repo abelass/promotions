@@ -59,7 +59,6 @@ function promotions_reservation_evenement_donnees_details($flux) {
 
 				$reduction = $data['reduction'];
 				$type_reduction = $data['type_reduction'];
-
 				$flux['data']['applicable'] = 'non';
 
 				// On passe à la fonction de la promotion pour établir si la promotion s'applique
@@ -77,7 +76,6 @@ function promotions_reservation_evenement_donnees_details($flux) {
 					set_request('evenements_exclus', $evenements_exclus);
 
 					// On applique les réductions prévues
-
 					// En pourcentage
 					if ($type_reduction == 'pourcentage') {
 						// Prix de base
@@ -99,6 +97,7 @@ function promotions_reservation_evenement_donnees_details($flux) {
 					elseif ($type_reduction == 'absolu')
 					if ($flux['data']['prix_ht'] > 0) {
 						$flux['data']['prix_ht'] = $flux['data']['prix_ht'] - $reduction;
+						$flux['data']['prix'] = 0;
 					}
 				}
 

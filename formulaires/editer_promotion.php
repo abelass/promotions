@@ -123,7 +123,6 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
 	include_spip('inc/saisies');
 
 	$saisies = promotions_definition_saisies(_request('type_promotion'));
-
 	$erreurs = saisies_verifier($saisies);
 
 	$verifier = charger_fonction('verifier', 'inc');

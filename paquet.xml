@@ -1,7 +1,7 @@
 <paquet
 	prefix="promotions"
 	categorie="communication"
-	version="1.5.5"
+	version="1.6.0"
 	etat="test"
 	compatibilite="[3.0.17;3.2.*]"
 	logo="prive/themes/spip/images/promotions-64.png"
