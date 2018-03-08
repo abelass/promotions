@@ -84,7 +84,10 @@ function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retou
 	}
 
 	$valeurs_promotion = $valeurs['valeurs_promotion'] = unserialize($valeurs['valeurs_promotion']);
-	$valeurs['_saisies'] = promotions_definition_saisies($type_promotion, $valeurs);
+
+	$saisies = promotions_definition_saisies($type_promotion, $valeurs);
+	$valeurs['_saisies_generaux'] = $saisies['champs_generaux'];
+	$valeurs['_saisies_specifiques'] = $saisies['champs_specifiques'];
 
 	// initialiser les donnees spécifiques de la promotion
 	if (isset($valeurs['_saisies'][1]['saisies'])) {

@@ -5,21 +5,14 @@
 	[(#ENV{editable})
 	<form method='post' action='#ENV{action}'><div>
 		#ACTION_FORMULAIRE{#ENV{action}}
+
 		<input type='hidden' name='id_promotion' value='#ENV{id_promotion}' />
-		<ul>
-		#GENERER_SAISIES{#ENV{_saisies}}
-		</ul>
+		#GENERER_SAISIES{#ENV{_saisies_generaux}}
+		<INCLURE{fond=formulaires/inc-editer_promotion_champs_specifiques,env,ajax=promotion_champs_specifiques} />
+
 		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
 		<!--extra-->
 		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
 	</div></form>
 	]
 </div>
-
-<script type="text/javascript">
-  $(function(){                     
-        $(".auto_submit").change(function(event){  
- 			$(".formulaire_editer_promotion form").submit();
-          });          
-        });
-</script>

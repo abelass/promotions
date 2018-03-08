@@ -1,0 +1,19 @@
+#SET{saisies, #ENV{_saisies_specifiques}|table_valeur{#ENV{type_promotion}}}
+
+#GENERER_SAISIES{#GET{saisies}}
+
+<script type="text/javascript">
+	$(function() {
+		$("#champ_type_promotion").change(function(event) {
+			$("option:selected", $(this)).each(function() {
+				var type_promotion = $(this).attr('value');
+				ajaxReload('promotion_champs_specifiques', {
+					args : {
+						type_promotion : type_promotion,
+					}
+				});
+			});
+		});
+	});
+</script>
+

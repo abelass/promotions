@@ -41,8 +41,8 @@ if (! defined('_ECRIRE_INC_VERSION'))
 				// Charger la définition des champs
 				if ($defs = charger_fonction($nom, "promotions", true)) {
 					$promotion = $defs($valeurs);
-					if ($type_promotion == $nom and isset($promotion['saisies'])) {
-						$promotions_defs = array (
+					if (isset($promotion['saisies'])) {
+						$promotions_defs['champs_specifiques'][$nom] = array (
 							array (
 								'saisie' => 'fieldset',
 								'options' => array (
@@ -66,7 +66,7 @@ if (! defined('_ECRIRE_INC_VERSION'))
 		else {
 			include_spip('inc/promotion');
 			$saisies = promotions_champ_generaux($promotions_actives, $type_promotions_noms);
-			$saisies = array_merge($saisies, $promotions_defs);
+			$saisies = array_merge(array('champs_generaux' => $saisies), $promotions_defs);
 		}
 
 
