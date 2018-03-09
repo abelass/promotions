@@ -34,7 +34,7 @@ if (! defined('_ECRIRE_INC_VERSION'))
 						'saisie' => 'input',
 						'options' => array (
 							'nom' => 'titre',
-							'label' => _T('promotion:label_titre'),
+							'label' => _T('forum:label_titre'),
 							'obligatoire' => 'oui'
 						)
 					),
