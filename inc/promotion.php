@@ -107,22 +107,31 @@ if (! defined('_ECRIRE_INC_VERSION'))
 						)
 					),
 					/*array(
-					 'saisie' => 'selection',
-					 'options' => array(
-					 'nom' => 'rang',
-					 'label' => _T('promotion:label_rang'),
-					 'datas'=>$rangs,
-					 'obligatoire'=>'oui'
-					 )
-					 ),	*/
+					'saisie' => 'selection',
+					'options' => array(
+					'nom' => 'rang',
+					'label' => _T('promotion:label_rang'),
+					'datas'=>$rangs,
+					'obligatoire'=>'oui'
+					)
+					),	*/
+					array (
+						'saisie' => 'selection',
+						'options' => array (
+							'nom' => 'plugin_applicable',
+							'label' => _T('promotion:label_plugin_applicable'),
+							'obligatoire' => 'oui',
+							'datas' => $plugin_applicable,
+							'class' => 'auto_submit'
+						)
+					),
 					array (
 						'saisie' => 'selection',
 						'options' => array (
 							'nom' => 'type_promotion',
 							'label' => _T('promotion:label_type_promotion'),
 							'obligatoire' => 'oui',
-							'datas' => $type_promotions,
-							'class' => 'auto_submit'
+							'datas' => $type_promotions
 						)
 					)
 				)
