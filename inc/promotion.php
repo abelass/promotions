@@ -22,6 +22,10 @@ if (! defined('_ECRIRE_INC_VERSION'))
 	// Définition des champs
 	function promotions_champ_generaux($promotions_actives, $type_promotions) {
 
+		if (isset($GLOBALS['promotion_plugin']) && count($GLOBALS['promotion_plugin']) > 0) {
+			$plugin_applicable = $GLOBALS['promotion_plugin'];
+		}
+
 		return array (
 			array (
 				'saisie' => 'fieldset',
