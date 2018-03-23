@@ -30,6 +30,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array (
 	'label_non_cumulable' => 'Promotion non cumulable avec :',
 	'label_parametres_generales' => 'Paramètres générales',
 	'label_parametres_specifiques' => 'Paramètres spécifiques',
+	'label_plugin_applicable' => 'Applicable pour le/s plugin/s :',
 	'label_prix_base' => 'Prix de base :',
 	'label_reduction' => 'Réduction :',
 	'label_type_promotion' => 'Type promotion : ',

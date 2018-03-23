@@ -80,14 +80,13 @@ function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retou
 	while ( $data = sql_fetch($sql) ) {
 		$i ++;
 		$valeurs['promotions'][$data['id_promotion']] = $data['titre'];
-		// $valeurs['rangs'][$i]=$i.' ('.$data['titre'].')';
 	}
 
 	$valeurs_promotion = $valeurs['valeurs_promotion'] = unserialize($valeurs['valeurs_promotion']);
+	$valeurs['plugins_applicables'] = unserialize($valeurs['plugins_applicables']);
 
-	$saisies = promotions_definition_saisies($type_promotion, $valeurs);
-	$valeurs['_saisies_generaux'] = $saisies['champs_generaux'];
-	$valeurs['_saisies_specifiques'] = $saisies['champs_specifiques'];
+	$valeurs['_saisies_generaux'] = promotions_definition_saisies($type_promotion, $valeurs);
+
 
 	// initialiser les donnees spécifiques de la promotion
 	if (isset($valeurs['_saisies'][1]['saisies'])) {
@@ -155,6 +154,31 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
 	if (_request('date_debut') > '0000-00-00 00:00:00' and _request('date_fin') > '0000-00-00 00:00:00' and _request('date_debut') >= _request('date_fin'))
 		$erreurs['date_fin'] = _T('promotion:erreur_datefin');
 
+	// Préparer les données multis pour l'enregistrement.
+	if (!$erreurs) {
+		$promotion = charger_fonction(_request('type_promotion'), "promotions", true);
+
+		$valeurs_promotion = $promotion();
+
+		if (isset($valeurs_promotion['saisies'])) {
+			$promotion = array ();
+
+			foreach ($valeurs_promotion['saisies'] as $champ) {
+				$promotion[$champ['options']['nom']] = _request($champ['options']['nom']);
+			}
+		}
+
+		set_request('valeurs_promotion', serialize($promotion));
+
+		$non_cumulable = is_array(_request('non_cumulable')) ? serialize(_request('non_cumulable')) : serialize(array ());
+
+		set_request('non_cumulable', $non_cumulable);
+
+		if ($plugins_applicables =_request('plugins_applicables')) {
+			set_request('plugins_applicables', serialize($plugins_applicables));
+		}
+	}
+
 	return $erreurs;
 }
 
@@ -180,50 +204,6 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
  * @return array Retours des traitements
  */
 function formulaires_editer_promotion_traiter_dist($id_promotion = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
-	$type_promotion = _request('type_promotion');
-
-	$promotion = charger_fonction($type_promotion, "promotions", true);
-
-	$valeurs_promotion = $promotion();
-
-	if (isset($valeurs_promotion['saisies'])) {
-		$promotion = array ();
-
-		foreach ($valeurs_promotion['saisies'] as $champ) {
-			$promotion[$champ['options']['nom']] = _request($champ['options']['nom']);
-		}
-	}
-
-	set_request('valeurs_promotion', serialize($promotion));
-
-	$non_cumulable = is_array(_request('non_cumulable')) ? serialize(_request('non_cumulable')) : serialize(array ());
-
-	set_request('non_cumulable', $non_cumulable);
-
-	// établir le rang
-	/*
-	 * $rang_ancien=_request('rang_ancien');
-	 * $rang=_request('rang');
-	 *
-	 * if($rang_ancien>$rang){
-	 * $sql=sql_select('id_promotion','spip_promotions','statut!="poubelle" AND rang>='._request('rang'),'','rang');
-	 * while($data=sql_fetch($sql)){
-	 * $rang++;
-	 * sql_updateq('spip_promotions',array('rang'=>$rang),'id_promotion='.$data['id_promotion']);
-	 * }
-	 * }
-	 * else{
-	 * $sql=sql_select('id_promotion','spip_promotions','statut!="poubelle" AND rang>'._request('rang_ancien').' AND rang <='._request('rang'),'','rang DESC');
-	 * $rang=_request('rang');
-	 * while($data=sql_fetch($sql)){
-	 * $rang=$rang-1;
-	 * sql_updateq('spip_promotions',array('rang'=>$rang),'id_promotion='.$data['id_promotion']);
-	 * }
-	 *
-	 * }
-	 */
 
 	return formulaires_editer_objet_traiter('promotion', $id_promotion, '', $lier_trad, $retour, $config_fonc, $row, $hidden);
 }
-
-?>

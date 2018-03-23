@@ -1,0 +1,40 @@
+#SET{saisies, #ENV{type_promotion}|promotions_definition_saisies{#ENV}}
+
+#GENERER_SAISIES{#GET{saisies}}
+
+<script type="text/javascript">
+	$(function() {
+		$("#champ_plugins_applicables").change(function() {
+			$("option:selected", $(this)).each(function() {
+				var plugins_applicables = $(this).attr('value');
+				ajaxReload('promotion_champs_generaux', {
+					args : {
+						plugins_applicables : plugins_applicables,
+						type_promotion : type_promotion,
+					},
+					callback : function() {
+						var type_promotion = $('#champ_type_promotion').val();
+						ajaxReload('promotion_champs_specifiques', {
+							args : {
+								type_promotion : type_promotion,
+							}
+						});
+					}
+				});
+			});
+		});
+
+		$("#champ_type_promotion").change(function() {
+			$("option:selected", $(this)).each(function() {
+				var type_promotion = $(this).attr('value');
+				ajaxReload('promotion_champs_specifiques', {
+					args : {
+						type_promotion : type_promotion,
+					}
+				});
+			});
+		});
+	});
+
+</script>
+
