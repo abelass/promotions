@@ -19,7 +19,7 @@
 	<necessite nom="saisies"  compatibilite="[2.23.3;]" />
 	<necessite nom="verifier" compatibilite="[1.6.16;]" />
 
-	<utilise nom="reservation_evenement" compatibilite="[1.28.0;]" />
+	<utilise nom="reservation_evenement" compatibilite="[1.28.2;]" />
 
 	<pipeline nom="autoriser" inclure="promotions_autorisations.php" />
 
