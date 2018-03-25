@@ -148,5 +148,26 @@ function promotions_champ_generaux($promotions_actives, $type_promotions, $plugi
  * @return array
  */
 function promotion_types_promotions($types_promotions, $plugins_applicables_selection, $plugins_applicables_all) {
+	print_r($plugins_applicables_all);
+	print_r($types_promotions);
+	print_r($plugins_applicables_selection);
+
+
+	foreach (array_keys($types_promotions) as $type) {
+
+			if (
+					(
+						isset($plugins_applicables_all[$type]) AND
+						$plugin = $plugins_applicables_all[$type]
+					) AND
+					(
+						!$plugins_applicables_selection ||
+						in_array($plugin, $plugins_applicables_selection)
+					)
+					) {
+					unset($types_promotions[$type]);
+				}
+	}
 	return $types_promotions;
 }
+
