@@ -6,18 +6,27 @@
 	$(function() {
 		$("#champ_plugins_applicables").change(function() {
 			$("option:selected", $(this)).each(function() {
-				var plugins_applicables = $(this).attr('value');
+
+				// Obtenir les valeurs des champs généraux
+				var data = $('.formulaire_editer_promotion form .fieldset_general').find(
+								'input, select, radio, textarea, checkbox');
+				var values = {};
+				jQuery.each( data, function( i, field ) {
+					//console.log($(field).val());
+					var f = $(field).serialize();
+					console.log(f)
+						values[$(field).name()] = $(field).val();
+				});
+
+				// Recharger les champs
 				ajaxReload('promotion_champs_generaux', {
-					args : {
-						plugins_applicables : plugins_applicables,
-						type_promotion : type_promotion,
-					},
+					args : values
+					,
 					callback : function() {
-						var type_promotion = $('#champ_type_promotion').val();
+						// Adapter si changé après reload.
+						values.type_promotion = $('#champ_type_promotion').val();
 						ajaxReload('promotion_champs_specifiques', {
-							args : {
-								type_promotion : type_promotion,
-							}
+							args : values
 						});
 					}
 				});
