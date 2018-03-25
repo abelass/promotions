@@ -135,6 +135,18 @@ function promotions_champ_generaux($promotions_actives, $type_promotions, $plugi
 			)
 	);
 }
+
+/**
+ * Établit les types de promotion disponibles selon les plugins applicables.
+ *
+ * @param array $types_promotions
+ *        	Les types de promotion disponibles
+ * @param array $plugins_applicables_selection
+ *					Les plugins sélectionnés.
+ * @param array $plugins_applicables_all
+ *
+ * @return array
+ */
 function promotion_types_promotions($types_promotions, $plugins_applicables_selection, $plugins_applicables_all) {
 	return $types_promotions;
 }
