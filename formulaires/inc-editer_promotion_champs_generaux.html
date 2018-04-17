@@ -14,8 +14,7 @@
 						plugins_applicable: $(this).val(),
 				};
 				jQuery.each( data, function( i, field ) {
-					var f = $(field).serialize();
-						values[$(field).attr('name')] = $(field).val();
+					values[$(field).attr('name')] = $(field).val();
 				});
 
 				// Recharger les champs
