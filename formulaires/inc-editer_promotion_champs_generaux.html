@@ -10,12 +10,12 @@
 				// Obtenir les valeurs des champs généraux
 				var data = $('.formulaire_editer_promotion form .fieldset_general').find(
 								'input, select, radio, textarea, checkbox');
-				var values = {};
+				var values = {
+						plugins_applicable: $(this).val(),
+				};
 				jQuery.each( data, function( i, field ) {
-					//console.log($(field).val());
 					var f = $(field).serialize();
-					console.log(f)
-						values[$(field).name()] = $(field).val();
+						values[$(field).attr('name')] = $(field).val();
 				});
 
 				// Recharger les champs
