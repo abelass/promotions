@@ -6,27 +6,22 @@
 	$(function() {
 		$("#champ_plugins_applicables").change(function() {
 			var plugins_applicables = $(this).val();
-			console.log(plugins_applicables);
-			//$("option:selected", $(this)).each(function() {
-
-
-				// Recharger les champs
-				ajaxReload('promotion_champ_type_promotion', {
-					args : {
-						plugins_applicables : plugins_applicables,
-					}
-					,
-					callback : function() {
-						// Adapter si changé après reload.
-						type_promotion = $('#champ_type_promotion').val();
-						ajaxReload('promotion_champs_specifiques', {
-							args : {
-								type_promotion : type_promotion,
-							}
-						});
-					}
-				});
-			//});
+			// Recharger les champs
+			ajaxReload('promotion_champ_type_promotion', {
+				args : {
+					plugins_applicables : plugins_applicables,
+				}
+				,
+				callback : function() {
+					// Adapter si changé après reload.
+					type_promotion = $('#champ_type_promotion').val();
+					ajaxReload('promotion_champs_specifiques', {
+						args : {
+							type_promotion : type_promotion,
+						}
+					});
+				}
+			});
 		});
 	});
 

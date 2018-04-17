@@ -9,16 +9,13 @@
 <script type="text/javascript">
 	$(function() {
 		$("#champ_type_promotion").change(function() {
-			//$("option:selected", $(this)).each(function() {
-				var type_promotion = $(this).val();
-				ajaxReload('promotion_champs_specifiques', {
-					args : {
-						type_promotion : type_promotion,
-					}
-				});
+			var type_promotion = $(this).val();
+			ajaxReload('promotion_champs_specifiques', {
+				args : {
+					type_promotion : type_promotion,
+				}
 			});
-		//});
+		});
 	});
-
 </script>
 
