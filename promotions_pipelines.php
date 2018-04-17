@@ -32,7 +32,7 @@ function promotions_optimiser_base_disparus($flux) {
 /**
  * Intervenir sur les détails d'une réservation du plug reservation_evenement
  *
- * @pipeline evenement_donnees_detail
+ * @pipeline reservation_evenement_donnees_details
  *
  * @param array $flux
  *        	Données du pipeline
@@ -149,6 +149,16 @@ function promotions_post_insertion($flux) {
 
 	return $flux;
 }
+
+/**
+ * Active des modules de jquery ui
+ *
+ * @pipeline jqueryui_plugins
+ *
+ * @param array $scripts
+ *        	Données du pipeline
+ * @return array
+ */
 function promotions_jqueryui_plugins($scripts) {
 	$scripts[] = "jquery.ui.sortable";
 	return $scripts;
