@@ -29,7 +29,15 @@ function promotions_optimiser_base_disparus($flux) {
 	return $flux;
 }
 
-// Intervenir sur les détails d'une réservation du plug reservation_evenement
+/**
+ * Intervenir sur les détails d'une réservation du plug reservation_evenement
+ *
+ * @pipeline evenement_donnees_detail
+ *
+ * @param array $flux
+ *        	Données du pipeline
+ * @return array
+ */
 function promotions_reservation_evenement_donnees_details($flux) {
 	if (! _request('exec')) {
 		$date = date('Y-m-d H:i:s');
@@ -118,6 +126,16 @@ function promotions_reservation_evenement_donnees_details($flux) {
 
 	return $flux;
 }
+
+/**
+ * Intervient après l'insetion d'un objet
+ *
+ * @pipeline post_insertion
+ *
+ * @param array $flux
+ *        	Données du pipeline
+ * @return array
+ */
 function promotions_post_insertion($flux) {
 	$table = $flux['args']['table'];
 
