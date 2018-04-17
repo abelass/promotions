@@ -24,7 +24,7 @@ if (!defined('_ECRIRE_INC_VERSION'))
  * @return array Les champs de la promotion.
  */
 // Définition des champs
-function promotions_champ_generaux($promotions_actives, $type_promotions, $plugins_applicables) {
+function promotions_champ_generaux($promotions_actives, $plugins_applicables) {
 	if (isset($GLOBALS['promotion_plugin']) && count($GLOBALS['promotion_plugin']) > 0) {
 		$plugins_applicables = array (
 				'saisie' => 'selection_multiple',
@@ -122,52 +122,32 @@ function promotions_champ_generaux($promotions_actives, $type_promotions, $plugi
 									)
 							),
 							$plugins_applicables,
-							array (
-									'saisie' => 'selection',
-									'options' => array (
-											'nom' => 'type_promotion',
-											'label' => _T('promotion:label_type_promotion'),
-											'obligatoire' => 'oui',
-											'datas' => $type_promotions
-									)
-							)
 					)
 			)
 	);
 }
 
+
 /**
- * Établit les types de promotion disponibles selon les plugins applicables.
- *
- * @param array $types_promotions
- *        	Les types de promotion disponibles
- * @param array $plugins_applicables_selection
- *					Les plugins sélectionnés.
- * @param array $plugins_applicables_all
+ * Cherche les définitions des promotions disponibles.
  *
  * @return array
  */
-function promotion_types_promotions($types_promotions, $plugins_applicables_selection, $plugins_applicables_all) {
-	print_r($plugins_applicables_all);
-	print_r($types_promotions);
-	print_r($plugins_applicables_selection);
+function chercher_definitions_promotions() {
+	$definitions_promotions = find_all_in_path("promotions/", '^');
+	$promotions = array();
+	if (is_array($definitions_promotions)) {
+		foreach ($definitions_promotions as $fichier => $chemin) {
+			list ($nom, $extension) = explode('.', $fichier);
+			// Charger la définition des champs
 
-
-	foreach (array_keys($types_promotions) as $type) {
-
-			if (
-					(
-						isset($plugins_applicables_all[$type]) AND
-						$plugin = $plugins_applicables_all[$type]
-					) AND
-					(
-						!$plugins_applicables_selection ||
-						in_array($plugin, $plugins_applicables_selection)
-					)
-					) {
-					unset($types_promotions[$type]);
-				}
+			if ($defs = charger_fonction($nom, "promotions", true)) {
+				$promotion = $defs($valeurs);
+				$promotions[$nom] = $promotion;
+			}
+		}
 	}
-	return $types_promotions;
+
+	return $promotions;
 }
 

@@ -8,13 +8,11 @@
  * @licence    GNU/GPL
  * @package    SPIP\Promotions\Formulaires
  */
-if (! defined('_ECRIRE_INC_VERSION'))
+if (!defined('_ECRIRE_INC_VERSION'))
 	return;
 
 include_spip('inc/actions');
 include_spip('inc/editer');
-
-
 
 /**
  * Identifier le formulaire en faisant abstraction des paramètres qui ne représentent pas l'objet edité
@@ -34,7 +32,7 @@ include_spip('inc/editer');
  * @return string Hash du formulaire
  */
 function formulaires_editer_promotion_identifier_dist($id_promotion = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
-	return serialize(array (
+	return serialize(array(
 		intval($id_promotion)
 	));
 }
@@ -65,28 +63,11 @@ function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retou
 
 	$type_promotion = _request('type_promotion') ? _request('type_promotion') : (isset($valeurs['type_promotion']) ? $valeurs['type_promotion'] : '');
 
-	if ($id_promotion = _request('id_promotion')) {
-		$sql = sql_select('id_promotion,rang,titre', 'spip_promotions', 'id_promotion!=' . _request('id_promotion') . ' AND statut !="poubelle"', '', 'rang');
-	}
-
 	$valeurs['non_cumulable'] = _request('non_cumulable') ? _request('non_cumulable') : isset($valeurs['non_cumulable']) ? unserialize($valeurs['non_cumulable']) : '';
 
-	$valeurs['promotions'] = array (
-		'toutes' => _T('promotion:toutes_promotions')
-	);
-	$valeurs['rangs'] = array ();
-
-	$i = 0;
-	while ( $data = sql_fetch($sql) ) {
-		$i ++;
-		$valeurs['promotions'][$data['id_promotion']] = $data['titre'];
-	}
-
 	$valeurs_promotion = $valeurs['valeurs_promotion'] = unserialize($valeurs['valeurs_promotion']);
-	$valeurs['plugins_applicables'] = unserialize($valeurs['plugins_applicables']);
 
 	$valeurs['_saisies_generaux'] = promotions_definition_saisies($type_promotion, $valeurs);
-
 
 	// initialiser les donnees spécifiques de la promotion
 	if (isset($valeurs['_saisies'][1]['saisies'])) {
@@ -129,19 +110,19 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
 
 	$verifier = charger_fonction('verifier', 'inc');
 
-	foreach (array (
+	foreach (array(
 		'date_debut',
 		'date_fin'
 	) as $champ) {
 		if (_request($champ)) {
 			$normaliser = null;
-			if ($erreur = $verifier(_request($champ), 'date', array (
+			if ($erreur = $verifier(_request($champ), 'date', array(
 				'normaliser' => 'datetime'
 			), $normaliser)) {
 				$erreurs[$champ] = $erreur;
 				// si une valeur de normalisation a ete transmis, la prendre.
 			}
-			elseif (! is_null($normaliser)) {
+			elseif (!is_null($normaliser)) {
 				set_request($champ, $normaliser);
 				// si pas de normalisation ET pas de date soumise, il ne faut pas tenter d'enregistrer ''
 			}
@@ -161,7 +142,7 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
 		$valeurs_promotion = $promotion();
 
 		if (isset($valeurs_promotion['saisies'])) {
-			$promotion = array ();
+			$promotion = array();
 
 			foreach ($valeurs_promotion['saisies'] as $champ) {
 				$promotion[$champ['options']['nom']] = _request($champ['options']['nom']);
@@ -170,11 +151,11 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
 
 		set_request('valeurs_promotion', serialize($promotion));
 
-		$non_cumulable = is_array(_request('non_cumulable')) ? serialize(_request('non_cumulable')) : serialize(array ());
+		$non_cumulable = is_array(_request('non_cumulable')) ? serialize(_request('non_cumulable')) : serialize(array());
 
 		set_request('non_cumulable', $non_cumulable);
 
-		if ($plugins_applicables =_request('plugins_applicables')) {
+		if ($plugins_applicables = _request('plugins_applicables')) {
 			set_request('plugins_applicables', serialize($plugins_applicables));
 		}
 	}
@@ -204,6 +185,5 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
  * @return array Retours des traitements
  */
 function formulaires_editer_promotion_traiter_dist($id_promotion = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
-
 	return formulaires_editer_objet_traiter('promotion', $id_promotion, '', $lier_trad, $retour, $config_fonc, $row, $hidden);
 }

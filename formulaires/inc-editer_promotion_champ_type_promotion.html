@@ -1,0 +1,24 @@
+#SET{datas,#ENV{plugins_applicables}|promotion_types_promotions}
+[(#SAISIE{selection,type_promotion,
+	label=<:promotion:label_type_promotion:>,
+	obligatoire=oui,
+	datas=#GET{datas}
+})]
+
+
+<script type="text/javascript">
+	$(function() {
+		$("#champ_type_promotion").change(function() {
+			//$("option:selected", $(this)).each(function() {
+				var type_promotion = $(this).val();
+				ajaxReload('promotion_champs_specifiques', {
+					args : {
+						type_promotion : type_promotion,
+					}
+				});
+			});
+		//});
+	});
+
+</script>
+

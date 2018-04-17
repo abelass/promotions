@@ -5,42 +5,28 @@
 <script type="text/javascript">
 	$(function() {
 		$("#champ_plugins_applicables").change(function() {
-			$("option:selected", $(this)).each(function() {
+			var plugins_applicables = $(this).val();
+			console.log(plugins_applicables);
+			//$("option:selected", $(this)).each(function() {
 
-				// Obtenir les valeurs des champs généraux
-				var data = $('.formulaire_editer_promotion form .fieldset_general').find(
-								'input, select, radio, textarea, checkbox');
-				var values = {
-						plugins_applicable: $(this).val(),
-				};
-				jQuery.each( data, function( i, field ) {
-					values[$(field).attr('name')] = $(field).val();
-				});
 
 				// Recharger les champs
-				ajaxReload('promotion_champs_generaux', {
-					args : values
+				ajaxReload('promotion_champ_type_promotion', {
+					args : {
+						plugins_applicables : plugins_applicables,
+					}
 					,
 					callback : function() {
 						// Adapter si changé après reload.
-						values.type_promotion = $('#champ_type_promotion').val();
+						type_promotion = $('#champ_type_promotion').val();
 						ajaxReload('promotion_champs_specifiques', {
-							args : values
+							args : {
+								type_promotion : type_promotion,
+							}
 						});
 					}
 				});
-			});
-		});
-
-		$("#champ_type_promotion").change(function() {
-			$("option:selected", $(this)).each(function() {
-				var type_promotion = $(this).attr('value');
-				ajaxReload('promotion_champs_specifiques', {
-					args : {
-						type_promotion : type_promotion,
-					}
-				});
-			});
+			//});
 		});
 	});
 
