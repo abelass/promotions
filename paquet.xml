@@ -12,7 +12,7 @@
 	<nom>Promotions</nom>
 
 
-	<auteur lien='http://websimple.be'>Rainer</auteur>
+	<auteur lien='https://websimple.be'>Rainer Müller</auteur>
 
 	<licence>GNU/GPL</licence>
 
@@ -28,7 +28,6 @@
 	<pipeline nom="declarer_tables_auxiliaires" inclure="base/promotions.php" />
 	<pipeline nom="optimiser_base_disparus" inclure="promotions_pipelines.php" />
 	<pipeline nom="jqueryui_plugins" inclure="promotions_pipelines.php" />
-	<pipeline nom="panier2commande_prix" inclure="promotions_pipelines.php" />
 
 	<pipeline nom="reservation_evenement_donnees_details" inclure="promotions_pipelines.php" />
 	<pipeline nom="post_insertion" inclure="promotions_pipelines.php" />
