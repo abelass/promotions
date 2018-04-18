@@ -177,8 +177,14 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
 
 		set_request('non_cumulable', $non_cumulable);
 
-		if ($plugins_applicables = _request('plugins_applicables')) {
+		if ($plugins_applicables = _request('plugins_applicables') and
+					isset($plugins_applicables[0]) and
+					!empty($plugins_applicables[0])
+				) {
 			set_request('plugins_applicables', serialize($plugins_applicables));
+		}
+		else {
+			set_request('plugins_applicables', '');
 		}
 	}
 
