@@ -49,7 +49,7 @@ function promotions_champ_generaux($promotions_actives, $plugins_applicables) {
 									'saisie' => 'input',
 									'options' => array (
 											'nom' => 'titre',
-											'label' => _T('forum:label_titre'),
+										'label' => _T('ecrire:info_titre'),
 											'obligatoire' => 'oui'
 									)
 							),
