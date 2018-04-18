@@ -77,10 +77,9 @@ function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retou
 		_request('plugins_applicables') :
 		(
 			isset($valeurs['plugins_applicables']) ?
-			userialize($valeurs['plugins_applicables']) :
+			unserialize($valeurs['plugins_applicables']) :
 			''
 		);
-
 
 	$valeurs_promotion = $valeurs['valeurs_promotion'] = unserialize($valeurs['valeurs_promotion']);
 
