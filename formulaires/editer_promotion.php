@@ -61,7 +61,12 @@ function formulaires_editer_promotion_identifier_dist($id_promotion = 'new', $re
 function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
 	$valeurs = formulaires_editer_objet_charger('promotion', $id_promotion, '', $lier_trad, $retour, $config_fonc, $row, $hidden);
 
-	$type_promotion = _request('type_promotion') ? _request('type_promotion') : (isset($valeurs['type_promotion']) ? $valeurs['type_promotion'] : '');
+	$type_promotion = _request('type_promotion')
+		? _request('type_promotion') :
+		(isset($valeurs['type_promotion'])
+				? $valeurs['type_promotion'] :
+				''
+		);
 	$valeurs['non_cumulable'] = _request('non_cumulable')
 		? _request('non_cumulable') :
 		(isset($valeurs['non_cumulable'])
@@ -84,7 +89,13 @@ function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retou
 	if (isset($valeurs['_saisies'][1]['saisies'])) {
 		foreach ($valeurs['_saisies'][1]['saisies'] as $saisie) {
 			if (isset($saisie['options']['nom'])) {
-				$valeurs[$saisie['options']['nom']] = _request($saisie['options']['nom']) ? _request($saisie['options']['nom']) : (isset($valeurs_promotion[$saisie['options']['nom']]) ? $valeurs_promotion[$saisie['options']['nom']] : '');
+				$valeurs[$saisie['options']['nom']] =
+					_request($saisie['options']['nom'])
+					? _request($saisie['options']['nom']) :
+					(isset($valeurs_promotion[$saisie['options']['nom']])
+							? $valeurs_promotion[$saisie['options']['nom']]
+							: ''
+					);
 			}
 		}
 	}
