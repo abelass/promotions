@@ -47,13 +47,13 @@ function promotions_reservation_evenement_donnees_details($flux) {
 
 		while ($data = sql_fetch($sql)) {
 			$non_cumulable = isset($data['non_cumulable']) ? unserialize($data['non_cumulable']) : array();
-			$plugins_applicables = isset($data['plugins_applicables']) ? unserialize($data['plugins_applicables']) : array();
+			$plugins_applicables = isset($data['plugins_applicables']) ? unserialize($data['plugins_applicables']) : '';
 			$id_promotion = $data['id_promotion'];
 			$evenements_exclus_promotion = isset($evenements_exclus[$id_promotion]) ? $evenements_exclus[$id_promotion] : array();
 			$exclure_toutes = (isset($evenements_exclus['toutes'])) ? $evenements_exclus['toutes'] : '';
 			if ($details = charger_fonction('action', 'promotions/' . $data['type_promotion'], true) and
 					(
-						count($plugins_applicables) == 0 or
+						!$plugins_applicables or
 						in_array('reservation_evenement', $plugins_applicables)
 					) and
 					(
