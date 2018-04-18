@@ -26,6 +26,11 @@
 	<span dir='#LANG_DIR' class='#EDIT{type_promotion} type_promotion'>(#TYPE_PROMOTION)</span>
 </div>]
 
+[<div class="champ contenu_plugins_applicables[ (#PLUGINS_APPLICABLES*|strlen|?{'',vide})]">
+	<label><:promotion:label_plugin_applicable:></label>
+	<span dir='#LANG_DIR' class='#EDIT{plugins_applicables} plugins_applicables'>(#PLUGINS_APPLICABLES|unserialize|implode{', '})</span>
+</div>]
+
 [<div class="champ contenu_reduction[ (#REDUCTION*|strlen|?{'',vide})]">
 	<label><:promotion:label_reduction:></label>
 	<span dir='#LANG_DIR' class='#EDIT{reduction} reduction'>(#REDUCTION)</span>
