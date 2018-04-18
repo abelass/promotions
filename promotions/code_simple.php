@@ -21,13 +21,9 @@ function promotions_code_simple_dist($flux = '') {
 	if (!isset($reservations['field']['code_promotion'])) {
 
 		$saisies[0]['options']['disable'] = 'disabled';
-		$saisies[1] = array (
-			'saisie' => 'explication',
-			'options' => array (
-				'texte' =>_T('promotion:explication_code_champ_manquant'),
-				'conteneur_class' => 'erreur',
-			)
-		);
+		$saisies[0]['options']['explication'] = _T('promotion:explication_code_champ_manquant');
+
+
 	}
 
 	return array (
