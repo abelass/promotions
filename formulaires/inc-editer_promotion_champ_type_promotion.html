@@ -1,4 +1,9 @@
-#SET{datas,#ENV{plugins_applicables}|promotion_types_promotions}
+#SET{datas,#ENV{plugins_applicables}
+	|promotion_types_promotions{
+		#ARRAY{plugins_applicables,#ENV{plugins_applicables}}
+	}
+}
+
 [(#SAISIE{selection,type_promotion,
 	label=<:promotion:label_type_promotion:>,
 	obligatoire=oui,

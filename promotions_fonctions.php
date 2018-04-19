@@ -46,7 +46,7 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 	$nombre_promotions = isset($valeurs['nombre_promotions']) ? $valeurs['nombre_promotions'] : 0;
 	$plugins_applicables_selection = isset($valeurs['plugins_applicables']) ? $valeurs['plugins_applicables'] : '';
 
-	$promotions = chercher_definitions_promotions();
+	$promotions = chercher_definitions_promotions($valeurs);
 
 
 	if (is_array($promotions)) {
@@ -100,13 +100,10 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
  *
  * @return array
  */
-function promotion_types_promotions($plugins_applicables) {
+function promotion_types_promotions($plugins_applicables, $valeurs) {
 	include_spip('inc/promotion');
-	/*print_r($plugins_applicables_all);
-	print_r($types_promotions);
-	print_r($plugins_applicables_selection);*/
 
-	$promotions = chercher_definitions_promotions();
+	$promotions = chercher_definitions_promotions($valeurs);
 
 
 	if (is_array($promotions)) {

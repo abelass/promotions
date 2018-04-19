@@ -133,7 +133,7 @@ function promotions_champ_generaux($promotions_actives, $plugins_applicables) {
  *
  * @return array
  */
-function chercher_definitions_promotions() {
+function chercher_definitions_promotions($valeurs) {
 	$definitions_promotions = find_all_in_path("promotions/", '^');
 	$promotions = array();
 	if (is_array($definitions_promotions)) {
