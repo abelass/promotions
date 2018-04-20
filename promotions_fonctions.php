@@ -102,11 +102,10 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
  */
 function promotion_types_promotions($plugins_applicables, $valeurs) {
 	include_spip('inc/promotion');
-
 	$promotions = chercher_definitions_promotions($valeurs);
 
-
 	if (is_array($promotions)) {
+
 		// Chercher les fichiers promotions
 		$types_promotions = array();
 		$promotions_defs = array();
@@ -126,14 +125,14 @@ function promotion_types_promotions($plugins_applicables, $valeurs) {
 
 	foreach (array_keys($types_promotions) as $type) {
 		if (
-				(
+					(
 						isset($plugins_applicables_all[$type]) AND
 						$plugin = $plugins_applicables_all[$type]
-						) AND
-				(
+					) AND
+					(
 						!$plugins_applicables OR
 						!in_array($plugin, $plugins_applicables)
-						)
+					)
 				) {
 			unset($types_promotions[$type]);
 		}
