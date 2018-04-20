@@ -1,11 +1,11 @@
 <?php
 if (! defined("_ECRIRE_INC_VERSION"))
 	return;
-	
-	// Définition des champs pour le détail du formulaire promotion du plugin promotions (https://github.com/abelass/promotions)
+
+// Définition des champs pour le détail du formulaire promotion du plugin promotions (https://github.com/abelass/promotions)
 function promotions_promotion_simple_dist($flux = '') {
 	return array (
-		'nom' => _T('promotion:nom_promotion_simple') 
+		'nom' => _T('promotion:nom_promotion_simple')
 	);
 }
 
