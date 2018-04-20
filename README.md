@@ -3,12 +3,12 @@ Promotions
 
 Permet de créer des promotions
 
-## Pour le moment fonctionnel pour des:
+## Compatibilité:
 
 - __Réservations__ (Réservation d’événements - https://plugins.spip.net/reservation_evenement.html)
-	avec le plugin __Promotion réservations (https://github.com/abelass/promotions_reservations)
+	avec le plugin __Promotion réservations__ (https://github.com/abelass/promotions_reservations)
 - __Paniers__ ensemble avec __commandes__ en utilisant le plugin __Promotions commande__ (https://github.com/abelass/promotions_commandes)
-	des promotions peuvent être déclarés dans un fichier promotions/ma_promotion.php (example https://github.com/abelass/reservation_evenement/blob/master/promotions/multiples_evenements.php)
+	des promotions peuvent être déclarés dans un fichier promotions/ma_promotion.php
 
 ## Édition
 
@@ -22,7 +22,7 @@ dans l'édition de la promotion.
 
 Chaque promotions peut également prévoir des champs spéficiques.
 
-L'ordre d'éxecution des promotions dépend de son numéro titre. 
+L'ordre d'éxecution des promotions dépend de son numéro titre.
 Il peut être facilement modifié en déplacant une promotion dans la liste des promotions (drag & drop).
 Si les promotions ne sont pas cumulables, seulement la première applicables sera exécutée.
 
