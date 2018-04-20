@@ -8,7 +8,7 @@
  * @licence    GNU/GPL
  * @package    SPIP\Promotions\Fonctions
  */
-if (! defined('_ECRIRE_INC_VERSION'))
+if (!defined('_ECRIRE_INC_VERSION'))
 	return;
 
 /**
@@ -18,7 +18,7 @@ if (! defined('_ECRIRE_INC_VERSION'))
  *        	Le type de promotion.
  * @param array $valeurs
  *        	Des valeurs par défaut.
- * @options array options:
+ * @param array options:
  *                - champs_specifiques: si oui filtre le tableau pour obtenir uniquement les champs
  *                  spécifiques.
  *
@@ -28,9 +28,11 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 	include_spip('inc/promotion');
 
 	// Les promotions actives.
-	$where = array('statut !="poubelle"');
-	if ($id_promotion = _request('id_promotion') ) {
-		$where[] ='id_promotion!=' . _request('id_promotion');
+	$where = array(
+		'statut !="poubelle"'
+	);
+	if ($id_promotion = _request('id_promotion')) {
+		$where[] = 'id_promotion!=' . _request('id_promotion');
 	}
 
 	$sql = sql_select('id_promotion,rang,titre', 'spip_promotions', $where, '', 'rang');
@@ -48,7 +50,6 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 
 	$promotions = chercher_definitions_promotions($valeurs);
 
-
 	if (is_array($promotions)) {
 		// Chercher les fichiers promotions
 		$type_promotions_noms = array();
@@ -61,8 +62,7 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 						'saisie' => 'fieldset',
 						'options' => array(
 							'nom' => 'specifique',
-							'label' => _T(
-									'promotion:label_parametres_specifiques')
+							'label' => _T('promotion:label_parametres_specifiques')
 						),
 						'saisies' => $definition['saisies']
 					)
@@ -73,17 +73,14 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 
 	// Obtenir uniquement les champs spécifiques
 	if (isset($options['champs_specifiques'])) {
-		//print_r($type_promotion);
-		//if ($type_promotion) {
-			$saisies = $promotions_saisies[$type_promotion];
-		//}
+		// print_r($type_promotion);
+		// if ($type_promotion) {
+		$saisies = $promotions_saisies[$type_promotion];
+		// }
 	} // Sinon les champs généraux
 	else {
 		include_spip('inc/promotion');
-		$saisies = promotions_champ_generaux(
-				$promotions_actives,
-				$plugins_applicables,
-				$plugins_applicables_nom);
+		$saisies = promotions_champ_generaux($promotions_actives, $plugins_applicables, $plugins_applicables_nom);
 	}
 
 	return $saisies;
@@ -92,11 +89,10 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 /**
  * Établit les types de promotion disponibles selon les plugins applicables.
  *
- * @param array $types_promotions
- *        	Les types de promotion disponibles
  * @param array $plugins_applicables_selection
- *					Les plugins sélectionnés.
- * @param array $plugins_applicables_all
+ *        	Les plugins sélectionnés.
+ * @param $valeurs $plug
+ *        	Les données du contexte.
  *
  * @return array
  */
@@ -124,16 +120,7 @@ function promotion_types_promotions($plugins_applicables, $valeurs) {
 	}
 
 	foreach (array_keys($types_promotions) as $type) {
-		if (
-					(
-						isset($plugins_applicables_all[$type]) AND
-						$plugin = $plugins_applicables_all[$type]
-					) AND
-					(
-						!$plugins_applicables OR
-						!in_array($plugin, $plugins_applicables)
-					)
-				) {
+		if ((isset($plugins_applicables_all[$type]) and $plugin = $plugins_applicables_all[$type]) and (!$plugins_applicables or !in_array($plugin, $plugins_applicables))) {
 			unset($types_promotions[$type]);
 		}
 	}
