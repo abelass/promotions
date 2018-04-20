@@ -148,5 +148,3 @@ function promotions_declarer_tables_auxiliaires($tables) {
 
 	return $tables;
 }
-
-?>
