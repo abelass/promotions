@@ -163,7 +163,7 @@ function promotions_actives($exclus = '') {
 		$where[] = 'id_promotion !IN (' . $exclus . ')';
 	}
 
-	$sql = sql_select('id_promotion,rang,titre', 'spip_promotions', $where, '', 'rang');
+	$sql = sql_select('*', 'spip_promotions', $where, '', 'rang');
 
 	$promotions_actives = array();
 
