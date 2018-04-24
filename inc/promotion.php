@@ -151,3 +151,25 @@ function chercher_definitions_promotions($valeurs) {
 	return $promotions;
 }
 
+function promotions_actives($exclus = '') {
+	$where = array(
+		'statut !="poubelle"'
+	);
+	if ($exclu) {
+		if (is_array($exclus)) {
+			$exclus = implode(',', $exclus);
+		}
+
+		$where[] = 'id_promotion !IN (' . $exclus . ')';
+	}
+
+	$sql = sql_select('id_promotion,rang,titre', 'spip_promotions', $where, '', 'rang');
+
+	$promotions_actives = array();
+
+	while ($data = sql_fetch($sql)) {
+		$promotions_actives[$data['id_promotion']] = $data;
+	}
+
+	return $promotions_actives;
+}

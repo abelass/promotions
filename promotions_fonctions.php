@@ -28,20 +28,14 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 	include_spip('inc/promotion');
 
 	// Les promotions actives.
-	$where = array(
-		'statut !="poubelle"'
-	);
-	if ($id_promotion = _request('id_promotion')) {
-		$where[] = 'id_promotion!=' . _request('id_promotion');
-	}
-
-	$sql = sql_select('id_promotion,rang,titre', 'spip_promotions', $where, '', 'rang');
+	$data_promotions_actives = promotions_actives(_request('id_promotion'));
 
 	$promotions_actives = array(
 		'toutes' => _T('promotion:toutes_promotions')
 	);
-	while ($data = sql_fetch($sql)) {
-		$promotions_actives[$data['id_promotion']] = $data['titre'];
+
+	foreach ($data_promotions_actives as $id_promotion => $data) {
+		$promotions_actives[$id_promotion] = $data['titre'];
 	}
 
 	$rangs = isset($valeurs['rangs']) ? $valeurs['rangs'] : '';
