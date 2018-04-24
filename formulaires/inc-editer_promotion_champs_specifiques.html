@@ -1,9 +1,14 @@
-#SET{saisies, #ENV{type_promotion}
+[(#SET{saisies, #ENV{type_promotion}
 	|promotions_definition_saisies{
-		#ARRAY{plugins_applicables,#ENV{plugins_applicables}},
+		#ENV**,
 		#ARRAY{champs_specifiques,oui}
 	}
-}
+})]
+
+<BOUCLE_saisies(DATA){source tableau, #GET{saisies}|table_valeur{0}|table_valeur{saisies}}>
+	#SET{nom,#OPTIONS|table_valeur{nom}}
+	[(#ENV{#GET{nom},#ENV{_valeurs_promotion}|table_valeur{#GET{nom}}}|setenv{#GET{nom}})]
+</BOUCLE_saisies>
 
 #GENERER_SAISIES{#GET{saisies}}
 
