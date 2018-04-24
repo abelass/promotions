@@ -73,11 +73,11 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 
 	// Obtenir uniquement les champs spécifiques
 	if (isset($options['champs_specifiques'])) {
-		// print_r($type_promotion);
-		// if ($type_promotion) {
+		if ($type_promotion and isset($promotions_saisies[$type_promotion])) {
 		$saisies = $promotions_saisies[$type_promotion];
-		// }
-	} // Sinon les champs généraux
+		}
+	}
+	// Sinon les champs généraux
 	else {
 		include_spip('inc/promotion');
 		$saisies = promotions_champ_generaux($promotions_actives, $plugins_applicables, $plugins_applicables_nom);
