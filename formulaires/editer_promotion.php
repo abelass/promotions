@@ -81,24 +81,7 @@ function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retou
 			''
 		);
 
-	$valeurs_promotion = $valeurs['valeurs_promotion'] = unserialize($valeurs['valeurs_promotion']);
-
-	$valeurs['_saisies_generaux'] = promotions_definition_saisies($type_promotion, $valeurs);
-
-	// initialiser les donnees spécifiques de la promotion
-	if (isset($valeurs['_saisies'][1]['saisies'])) {
-		foreach ($valeurs['_saisies'][1]['saisies'] as $saisie) {
-			if (isset($saisie['options']['nom'])) {
-				$valeurs[$saisie['options']['nom']] =
-					_request($saisie['options']['nom']) ?
-					_request($saisie['options']['nom']) :
-					(isset($valeurs_promotion[$saisie['options']['nom']]) ?
-						$valeurs_promotion[$saisie['options']['nom']] :
-						''
-					);
-			}
-		}
-	}
+	$valeurs_promotion = $valeurs['_valeurs_promotion'] = unserialize($valeurs['valeurs_promotion']);
 
 	return $valeurs;
 }
