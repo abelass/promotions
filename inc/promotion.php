@@ -8,7 +8,7 @@
  * @licence    GNU/GPL
  * @package    SPIP\Promotions\Inc\Promotions
  */
-if (!defined('_ECRIRE_INC_VERSION'))
+if (! defined('_ECRIRE_INC_VERSION'))
 	return;
 
 /**
@@ -19,8 +19,7 @@ if (!defined('_ECRIRE_INC_VERSION'))
  * @param array $plugins_applicables
  *        	Les plugins applicables par définition.
  *
- * @return array
- *          Les champs de la promotion.
+ * @return array Les champs de la promotion.
  */
 // Définition des champs
 function promotions_champ_generaux($promotions_actives, $plugins_applicables) {
@@ -31,7 +30,6 @@ function promotions_champ_generaux($promotions_actives, $plugins_applicables) {
 				'nom' => 'plugins_applicables',
 				'label' => _T('promotion:label_plugin_applicable'),
 				'datas' => $GLOBALS['promotion_plugin'],
-				'class' => 'auto_submit'
 			)
 		);
 	}
@@ -138,7 +136,7 @@ function chercher_definitions_promotions($valeurs) {
 	$promotions = array();
 	if (is_array($definitions_promotions)) {
 		foreach ($definitions_promotions as $fichier => $chemin) {
-			list($nom, $extension) = explode('.', $fichier);
+			list ($nom, $extension) = explode('.', $fichier);
 			// Charger la définition des champs
 
 			if ($defs = charger_fonction($nom, "promotions", true)) {
@@ -159,22 +157,59 @@ function chercher_definitions_promotions($valeurs) {
  */
 function promotions_enregistres($options = array()) {
 	$select = '*';
-	$where = 'statut LIKE "publie"';
+	$where = 'statut = "publie"';
 	$groupby = '';
 	$orderby = 'rang';
 	$limit = '';
 
-	foreach($options as $option => $valeur) {
+	// Surcharge des valeurs par défaut si défini dans $options.
+	foreach ($options as $option => $valeur) {
 		$$option = $valeur;
 	}
 
-	$sql = sql_select($champs, 'spip_promotions', $where, $groupby, $orderby, $limit);
+	$sql = sql_select($select, 'spip_promotions', $where, $groupby, $orderby, $limit);
 
 	$promotions = array();
-
+	$i = 0;
 	while ($data = sql_fetch($sql)) {
-		$promotions[$data['id_promotion']] = $data;
+		$index = $i;
+		$i ++;
+		if (isset($data['id_promotion'])) {
+			$index = $data['id_promotion'];
+		}
+
+		$promotions[$index] = $data;
 	}
 
 	return $promotions;
+}
+
+/**
+ * Détermine si la promotion code_simple est actif pour un plugin déterminé
+ *
+ * @param string $plugin
+ *        	Nom du plugin
+ *
+ * @return boolean
+ */
+function promotion_code_simple_actif_plugin($plugin) {
+	$promotion_actif = false;
+	if ($promotion_actif = _request('forcer')) {
+		$promotions_actives = promotions_enregistres(array(
+			'select' => 'plugins_applicables',
+			'where' => array(
+				'type_promotion="code_simple"',
+				'statut="publie"'
+			)
+		));
+
+		foreach ($promotions_actives as $plugins_applicables) {
+			if (in_array($plugin, $plugins_applicables)) {
+				$promotion_actif = true;
+				break;
+			}
+		}
+	}
+
+	return $promotion_actif;
 }

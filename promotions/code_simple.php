@@ -5,7 +5,10 @@ if (! defined("_ECRIRE_INC_VERSION"))
 	// Définition des champs pour le détail du formulaire promotion du plugin promotions (https://github.com/abelass/promotions)
 function promotions_code_simple_dist($flux) {
 	if (isset($flux['plugins_applicables']) and $plugins_applicables = $flux['plugins_applicables']) {
+		include_spip('inc/cextras');
+
 		foreach($plugins_applicables AS $plugin) {
+			print $plugin;
 			if ($plugin != 'commandes' and $objet = lister_tables_objets_sql('spip_' . $plugin)) {
 				$saisies = array(
 					array (
@@ -18,10 +21,19 @@ function promotions_code_simple_dist($flux) {
 					)
 				);
 
-				// nécessite un champ extra "code_promotion"
+				// Nécessite un champ extra "code_promotion"
 				if (!isset($objet['field']['code_promotion'])) {
-					$saisies[]['options']['disable'] = 'disabled';
-					$saisies[]['options']['explication'] = _T('promotion:explication_code_champ_manquant');
+					include_spip('base/promotions_' . $plugin);
+					$function = $plugin . '_declarer_champs_extras';
+					if (function_exists('cextras_api_upgrade')) {
+						set_request('forcer', true);
+						$maj = array();
+						cextras_api_upgrade($function(), $maj['create']);
+					}
+					else {
+						$saisies[]['options']['disable'] = 'disabled';
+						$saisies[]['options']['explication'] = _T('promotion:explication_code_champ_manquant');
+					}
 				}
 				return array (
 					'nom' => _T('promotion:nom_code_simple'),
