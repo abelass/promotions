@@ -151,25 +151,30 @@ function chercher_definitions_promotions($valeurs) {
 	return $promotions;
 }
 
-function promotions_actives($exclus = '') {
-	$where = array(
-		'statut !="poubelle"'
-	);
-	if ($exclu) {
-		if (is_array($exclus)) {
-			$exclus = implode(',', $exclus);
-		}
+/**
+ * Retourne un tableau des promotions enregistrés
+ *
+ * @param array $options
+ * @return array
+ */
+function promotions_enregistres($options = array()) {
+	$select = '*';
+	$where = 'statut LIKE "publie"';
+	$groupby = '';
+	$orderby = 'rang';
+	$limit = '';
 
-		$where[] = 'id_promotion !IN (' . $exclus . ')';
+	foreach($options as $option => $valeur) {
+		$$option = $valeur;
 	}
 
-	$sql = sql_select('*', 'spip_promotions', $where, '', 'rang');
+	$sql = sql_select($champs, 'spip_promotions', $where, $groupby, $orderby, $limit);
 
-	$promotions_actives = array();
+	$promotions = array();
 
 	while ($data = sql_fetch($sql)) {
-		$promotions_actives[$data['id_promotion']] = $data;
+		$promotions[$data['id_promotion']] = $data;
 	}
 
-	return $promotions_actives;
+	return $promotions;
 }

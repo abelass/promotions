@@ -28,7 +28,17 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 	include_spip('inc/promotion');
 
 	// Les promotions actives.
-	$data_promotions_actives = promotions_actives(_request('id_promotion'));
+	// Les promotions actives.
+	$where = array(
+		'statut !="poubelle"'
+	);
+	if ($id_promotion = _request('id_promotion')) {
+		$where[] = 'id_promotion!=' . _request('id_promotion');
+	}
+	$data_promotions_actives = promotions_enregistres(array(
+		'select' => 'id_promotion,rang,titre',
+		'where' => $where,
+	));
 
 	$promotions_actives = array(
 		'toutes' => _T('promotion:toutes_promotions')
