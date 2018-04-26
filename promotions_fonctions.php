@@ -18,9 +18,10 @@ if (!defined('_ECRIRE_INC_VERSION'))
  *        	Le type de promotion.
  * @param array $valeurs
  *        	Des valeurs par défaut.
- * @param array options:
- *                - champs_specifiques: si oui filtre le tableau pour obtenir uniquement les champs
- *                  spécifiques.
+ * @param
+ *        	array options:
+ *        	- champs_specifiques: si oui filtre le tableau pour obtenir uniquement les champs
+ *        	spécifiques.
  *
  * @return array Les champs de la promotion.
  */
@@ -37,7 +38,7 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 	}
 	$data_promotions_actives = promotions_enregistres(array(
 		'select' => 'id_promotion,rang,titre',
-		'where' => $where,
+		'where' => $where
 	));
 
 	$promotions_actives = array(
@@ -58,7 +59,6 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 		// Chercher les fichiers promotions
 		$type_promotions_noms = array();
 		$promotions_saisies = array();
-
 		foreach ($promotions as $nom => $definition) {
 			if (isset($definition['saisies'])) {
 				$promotions_saisies[$nom] = array(
@@ -78,10 +78,9 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 	// Obtenir uniquement les champs spécifiques
 	if (isset($options['champs_specifiques'])) {
 		if ($type_promotion and isset($promotions_saisies[$type_promotion])) {
-		$saisies = $promotions_saisies[$type_promotion];
+			$saisies = $promotions_saisies[$type_promotion];
 		}
-	}
-	// Sinon les champs généraux
+	} // Sinon les champs généraux
 	else {
 		include_spip('inc/promotion');
 		$saisies = promotions_champ_generaux($promotions_actives, $plugins_applicables, $plugins_applicables_nom);
@@ -124,7 +123,10 @@ function promotion_types_promotions($plugins_applicables, $valeurs) {
 	}
 
 	foreach (array_keys($types_promotions) as $type) {
-		if ((isset($plugins_applicables_all[$type]) and $plugin = $plugins_applicables_all[$type]) and (!$plugins_applicables or !in_array($plugin, $plugins_applicables))) {
+		if ((isset($plugins_applicables_all[$type]) and
+			$plugin = $plugins_applicables_all[$type]) and
+			(!$plugins_applicables or !in_array($plugin, $plugins_applicables))
+			) {
 			unset($types_promotions[$type]);
 		}
 	}

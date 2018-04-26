@@ -21,7 +21,6 @@ if (! defined('_ECRIRE_INC_VERSION'))
  *
  * @return array Les champs de la promotion.
  */
-// Définition des champs
 function promotions_champ_generaux($promotions_actives, $plugins_applicables) {
 	if (isset($GLOBALS['promotion_plugin']) && count($GLOBALS['promotion_plugin']) > 0) {
 		$plugins_applicables = array(
@@ -88,7 +87,7 @@ function promotions_champ_generaux($promotions_actives, $plugins_applicables) {
 					'options' => array(
 						'nom' => 'type_reduction',
 						'label' => _T('promotion:label_type_reduction'),
-						'datas' => array(
+						'data' => array(
 							'pourcentage' => _T('promotion:pourcentage'),
 							'absolu' => _T('promotion:absolu')
 						),
@@ -101,7 +100,7 @@ function promotions_champ_generaux($promotions_actives, $plugins_applicables) {
 						'nom' => 'prix_base',
 						'label' => _T('promotion:label_prix_base'),
 						'explication' => _T('promotion:explication_prix_base'),
-						'datas' => array(
+						'data' => array(
 							'prix_original' => _T('promotion:prix_original'),
 							'prix_reduit' => _T('promotion:prix_reduit')
 						),
@@ -114,7 +113,7 @@ function promotions_champ_generaux($promotions_actives, $plugins_applicables) {
 					'options' => array(
 						'nom' => 'non_cumulable',
 						'label' => _T('promotion:label_non_cumulable'),
-						'datas' => $promotions_actives,
+						'data' => $promotions_actives,
 						'class' => 'chosen'
 					)
 				),
@@ -140,6 +139,9 @@ function chercher_definitions_promotions($valeurs) {
 			// Charger la définition des champs
 
 			if ($defs = charger_fonction($nom, "promotions", true)) {
+				if (is_string($valeurs)) {
+					$valeurs = unserialize($valeurs);
+				}
 				$promotion = $defs($valeurs);
 				$promotions[$nom] = $promotion;
 			}
@@ -194,7 +196,7 @@ function promotions_enregistres($options = array()) {
  */
 function promotion_code_simple_actif_plugin($plugin) {
 	$promotion_actif = false;
-	if ($promotion_actif = _request('forcer')) {
+	if (!$promotion_actif = _request('forcer')) {
 		$promotions_actives = promotions_enregistres(array(
 			'select' => 'plugins_applicables',
 			'where' => array(

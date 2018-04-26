@@ -6,7 +6,7 @@
  * @copyright  2014 - 2018
  * @author     Rainer
  * @licence    GNU/GPL
- * @package    SPIP\Promotions\Pipelines
+ * @package    SPIP\Promotions\Base
  */
 if (!defined('_ECRIRE_INC_VERSION'))
 	return;
