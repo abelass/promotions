@@ -6,7 +6,7 @@ Permet de créer des promotions
 ## Compatibilité:
 
 - __Réservations__ (Réservation d’événements - https://plugins.spip.net/reservation_evenement.html)
-	avec le plugin __Promotion réservations événements__ (https://github.com/abelass/promotions_reservations_evenements)
+	avec le plugin __Promotion réservations__ (https://github.com/abelass/promotions_reservations)
 - __Paniers__ ensemble avec __commandes__ en utilisant le plugin __Promotions commande__ (https://github.com/abelass/promotions_commandes)
 	des promotions peuvent être déclarés dans un fichier promotions/ma_promotion.php
 
