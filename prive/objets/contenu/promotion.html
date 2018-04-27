@@ -41,9 +41,30 @@
 	<span dir='#LANG_DIR' class='#EDIT{type_reduction} type_reduction'>(#TYPE_REDUCTION)</span>
 </div>]
 
+[<div class="champ contenu_prix_base[ (#PRIX_BASE*|strlen|?{'',vide})]">
+	<label><:promotion:label_prix_base:></label>
+	<span dir='#LANG_DIR' class='#EDIT{prix_base} prix_base'>(#PRIX_BASE)</span>
+</div>]
+
+[<div class="champ contenu_non_cumulable[ (#NON_CUMULABLE*|strlen|?{'',vide})]">
+	<label><:promotion:label_non_cumulable:></label>
+	<span dir='#LANG_DIR' class='non_cumulable'>(#NON_CUMULABLE|unserialize|implode{', '})</span>
+</div>]
+
+
+
 	[(#REM) Les valeurs spécifique de la promotion]
+	[(#SET{champs_specifiques,TYPE_PROMOTION
+		|promotions_definition_saisies{
+			#ENV**,
+			#ARRAY{champs_specifiques,oui}
+		}
+	})]
+
 	#SET{valeurs_promotions, #VALEURS_PROMOTION|unserialize}
-	<BOUCLE_valeurs_promotion(DATA){source tableau, #TYPE_PROMOTION|promotions_definition_saisies{'', #ARRAY{donnees_champs,oui}}}>
+	#SET{champs_specifiques, (#TYPE_PROMOTION|promotions_definition_saisies{'', #ARRAY{champs_specifiques,oui}}|saisies_lister_par_nom)}
+	[(#GET{champs_specifiques}|serialize)]
+	<BOUCLE_valeurs_promotion(DATA){source tableau, #GET{champs_specifiques}|table_valeur{saisies}}>
 		[(#GET{valeurs_promotions}|table_valeur{#VALEUR{options/nom}}|oui)
 	<div class="champ contenu_[(#VALEUR{options/nom})]">
 		[<label>(#VALEUR{options/label}) </label>]
