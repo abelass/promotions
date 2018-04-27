@@ -145,7 +145,7 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
 	// Préparer les données multis pour l'enregistrement.
 	if (!$erreurs) {
 		$function = charger_fonction(_request('type_promotion'), "promotions", true);
-		$saisies = $function(calculer_contexte( ));
+		$saisies = $function(calculer_contexte());
 		$valeurs_promotion = saisies_lister_par_nom(
 			array(
 				array(
@@ -158,9 +158,6 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
 				)
 			));
 
-
-		spip_log($valeurs_promotion, 'teste');
-
 		$promotion = array();
 		foreach ($valeurs_promotion as $champ) {
 			if ($request = _request($champ['options']['nom'])) {
@@ -168,7 +165,6 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
 			}
 		}
 
-		spip_log($promotion, 'teste');
 		set_request('valeurs_promotion', serialize($promotion));
 
 		$non_cumulable = is_array(_request('non_cumulable')) ? serialize(_request('non_cumulable')) : serialize(array());

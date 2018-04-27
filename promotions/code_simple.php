@@ -89,11 +89,11 @@ function promotions_code_simple_dist($flux = '') {
 
 // Définition de l'action de la promotion
 function promotions_code_simple_action_dist($flux, $promotion = array()) {
-	if (isset($promotion['valeurs_promotion']['code_promotion']) &&
-		trim($promotion['valeurs_promotion']['code_promotion_' . _request('formulaire_action')]) == trim(_request('code_promotion'))
+	if (isset($promotion['valeurs_promotion']['code_promotion_' . _request('formulaire_action')]) and
+		$code_promotion = $promotion['valeurs_promotion']['code_promotion_' . _request('formulaire_action')] and
+		trim($code_promotion) == trim(_request('code_promotion'))
 			) {
 		$flux['data']['applicable'] = 'oui';
 	}
-
 	return $flux;
 }

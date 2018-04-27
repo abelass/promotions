@@ -194,25 +194,27 @@ function promotions_enregistres($options = array()) {
  *
  * @return boolean
  */
-function promotion_code_simple_actif_plugin($plugin) {
+function promotion_code_simple_actif_plugin($formulaire) {
 	$code_simple_actif = false;
 
 	if (!$code_simple_actif = _request('forcer')) {
 		$promotions_actives = promotions_enregistres(array(
-			'select' => 'plugins_applicables',
+			'select' => 'valeurs_promotion',
 			'where' => array(
 				'type_promotion="code_simple"',
 				'statut="publie"'
 			)
 		));
 
+		//print 'code_promotion_' . $formulaire;
 		foreach ($promotions_actives as $promotion) {
-			if (in_array($plugin, unserialize($promotion['plugins_applicables']))) {
+			$valeurs_promotion = unserialize($promotion['valeurs_promotion']);
+			if (isset($valeurs_promotion['code_promotion_' .$formulaire])) {
 				$code_simple_actif = true;
 				break;
 			}
 		}
 	}
 
-	return $promotion_actif;
+	return $code_simple_actif;
 }

@@ -5,6 +5,7 @@
 	}
 })]
 
+[(#REM) mettre les valeurs des champs spécifiques dans le contexte]
 <BOUCLE_saisies(DATA){source tableau, #GET{saisies}|saisies_lister_par_nom}>
 	#SET{nom,#OPTIONS|table_valeur{nom}}
 	[(#ENV{#GET{nom},#ENV{_valeurs_promotion}|table_valeur{#GET{nom}}}|setenv{#GET{nom}})]
@@ -12,4 +13,4 @@
 
 #GENERER_SAISIES{#GET{saisies}}
 
-<!-- en champs_specifiques -->
+<!-- champs_specifiques -->
