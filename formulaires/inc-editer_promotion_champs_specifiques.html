@@ -5,7 +5,7 @@
 	}
 })]
 
-<BOUCLE_saisies(DATA){source tableau, #GET{saisies}|table_valeur{0}|table_valeur{saisies}}>
+<BOUCLE_saisies(DATA){source tableau, #GET{saisies}|saisies_lister_par_nom}>
 	#SET{nom,#OPTIONS|table_valeur{nom}}
 	[(#ENV{#GET{nom},#ENV{_valeurs_promotion}|table_valeur{#GET{nom}}}|setenv{#GET{nom}})]
 </BOUCLE_saisies>

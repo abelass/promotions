@@ -59,6 +59,7 @@ function formulaires_editer_promotion_identifier_dist($id_promotion = 'new', $re
  * @return array Environnement du formulaire
  */
 function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
+	include_spip('inc/saisies');
 	$valeurs = formulaires_editer_objet_charger('promotion', $id_promotion, '', $lier_trad, $retour, $config_fonc, $row, $hidden);
 
 	$type_promotion = _request('type_promotion') ?
@@ -109,6 +110,7 @@ function formulaires_editer_promotion_charger_dist($id_promotion = 'new', $retou
  */
 function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = '') {
 	include_spip('inc/saisies');
+	include_spip('public/assembler');
 
 	$saisies = promotions_definition_saisies(_request('type_promotion'));
 	$erreurs = saisies_verifier($saisies);
@@ -142,18 +144,31 @@ function formulaires_editer_promotion_verifier_dist($id_promotion = 'new', $reto
 
 	// Préparer les données multis pour l'enregistrement.
 	if (!$erreurs) {
-		$promotion = charger_fonction(_request('type_promotion'), "promotions", true);
+		$function = charger_fonction(_request('type_promotion'), "promotions", true);
+		$saisies = $function(calculer_contexte( ));
+		$valeurs_promotion = saisies_lister_par_nom(
+			array(
+				array(
+					'saisie' => 'fieldset',
+					'options' => array(
+						'nom' => 'specifique',
+						'label' => _T('promotion:label_parametres_specifiques')
+					),
+					'saisies' => $saisies['saisies']
+				)
+			));
 
-		$valeurs_promotion = $promotion();
 
-		if (isset($valeurs_promotion['saisies'])) {
-			$promotion = array();
+		spip_log($valeurs_promotion, 'teste');
 
-			foreach ($valeurs_promotion['saisies'] as $champ) {
-				$promotion[$champ['options']['nom']] = _request($champ['options']['nom']);
+		$promotion = array();
+		foreach ($valeurs_promotion as $champ) {
+			if ($request = _request($champ['options']['nom'])) {
+				$promotion[$champ['options']['nom']] = $request;
 			}
 		}
 
+		spip_log($promotion, 'teste');
 		set_request('valeurs_promotion', serialize($promotion));
 
 		$non_cumulable = is_array(_request('non_cumulable')) ? serialize(_request('non_cumulable')) : serialize(array());

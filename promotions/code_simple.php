@@ -3,7 +3,7 @@ if (! defined("_ECRIRE_INC_VERSION"))
 	return;
 
 	// Définition des champs pour le détail du formulaire promotion du plugin promotions (https://github.com/abelass/promotions)
-function promotions_code_simple_dist($flux) {
+function promotions_code_simple_dist($flux = '') {
 	if (isset($flux['plugins_applicables']) and
 		$plugins_applicables = $flux['plugins_applicables']) {
 
@@ -27,7 +27,7 @@ function promotions_code_simple_dist($flux) {
 			'saisie' => 'fieldset',
 			'options' => array (
 				'nom' => 'plugin',
-				'label' => $plugins_definitions[$plugin]['label'],
+			'label' => $plugins_definitions[$plugin]['label'],
 				'obligatoire' => 'oui',
 			)
 		);
@@ -36,6 +36,8 @@ function promotions_code_simple_dist($flux) {
 
 				if (isset($definition['base']) and
 					$base = $definition['base'] and
+					isset($definition['formulaire']) and
+					$formulaire = $definition['formulaire'] and
 					isset($definition['table']) and
 					$table = $definition['table'] and
 					$objet = lister_tables_objets_sql($table)) {
@@ -43,7 +45,7 @@ function promotions_code_simple_dist($flux) {
 						$saisies[$index]['saisies'][$i] = array (
 						'saisie' => 'input',
 						'options' => array (
-							'nom' => 'code_promotion_' .$plugin,
+							'nom' => 'code_promotion_' .$formulaire,
 							'label' => _T('promotion:label_code'),
 							'obligatoire' => 'oui',
 						)
@@ -88,7 +90,7 @@ function promotions_code_simple_dist($flux) {
 // Définition de l'action de la promotion
 function promotions_code_simple_action_dist($flux, $promotion = array()) {
 	if (isset($promotion['valeurs_promotion']['code_promotion']) &&
-				trim($promotion['valeurs_promotion']['code_promotion']) == trim(_request('code_promotion'))
+		trim($promotion['valeurs_promotion']['code_promotion_' . _request('formulaire_action')]) == trim(_request('code_promotion'))
 			) {
 		$flux['data']['applicable'] = 'oui';
 	}
