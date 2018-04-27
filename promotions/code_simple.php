@@ -13,7 +13,8 @@ function promotions_code_simple_dist($flux) {
 				'tables' => array(
 					array(
 						'base' => 'promotions_reservations',
-						'table' => 'spip_reservations'
+						'table' => 'spip_reservations',
+						'formulaire' => 'reservation',
 					),
 				),
 			),
@@ -31,38 +32,49 @@ function promotions_code_simple_dist($flux) {
 			)
 		);
 
-			foreach ($plugins_definitions[$plugin]['tables'] as  $definition) {
+			foreach ($plugins_definitions[$plugin]['tables'] as $i => $definition) {
 
 				if (isset($definition['base']) and
 					$base = $definition['base'] and
 					isset($definition['table']) and
 					$table = $definition['table'] and
 					$objet = lister_tables_objets_sql($table)) {
-						$saisies[ $index]['saisies'][] = array (
-							'saisie' => 'input',
-							'options' => array (
-								'nom' => 'code_promotion_' .$plugin,
-								'label' => _T('promotion:label_code'),
-								'obligatoire' => 'oui',
-							)
-						);
 
-						// Si le champ code_promotion manque, on l'ajoute
-						if (!isset($objet['field']['code_promotion'])) {
-							include_spip('base/' . $base);
-							$function = $base . '_declarer_champs_extras';
+						$saisies[$index]['saisies'][$i] = array (
+						'saisie' => 'input',
+						'options' => array (
+							'nom' => 'code_promotion_' .$plugin,
+							'label' => _T('promotion:label_code'),
+							'obligatoire' => 'oui',
+						)
+					);
 
-							$champs = $function();
-							$sql = isset($champs[$table]['code_promotion']['options']['sql']) ?
-								$champs[$table]['code_promotion']['options']['sql'] :
-								'';
+					// Si le champ code_promotion manque, on l'ajoute
+					if (!isset($objet['field']['code_promotion'])) {
+						include_spip('base/' . $base);
+						$function = $base . '_declarer_champs_extras';
 
-							if ($sql) {
-								sql_alter("TABLE $table ADD code_promotion $sql");
-							}
+						$champs = $function();
+						$sql = isset($champs[$table]['code_promotion']['options']['sql']) ?
+							$champs[$table]['code_promotion']['options']['sql'] :
+							'';
+
+						if ($sql) {
+							sql_alter("TABLE $table ADD code_promotion $sql");
 						}
 					}
 
+					// Avertissment si Champs extras pas installé.
+					if (!test_plugin_actif('cextras')) {
+						$saisies[$index]['saisies'][$i]['options']['explication'] = _T(
+							'promotion:explication_code_champ_cextras',
+							array(
+								'table' => $table,
+								'formulaire' => $definition['formulaire']
+							)
+						);
+					}
+				}
 			}
 		}
 

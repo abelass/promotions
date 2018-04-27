@@ -11,7 +11,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array (
 
 	// E
 	'erreur_datefin' => 'La date fin doit être supérieure à la date début',
-	'explication_code_champ_manquant' => 'Vous devez d\'abord créer un champ extra "code_promotion". Si vous installez le pluging <a href="https://plugins.spip.net/cextras.html">Champs Extras</a> le champs será crée automatiquement',
+	'explication_code_champ_cextras' => 'Une colonne "code_promotionel" se trouve dans votre table "@table@".
+Vous devez également adapter le formulaire "@formulaire@" ou installer le plugin <a href="https://plugins.spip.net/cextras.html">Champs Extras</a>
+afin que le code de promotion soit pris en compte dans votre formulaire.',
 	'explication_prix_base' => 'Est-ce que la promotion se base sur le prix d\'origine ou dans un cas de cumul de promotion, sur un prix déjà réduit par une autre promotion',
 
 	// I
