@@ -4,47 +4,65 @@ if (! defined("_ECRIRE_INC_VERSION"))
 
 	// Définition des champs pour le détail du formulaire promotion du plugin promotions (https://github.com/abelass/promotions)
 function promotions_code_simple_dist($flux) {
-	if (isset($flux['plugins_applicables']) and $plugins_applicables = $flux['plugins_applicables']) {
+	if (isset($flux['plugins_applicables']) and
+		$plugins_applicables = $flux['plugins_applicables']) {
+
 		$plugins_definitions = array(
 			'reservation_evenement' => array(
-				'base' => 'promotions_reservations',
-				'table' => 'spip_reservations'
+				'label' => _T('reservation_evenement:reservation_evenement_titre'),
+				'tables' => array(
+					array(
+						'base' => 'promotions_reservations',
+						'table' => 'spip_reservations'
+					),
+				),
 			),
-
 		);
+
 		$saisies = array();
 		set_request('forcer', true);
-		foreach($plugins_applicables AS $index => $plugin) {
+		foreach($plugins_applicables as $index => $plugin) {
+			$saisies[ $index] = array (
+			'saisie' => 'fieldset',
+			'options' => array (
+				'nom' => 'plugin',
+				'label' => $plugins_definitions[$plugin]['label'],
+				'obligatoire' => 'oui',
+			)
+		);
 
-			if (isset($plugins_definitions[$plugin]['base']) and
-				isset($plugins_definitions[$plugin]['table']) and
-				$table = $plugins_definitions[$plugin]['table'] and
+			foreach ($plugins_definitions[$plugin]['tables'] as  $definition) {
 
-				$objet = lister_tables_objets_sql($table)) {
+				if (isset($definition['base']) and
+					$base = $definition['base'] and
+					isset($definition['table']) and
+					$table = $definition['table'] and
+					$objet = lister_tables_objets_sql($table)) {
+						$saisies[ $index]['saisies'][] = array (
+							'saisie' => 'input',
+							'options' => array (
+								'nom' => 'code_promotion_' .$plugin,
+								'label' => _T('promotion:label_code'),
+								'obligatoire' => 'oui',
+							)
+						);
 
-				$saisies[$index] = array (
-					'saisie' => 'input',
-					'options' => array (
-						'nom' => 'code_promotion_' .$plugin,
-						'label' => _T('promotion:label_code', array('plugin' => $plugin)),
-						'obligatoire' => 'oui',
-					)
-				);
-print_r($objet['field']);
-				// Nécessite un champ extra "code_promotion"
-				if (!isset($objet['field']['code_promotion']) and isset($plugins_definitions[$plugin]['base'])) {
-					$base = $plugins_definitions[$plugin]['base'];
-					include_spip('base/' . $base);
-					$function = $base . '_declarer_champs_extras';
+						// Si le champ code_promotion manque, on l'ajoute
+						if (!isset($objet['field']['code_promotion'])) {
+							include_spip('base/' . $base);
+							$function = $base . '_declarer_champs_extras';
 
-					$champs = $function();
-					//print_r($champs);
-					$sql = isset($champs[$table]['code_promotion']['options']['sql']) ? $champs[$table]['code_promotion']['options']['sql'] : '';
+							$champs = $function();
+							$sql = isset($champs[$table]['code_promotion']['options']['sql']) ?
+								$champs[$table]['code_promotion']['options']['sql'] :
+								'';
 
-					if ($sql) {
-						sql_alter("TABLE $table ADD code_promotion $sql");
+							if ($sql) {
+								sql_alter("TABLE $table ADD code_promotion $sql");
+							}
+						}
 					}
-				}
+
 			}
 		}
 
