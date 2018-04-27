@@ -195,9 +195,9 @@ function promotions_enregistres($options = array()) {
  * @return boolean
  */
 function promotion_code_simple_actif_plugin($plugin) {
-	$promotion_actif = false;
+	$code_simple_actif = false;
 
-	if (!$promotion_actif = _request('forcer')) {
+	if (!$code_simple_actif = _request('forcer')) {
 		$promotions_actives = promotions_enregistres(array(
 			'select' => 'plugins_applicables',
 			'where' => array(
@@ -208,7 +208,7 @@ function promotion_code_simple_actif_plugin($plugin) {
 
 		foreach ($promotions_actives as $promotion) {
 			if (in_array($plugin, unserialize($promotion['plugins_applicables']))) {
-				$promotion_actif = true;
+				$code_simple_actif = true;
 				break;
 			}
 		}
