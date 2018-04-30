@@ -51,21 +51,22 @@
 	<span dir='#LANG_DIR' class='non_cumulable'>(#NON_CUMULABLE|unserialize|implode{', '})</span>
 </div>]
 
-
-
 	[(#REM) Les valeurs spécifique de la promotion]
-	[(#SET{champs_specifiques,TYPE_PROMOTION
-		|promotions_definition_saisies{
-			#ENV**,
+
+	[(#SET{saisies,
+		#TYPE_PROMOTION|promotions_definition_saisies{
+			#ARRAY{
+				plugins_applicables,#PLUGINS_APPLICABLES|unserialize
+			},
 			#ARRAY{champs_specifiques,oui}
 		}
 	})]
 
 	#SET{valeurs_promotions, #VALEURS_PROMOTION|unserialize}
-	#SET{champs_specifiques, (#TYPE_PROMOTION|promotions_definition_saisies{'', #ARRAY{champs_specifiques,oui}}|saisies_lister_par_nom)}
-	[(#GET{champs_specifiques}|serialize)]
-	<BOUCLE_valeurs_promotion(DATA){source tableau, #GET{champs_specifiques}|table_valeur{saisies}}>
-		[(#GET{valeurs_promotions}|table_valeur{#VALEUR{options/nom}}|oui)
+
+	<BOUCLE_valeurs_promotion(DATA){source tableau, #GET{saisies}|saisies_lister_par_nom}>
+
+	[(#GET{valeurs_promotions}|table_valeur{#VALEUR{options/nom}}|oui)
 	<div class="champ contenu_[(#VALEUR{options/nom})]">
 		[<label>(#VALEUR{options/label}) </label>]
 		[<span dir='#LANG_DIR' class='#CLE'> (#GET{valeurs_promotions}|table_valeur{#VALEUR{options/nom}}|implode{','})</span>]
