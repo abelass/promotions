@@ -66,5 +66,3 @@ function promotions_jqueryui_plugins($scripts) {
 	$scripts[] = "jquery.ui.sortable";
 	return $scripts;
 }
-
-
