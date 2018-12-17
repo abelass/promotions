@@ -8,12 +8,12 @@
 ]
 
 <script type="text/javascript">
-    $(function() {
-        [(#REM)drag and drop]     
-        $( ".promotions").sortable({items:"tr.tr_liste"});
-        $( ".promotions").on("sortupdate", function(event, ui) {
-            var ordre = $(this).sortable('toArray').toString();
-            $('.promotions').load('[(#URL_ACTION_AUTEUR{ranger,nouvel,#SELF}|replace{&amp;,&})]&ordre='+ordre);
-        });
-    });
+		$(function() {
+				[(#REM)drag and drop]     
+				$( ".promotions").sortable({items:"tr.tr_liste"});
+				$( ".promotions").on("sortupdate", function(event, ui) {
+						var ordre = $(this).sortable('toArray').toString();
+						$('.promotions').load('[(#URL_ACTION_AUTEUR{promitions_ranger,nouvel,#SELF}|replace{&amp;,&})]&ordre='+ordre);
+				});
+		});
 </script>

@@ -1,7 +1,7 @@
 <?php
 if (!defined("_ECRIRE_INC_VERSION"))
 	return;
-function action_ranger_dist($arg = '') {
+function action_promotions_ranger_dist($arg = '') {
 	include_spip('inc/autoriser');
 	$securiser_action = charger_fonction('securiser_action', 'inc');
 	$arg = $securiser_action();
