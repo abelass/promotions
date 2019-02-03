@@ -29,7 +29,6 @@ function promotions_definition_saisies($type_promotion, $valeurs = array(), $opt
 	include_spip('inc/promotion');
 
 	// Les promotions actives.
-	// Les promotions actives.
 	$where = array(
 		'statut !="poubelle"'
 	);
