@@ -3,7 +3,7 @@
  * Gestion du formulaire de d'édition de promotion
  *
  * @plugin     Promotions
- * @copyright  2014 - 2018
+ * @copyright  2014 - 2021
  * @author     Rainer
  * @licence    GNU/GPL
  * @package    SPIP\Promotions\Formulaires

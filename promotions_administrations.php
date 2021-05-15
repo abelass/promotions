@@ -3,7 +3,7 @@
  * Fichier gérant l'installation et désinstallation du plugin Promotions
  *
  * @plugin     Promotions
- * @copyright  2014 - 2018
+ * @copyright  2014 - 2021
  * @author     Rainer
  * @licence    GNU/GPL
  * @package    SPIP\Promotions\Installation

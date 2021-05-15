@@ -1,9 +1,9 @@
 <paquet
 	prefix="promotions"
 	categorie="communication"
-	version="1.8.6"
+	version="1.9.0"
 	etat="test"
-	compatibilite="[3.0.17;3.2.*]"
+	compatibilite="[3.0.17;4.0.*]"
 	logo="prive/themes/spip/images/promotions-64.png"
 	documentation=""
 	schema="1.8.0"
@@ -18,6 +18,7 @@
 
 	<necessite nom="saisies"  compatibilite="[2.23.3;]" />
 	<necessite nom="verifier" compatibilite="[1.6.16;]" />
+	<necessite nom="jqueryui" compatibilite="[1.12.1;]" />
 
 	<utilise nom="reservation_evenement" compatibilite="[1.28.2;]" />
 	<utilise nom="commandes" compatibilite="[1.15.4;]" />

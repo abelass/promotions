@@ -3,7 +3,7 @@
  * Définit les autorisations du plugin Promotions
  *
  * @plugin     Promotions
- * @copyright  2014 - 2018
+ * @copyright  2014 - 2021
  * @author     Rainer
  * @licence    GNU/GPL
  * @package    SPIP\Promotions\Autorisations
@@ -51,7 +51,7 @@ function autoriser_configurer_promotions_dist($faire, $type, $id, $qui, $opt) {
 **/
 function autoriser_promotions_menu_dist($faire, $type, $id, $qui, $opt){
 	return true;
-} 
+}
 
 
 /**
@@ -66,7 +66,7 @@ function autoriser_promotions_menu_dist($faire, $type, $id, $qui, $opt){
 **/
 function autoriser_promotioncreer_menu_dist($faire, $type, $id, $qui, $opt){
 	return autoriser('creer', 'promotion', '', $qui, $opt);
-} 
+}
 
 /**
  * Autorisation de créer (promotion)
@@ -79,7 +79,7 @@ function autoriser_promotioncreer_menu_dist($faire, $type, $id, $qui, $opt){
  * @return bool          true s'il a le droit, false sinon
 **/
 function autoriser_promotion_creer_dist($faire, $type, $id, $qui, $opt) {
-	return in_array($qui['statut'], array('0minirezo', '1comite')); 
+	return in_array($qui['statut'], array('0minirezo', '1comite'));
 }
 
 /**

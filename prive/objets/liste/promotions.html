@@ -6,9 +6,9 @@
 	<thead>
 		<tr class='first_row'>
 			<th class='picto' scope='col'></th>
-			<th class='statut' scope='col'><span title="<:lien_trier_statut|attribut_html:>">#</span></th> 
+			<th class='statut' scope='col'><span title="<:lien_trier_statut|attribut_html:>">#</span></th>
 			<th class='titre' scope='col'><:forum:label_titre:></th>
-			<th class='date' scope='col'><:date:></th> 
+			<th class='date' scope='col'><:date:></th>
 			<th class='id' scope='col'><:info_numero_abbreviation:></th>
 		</tr>
 	</thead>
@@ -16,9 +16,9 @@
 	<BOUCLE_liste_promotions(PROMOTIONS){id_mot?}{id_auteur?}{where?}{statut?}{recherche?}{par rang}{pagination #ENV{nb,10}}>
 		<tr class='tr_liste[ (#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]' id="#ID_PROMOTION">
 			<td class='picto'>[(#CHEMIN_IMAGE{promotion-16.png}|balise_img)]</td>
-			<td class='statut'>[(#STATUT|puce_statut{promotion,#ID_PROMOTION})]</td> 
+			<td class='statut'>[(#STATUT|puce_statut{promotion,#ID_PROMOTION})]</td>
 			<td class='titre principale'>[(#LOGO_PROMOTION|image_reduire{20,26})]<a href="[(#ID_PROMOTION|generer_url_entite{promotion})]" title="<:info_numero_abbreviation|attribut_html:> #ID_PROMOTION">[(#RANG). ]#TITRE</a></td>
-			<td class='date secondaire'>[(#DATE|affdate_jourcourt)]</td> 
+			<td class='date secondaire'>[(#DATE|affdate_jourcourt)]</td>
 			<td class='id'>[(#AUTORISER{modifier,promotion,#ID_PROMOTION}|?{
 				<a href="[(#URL_ECRIRE{promotion_edit,id_promotion=#ID_PROMOTION})]">#ID_PROMOTION</a>,
 				#ID_PROMOTION
@@ -27,7 +27,7 @@
 	</BOUCLE_liste_promotions>
 	</tbody>
 </table>
-[<p class='pagination'>(#PAGINATION{prive})</p>]
+[<nav class='pagination' role='navigation'>(#PAGINATION)</nav>]
 </div>
 </B_liste_promotions>[
 <div class="liste-objets promotions caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
